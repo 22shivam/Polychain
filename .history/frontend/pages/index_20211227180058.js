@@ -76,15 +76,14 @@ async function transferSOL(solAmount) {
     transaction.feePayer = await provider.publicKey;
     let blockhashObj = await connection.getRecentBlockhash();
     transaction.recentBlockhash = await blockhashObj.blockhash;
-    console.log(transaction)
+
     // Request creator to sign the transaction (allow the transaction)
     let signed = await provider.signTransaction(transaction);
     // The signature is generated
     let signature = await connection.sendRawTransaction(signed.serialize());
     // Confirm whether the transaction went through or not
     await connection.confirmTransaction(signature);
-    console.log(signature)
-
+    console.log("transaction complete")
 }
 
 const handleSubmitDESO = async (e) => {
@@ -104,7 +103,6 @@ const startPayment = async ({ ether, addr }) => {
             to: addr,
             value: ethers.utils.parseEther(ether)
         });
-        console.log(tx)
     } catch (err) {
         console.error(err)
     }
@@ -128,7 +126,7 @@ export default function App() {
 
     useEffect(() => {
         (async () => {
-            const qrCode = await generateQR("bitcoin:3DBGwFbBoj7FjBFcbVi8hFcpmCjPhCY62X")
+            const qrCode = generateQR("bitcoin:1234555")
             setQrCode(qrCode)
         })()
     }, [])
@@ -193,7 +191,6 @@ export default function App() {
             <div>
                 <span>Pay Using Bitcoin</span>
                 <img src={qrCode}></img>
-                <a href="bitcoin:3DBGwFbBoj7FjBFcbVi8hFcpmCjPhCY62X">Send</a>
             </div>
 
 

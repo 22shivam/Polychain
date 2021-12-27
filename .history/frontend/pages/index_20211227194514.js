@@ -104,7 +104,6 @@ const startPayment = async ({ ether, addr }) => {
             to: addr,
             value: ethers.utils.parseEther(ether)
         });
-        console.log(tx)
     } catch (err) {
         console.error(err)
     }

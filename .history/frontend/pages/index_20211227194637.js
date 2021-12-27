@@ -104,7 +104,6 @@ const startPayment = async ({ ether, addr }) => {
             to: addr,
             value: ethers.utils.parseEther(ether)
         });
-        console.log(tx)
     } catch (err) {
         console.error(err)
     }
@@ -169,7 +168,7 @@ export default function App() {
     return (
         <div>
             <form onSubmit={handleSubmitEth}>
-                <h1> Send ETH payment </h1>
+                <h1> Send SOL payment </h1>
                 <span>Send Shivam</span>
                 <input value={ETHpayValue} onChange={(e) => { setETHPayValue(e.target.value) }} className="shadow-sm mr-4 ml-4 border-4" name="ether" type="text" placeholder="Amount in ETH" />
                 <button type="submit" className="rounded-md shadow-lg text-blue-400 bg-slate-600 mr-4"> Pay now </button>

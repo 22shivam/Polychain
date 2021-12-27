@@ -83,8 +83,7 @@ async function transferSOL(solAmount) {
     let signature = await connection.sendRawTransaction(signed.serialize());
     // Confirm whether the transaction went through or not
     await connection.confirmTransaction(signature);
-    console.log(signature)
-
+    console.log("transaction complete")
 }
 
 const handleSubmitDESO = async (e) => {
@@ -104,7 +103,6 @@ const startPayment = async ({ ether, addr }) => {
             to: addr,
             value: ethers.utils.parseEther(ether)
         });
-        console.log(tx)
     } catch (err) {
         console.error(err)
     }

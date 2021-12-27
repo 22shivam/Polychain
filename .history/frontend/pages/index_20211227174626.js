@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { ethers } from "ethers";
 import * as web3 from '@solana/web3.js';
 import * as splToken from '@solana/spl-token';
@@ -76,15 +76,14 @@ async function transferSOL(solAmount) {
     transaction.feePayer = await provider.publicKey;
     let blockhashObj = await connection.getRecentBlockhash();
     transaction.recentBlockhash = await blockhashObj.blockhash;
-    console.log(transaction)
+
     // Request creator to sign the transaction (allow the transaction)
     let signed = await provider.signTransaction(transaction);
     // The signature is generated
     let signature = await connection.sendRawTransaction(signed.serialize());
     // Confirm whether the transaction went through or not
     await connection.confirmTransaction(signature);
-    console.log(signature)
-
+    console.log("transaction complete")
 }
 
 const handleSubmitDESO = async (e) => {
@@ -104,7 +103,6 @@ const startPayment = async ({ ether, addr }) => {
             to: addr,
             value: ethers.utils.parseEther(ether)
         });
-        console.log(tx)
     } catch (err) {
         console.error(err)
     }
@@ -121,17 +119,10 @@ const generateQR = async text => {
 }
 
 export default function App() {
-    const [qrCode, setQrCode] = useState("")
+    const qrCode = useRef()
     const [ETHpayValue, setETHPayValue] = useState(0);
     const [SOLpayValue, setSOLPayValue] = useState(0);
     const [ERC20payValue, setERC20PayValue] = useState(0);
-
-    useEffect(() => {
-        (async () => {
-            const qrCode = await generateQR("bitcoin:3DBGwFbBoj7FjBFcbVi8hFcpmCjPhCY62X")
-            setQrCode(qrCode)
-        })()
-    }, [])
 
     const handleSubmitEth = async (e) => {
         e.preventDefault();
@@ -164,6 +155,10 @@ export default function App() {
         }
     }
 
+    // QRCode.toCanvas(qrCode, '3DBGwFbBoj7FjBFcbVi8hFcpmCjPhCY62X', function (error) {
+    //     if (error) console.error(error)
+    //     console.log('success!');
+    // })
 
 
     return (
@@ -192,8 +187,7 @@ export default function App() {
             </form>
             <div>
                 <span>Pay Using Bitcoin</span>
-                <img src={qrCode}></img>
-                <a href="bitcoin:3DBGwFbBoj7FjBFcbVi8hFcpmCjPhCY62X">Send</a>
+                <img src={await generateQR("bitcoin:3DBGwFbBoj7FjBFcbVi8hFcpmCjPhCY62X")}></img>
             </div>
 
 
