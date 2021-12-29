@@ -1,0 +1,14 @@
+// uses the below database
+use('multi-blockchain-payment-system');
+
+// users collection is in the db
+db.users.aggregate([
+    {
+        "$search": {
+            "text": {
+                "query": "61cbe32a7d3b472040ffdf9c",
+                "path": "_id"
+            }
+        }
+    }
+])

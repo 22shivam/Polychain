@@ -1,0 +1,15 @@
+// uses the below database
+use('multi-blockchain-payment-system');
+
+// users collection is in the db
+db.users.aggregate([
+    {
+        "$search": {
+            "index": "username, eth addr, sol addr",
+            "text": {
+                "query": "shivamgar",
+                "path": "username"
+            }
+        }
+    }
+])
