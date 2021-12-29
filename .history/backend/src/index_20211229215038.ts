@@ -28,17 +28,10 @@ app.use(cors({
 app.use(cookieParser(process.env.COOKIE_SECRET))
 
 
-app.post("/userDetails/update", (req: any, res: any) => {
-    const { ethAddress, solAddress, desoAddress, btcAddress, bio, profilePic } = req.body
-})
-
-
 app.post("/userDetails", (req: any, res: any) => {
     const { address, blockchain } = req.body
-    console.log(address)
-    console.log(blockchain)
     if (blockchain === "eth") {
-        User.findOne({ ETHAddress: address.toUpperCase() })
+        User.findOne({ ETHAddress: address })
             .then((user: any) => {
                 if (!user) {
                     return res.json({ success: false, message: "No User Found" })
@@ -49,7 +42,7 @@ app.post("/userDetails", (req: any, res: any) => {
                 res.status(500).send(err)
             })
     } else if (blockchain === "sol") {
-        User.findOne({ SOLAddress: address.toUpperCase() })
+        User.findOne({ SOLAddress: address })
             .then((user: any) => {
                 if (!user) {
                     return res.json({ success: false, message: "No User Found" })

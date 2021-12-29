@@ -28,11 +28,6 @@ app.use(cors({
 app.use(cookieParser(process.env.COOKIE_SECRET))
 
 
-app.post("/userDetails/update", (req: any, res: any) => {
-    const { ethAddress, solAddress, desoAddress, btcAddress, bio, profilePic } = req.body
-})
-
-
 app.post("/userDetails", (req: any, res: any) => {
     const { address, blockchain } = req.body
     console.log(address)

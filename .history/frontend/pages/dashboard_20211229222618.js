@@ -4,8 +4,8 @@ import Link from 'next/link';
 import createPostRequest from '../lib/createPostRequest';
 import { ethers } from 'ethers';
 import { validate } from "bitcoin-address-validation"
-import * as web3 from '@solana/web3.js';
-import Base58 from 'base-58'
+import * as web3 from 'solana-web3';
+
 
 
 export default function UserDashboard() {
@@ -84,15 +84,19 @@ export default function UserDashboard() {
     }, [])
 
     const updateInfo = async (e) => {
+        // TODO: IMPLEMENT THIS
 
         // validate input
-        if (!ethers.utils.isAddress(ethAddress.toLowerCase()) && ethAddress) {
+        if (!ethers.utils.isAddress(ethAddress)) {
             return alert("Invalid Ethereum Address")
         }
-        if (!validate(btcAddress) && btcAddress) {
+        if (!validate(btcAddress)) {
             return alert("Invalid Bitcoin Address")
         }
-        // TODO: Validate solana and deso address. Check if input bio is not malicious.
+        console.log(web3.PublicKey.toBytes(solAddress))
+        // web3.PublicKey.isOnCurve()
+
+
 
         // submit to server
     }

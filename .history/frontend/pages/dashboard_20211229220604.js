@@ -2,10 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './_app';
 import Link from 'next/link';
 import createPostRequest from '../lib/createPostRequest';
-import { ethers } from 'ethers';
-import { validate } from "bitcoin-address-validation"
-import * as web3 from '@solana/web3.js';
-import Base58 from 'base-58'
 
 
 export default function UserDashboard() {
@@ -64,17 +60,16 @@ export default function UserDashboard() {
                         blockchain: processedResponse.blockchain
                     })
                     if (!response.success) {
-                        console.log("no account found")
                         setHasAccount(false)
                         setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                         return
                     }
                     console.log("response:", response)
-                    console.log(response.user.ETHAddress)
-                    setEthAddress(response.user.ETHAddress)
-                    setSolAddress(response.user.SOLAddress)
-                    setDesoAddress(response.user.DESOAddress)
-                    setBtcAddress(response.user.BTCAddress)
+                    console.log(response.user.ETHAdress)
+                    setEthAddress(response.user.ETHAdress)
+                    setSolAddress(response.user.SOLAdress)
+                    setDesoAddress(response.user.DESOAdress)
+                    setBtcAddress(response.user.BTCAdress)
                     setBio(response.user.bio)
                     setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasAccount(true)
@@ -84,15 +79,9 @@ export default function UserDashboard() {
     }, [])
 
     const updateInfo = async (e) => {
+        // TODO: IMPLEMENT THIS
 
         // validate input
-        if (!ethers.utils.isAddress(ethAddress.toLowerCase()) && ethAddress) {
-            return alert("Invalid Ethereum Address")
-        }
-        if (!validate(btcAddress) && btcAddress) {
-            return alert("Invalid Bitcoin Address")
-        }
-        // TODO: Validate solana and deso address. Check if input bio is not malicious.
 
         // submit to server
     }
@@ -114,19 +103,12 @@ export default function UserDashboard() {
         <div>
             <button onClick={handleLogout}>Logout</button>
             Welcome to your dashboard! More coming soon....
-            <br />
             <input type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
-            <br />
             <input type="text" value={desoAddress} onChange={(e) => setDesoAddress(e.target.value)} placeholder="enter deso address" />
-            <br />
             <input type="text" value={btcAddress} onChange={(e) => setBtcAddress(e.target.value)} placeholder="enter btc address" />
-            <br />
             <input type="text" value={ethAddress} onChange={(e) => setEthAddress(e.target.value)} placeholder="enter eth address" />
-            <br />
             <input type="text" value={solAddress} onChange={(e) => setSolAddress(e.target.value)} placeholder="enter sol address" />
-            <br />
             <button onClick={updateInfo}>Save</button>
-            <br />
         </div>
     )
 }

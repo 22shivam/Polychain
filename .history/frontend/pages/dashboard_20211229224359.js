@@ -84,15 +84,22 @@ export default function UserDashboard() {
     }, [])
 
     const updateInfo = async (e) => {
+        // TODO: IMPLEMENT THIS
 
         // validate input
-        if (!ethers.utils.isAddress(ethAddress.toLowerCase()) && ethAddress) {
+        if (!ethers.utils.isAddress(ethAddress.toLowerCase())) {
             return alert("Invalid Ethereum Address")
         }
+        console.log(btcAddress)
         if (!validate(btcAddress) && btcAddress) {
             return alert("Invalid Bitcoin Address")
         }
-        // TODO: Validate solana and deso address. Check if input bio is not malicious.
+        const solAddr = new web3.PublicKey(Base58.encode(new Buffer.from(solAddress.toLowerCase())))
+        console.log(solAddr)
+        // console.log(solAddr.toBytes())
+        // web3.PublicKey.isOnCurve()
+
+
 
         // submit to server
     }
