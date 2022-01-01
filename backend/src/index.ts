@@ -30,6 +30,15 @@ app.use(cors({
 app.use(cookieParser(process.env.COOKIE_SECRET))
 
 
+app.get("/api/:username", async (req, res) => {
+    const user = await User.findOne({ username: req.params.username }).exec()
+    if (!user) {
+        return res.json({ success: false, message: "User not found" })
+    } else {
+        return res.json({ success: true, user: user, message: "User found" })
+    }
+})
+
 app.post("/userDetails/update", (req: any, res: any) => {
     // TODO: HIGH PRIOERITY. DO VALIDATION FOR INPUTS
 
@@ -43,12 +52,12 @@ app.post("/userDetails/update", (req: any, res: any) => {
             })
         } else { // logged in
             let { address, blockchain } = decoded.data
-            address = address.toUpperCase()
+            address = address
             let { ETHAddress, BTCAddress, DESOAddress, SOLAddress, bio, profilePic } = req.body
-            ETHAddress = ETHAddress && ETHAddress.toUpperCase()
-            BTCAddress = BTCAddress && BTCAddress.toUpperCase()
-            DESOAddress = DESOAddress && DESOAddress.toUpperCase()
-            SOLAddress = SOLAddress && SOLAddress.toUpperCase()
+            ETHAddress = ETHAddress && ETHAddress
+            BTCAddress = BTCAddress && BTCAddress
+            DESOAddress = DESOAddress && DESOAddress
+            SOLAddress = SOLAddress && SOLAddress
 
             if (blockchain == "eth") { // logged in with eth
                 let user = User.findOne({ ETHAddress: address }).exec()
@@ -58,9 +67,8 @@ app.post("/userDetails/update", (req: any, res: any) => {
                         message: "No corresponding Username for this address found"
                     })
                 } else { // username found for logged in account with eth
-                    console.log(address)
-                    console.log(ETHAddress)
-                    if (ETHAddress != address.toUpperCase()) { // primary eth address changed )
+
+                    if (ETHAddress != address) { // primary eth address changed )
                         let user = await User.findOne({ ETHAddress: ETHAddress }).exec()
                         if (user) { // new primary eth address is already taken
                             return res.json({
@@ -70,7 +78,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                         } else { // new primary eth address is available
                             // now check if sol address is alrdy taken
                             let user = await User.findOne({ SOLAddress }).exec()
-                            if (user && user.ETHAddress !== address.toUpperCase() && SOLAddress) { // sol address is already taken by SOMEONE ELSE
+                            if (user && user.ETHAddress !== address && SOLAddress) { // sol address is already taken by SOMEONE ELSE
                                 return res.json({
                                     success: "false",
                                     message: "Solana address is already associated with another Username"
@@ -94,7 +102,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                     } else { // primary eth address not changed
                         // check if sol address is alrdy taken
                         let user = await User.findOne({ SOLAddress }).exec()
-                        if (user && user.ETHAddress !== address.toUpperCase() && SOLAddress) { // sol address is already taken by SOMEONE ELSE
+                        if (user && user.ETHAddress !== address && SOLAddress) { // sol address is already taken by SOMEONE ELSE
                             return res.json({
                                 success: "false",
                                 message: "Solana address is already associated with another Username"
@@ -120,7 +128,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                         message: "No corresponding Username for this address found"
                     })
                 } else { // username found for logged in account with sol
-                    if (SOLAddress != address.toUpperCase()) { // primary sol address changed )
+                    if (SOLAddress != address) { // primary sol address changed )
                         let user = await User.findOne({ SOLAddress: SOLAddress }).exec()
                         if (user) { // new primary sol address is already taken
                             return res.json({
@@ -129,9 +137,8 @@ app.post("/userDetails/update", (req: any, res: any) => {
                             })
                         } else { // new primary sol address is available
                             // now check if eth address is alrdy taken
-                            console.log("there")
                             let user = await User.findOne({ ETHAddress }).exec()
-                            if (user && user.SOLAddress !== address.toUpperCase() && ETHAddress) { // eth address is already taken by SOMEONE ELSE
+                            if (user && user.SOLAddress !== address && ETHAddress) { // eth address is already taken by SOMEONE ELSE
                                 return res.json({
                                     success: "false",
                                     message: "Ethereum address is already associated with another Username"
@@ -151,9 +158,8 @@ app.post("/userDetails/update", (req: any, res: any) => {
                         }
                     } else { // primary sol address not changed
                         // check if eth address is alrdy taken
-                        console.log("here")
                         let user = await User.findOne({ ETHAddress }).exec()
-                        if (user && user.SOLAddress !== address.toUpperCase() && ETHAddress) { // eth address is already taken by SOMEONE ELSE
+                        if (user && user.SOLAddress !== address && ETHAddress) { // eth address is already taken by SOMEONE ELSE
                             return res.json({
                                 success: "false",
                                 message: "Ethereum address is already associated with another Username"
@@ -193,23 +199,17 @@ app.post("/userDetails", async (req: any, res: any) => {
             })
         }
         const { blockchain, address } = decoded.data
-        console.log(blockchain, address)
         if (blockchain === "eth") {
-            const user = await User.findOne({ ETHAddress: address.toUpperCase() }).exec()
+            const user = await User.findOne({ ETHAddress: address }).exec()
             if (!user) {
                 return res.json({ success: false, message: "No User Found" })
             }
             res.send({ success: true, user })
         } else if (blockchain === "sol") {
-            console.log(address.toUpperCase())
-            const user = await User.findOne({ SOLAddress: address.toUpperCase() }).exec()
-            console.log("here")
-            console.log(user)
+            const user = await User.findOne({ SOLAddress: address }).exec()
             if (!user) {
-                console.log('here')
                 return res.json({ success: false, message: "No User Found" })
             }
-            console.log(user)
             res.send({ success: true, user })
         } else {
             res.json({ success: false, message: "Invalid Blockchain" })
@@ -223,14 +223,14 @@ app.get("/logout", async (req, res) => {
 
 app.get("/isLoggedIn", async (req, res) => {
     const token = req.cookies.token
-    console.log(token)
+
     jwt.verify(token, process.env.COOKIE_SECRET as string, async (err: any, decoded: any) => {
         if (err) {
-            res.json({
+            console.log("not logged in")
+            res.clearCookie("token").json({
                 isLoggedIn: false
             })
         } else {
-            console.log(decoded.data.address, decoded.data.blockchain)
             res.json({
                 isLoggedIn: true,
                 address: decoded.data.address,
@@ -256,7 +256,7 @@ app.post("/login/sol", async (req, res) => {
 
     const isValid = nacl.sign.detached.verify(encodedMessage, new Uint8Array(signature.data), new Uint8Array(address.data))
 
-    if (!isValid || signedMessage.publicKey._bn.toUpperCase() !== comparePbKey.toUpperCase()) {
+    if (!isValid || signedMessage.publicKey._bn !== comparePbKey) {
         return res.json({
             success: false,
             message: "Login Failed"
@@ -264,7 +264,7 @@ app.post("/login/sol", async (req, res) => {
     }
     // generate jwt send it as response
     const token = jwt.sign({
-        data: { address: publicKey.toUpperCase(), blockchain: "sol" }
+        data: { address: publicKey, blockchain: "sol" }
     }, process.env.JWT_SECRET as string, {
         expiresIn: '2h'
     });
@@ -278,9 +278,11 @@ app.post("/login/sol", async (req, res) => {
 
 app.post("/login/eth", async (req, res) => {
     const { signature, message, address } = req.body
+    console.log(address)
+    console.log(signature)
+    console.log(message)
 
-
-    const signer = await ethers.utils.verifyMessage(message, signature)
+    const signer = ethers.utils.verifyMessage(message, signature)
     console.log("signer", signer)
     if (signer.toUpperCase() !== address.toUpperCase()) {
         return res.json({ success: false, message: "Invalid signature" })
@@ -288,12 +290,13 @@ app.post("/login/eth", async (req, res) => {
 
     // generate jwt send it as response
     const token = jwt.sign({
-        data: { address: signer.toUpperCase(), blockchain: "eth" }
+        data: { address: signer, blockchain: "eth" }
     }, process.env.JWT_SECRET as string, {
         expiresIn: '2h'
     });
 
     // send jwt
+    console.log("token", token)
     res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
     res.json({ success: true, message: "Logged in successfully" })
 })
@@ -348,6 +351,8 @@ app.post("/register/promo", async (req, res) => {
                 existingCode.address = address
                 existingCode.blockchain = blockchain
                 existingCode.save()
+
+                // generate jwt
 
                 return res.json({
                     success: true,
@@ -442,7 +447,7 @@ app.post("/register/sol", async (req, res) => {
 
     // verify that amount paid to right address
     console.log(to)
-    if (to.toUpperCase() !== "AA6BQLGTZYPPFFH2R9XLDUDIBWCEMLKKDRTZMPQESEIS") {
+    if (to !== "AA6BQLGTZYPPFFH2R9XLDUDIBWCEMLKKDRTZMPQESEIS") {
         return res.json({
             success: false,
             message: "USD paid to wrong address"
@@ -474,7 +479,7 @@ app.post("/register/sol", async (req, res) => {
     await newuser.save()
     console.log("new user created!")
     const token = jwt.sign({
-        data: { address: from.toUpperCase(), blockchain: "sol" }
+        data: { address: from, blockchain: "sol" }
     }, process.env.JWT_SECRET as string, {
         expiresIn: '2h'
     });
@@ -517,7 +522,7 @@ app.post("/register/eth", async (req, res) => {
     const ethPaidUSD = ethPaid * USDPerETH
 
     // verify that amount paid to right address
-    if (txDetailsFromEtherscan.to.toUpperCase() !== "0X76AEB5092D8EABCEC324BE739B8BA5DF473F0055") {
+    if (txDetailsFromEtherscan.to !== "0X76AEB5092D8EABCEC324BE739B8BA5DF473F0055") {
         return res.json({
             success: false,
             message: "USD paid to wrong address"
@@ -533,7 +538,7 @@ app.post("/register/eth", async (req, res) => {
     }
 
     // check if address not already used
-    existingUser = await User.findOne({ ETHAddress: txDetailsFromEtherscan.from.toUpperCase() }).exec()
+    existingUser = await User.findOne({ ETHAddress: txDetailsFromEtherscan.from }).exec()
     if (existingUser) {
         return res.json({
             success: false,
@@ -544,13 +549,13 @@ app.post("/register/eth", async (req, res) => {
     // if yes, then assign username in mongodb, otherwise reject
     const newuser = User.build({
         username,
-        ETHAddress: txDetailsFromEtherscan.from.toUpperCase()
+        ETHAddress: txDetailsFromEtherscan.from
     })
     await newuser.save()
     console.log("new user created!")
 
     const token = jwt.sign({
-        data: { address: txDetailsFromEtherscan.from.toUpperCase(), blockchain: "eth" }
+        data: { address: txDetailsFromEtherscan.from, blockchain: "eth" }
     }, process.env.JWT_SECRET as string, {
         expiresIn: '2h'
     });
