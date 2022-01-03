@@ -1,0 +1,51 @@
+<div id="form-v1" className="flex flex-row">
+                    <div className="flex flex-col" id="labels">
+                        <CustomLabel>Bio:</CustomLabel>
+                        <CustomLabel>DESO Address:</CustomLabel>
+                        <CustomLabel>Bitcoin Address:</CustomLabel>
+                        <CustomLabel>Ethereum Address:</CustomLabel>
+                        <CustomLabel>Solana Address:</CustomLabel>
+                        <CustomLabel>Upload Profile Picture:</CustomLabel>
+                    </div>
+                    <div className="flex flex-col" id="inputs">
+                        <CustomInput className="my-1" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
+                        <CustomInput className="my-1" type="text" value={DESOAddress} onChange={(e) => setDESOAddress(e.target.value)} placeholder="enter deso address" />
+                        <CustomInput className="my-1" type="text" value={BTCAddress} onChange={(e) => setBTCAddress(e.target.value)} placeholder="enter btc address" />
+                        <CustomInput className="my-1" type="text" value={ETHAddress} onChange={(e) => setETHAddress(e.target.value)} placeholder="enter eth address" />
+                        <CustomInput className="my-1" type="text" value={SOLAddress} onChange={(e) => setSOLAddress(e.target.value)} placeholder="enter sol address" />
+                        <CustomInput className="my-1" type="file" onChange={uploadImage}
+                            id="profilePic" name="profilePic" multiple={false}
+                            accept="image/png, image/jpeg" />
+                    </div>
+                </div>
+                <div id="form-v2" className='flex flex-col'>
+                    <div className='flex flex-row'>
+                        <CustomLabel>Bio:</CustomLabel>
+                        <CustomInput className="my-1" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
+                    </div>
+                    <div className='flex flex-row'>
+                        <CustomLabel>DESO Address:</CustomLabel>
+                        <CustomInput className="my-1" type="text" value={DESOAddress} onChange={(e) => setDESOAddress(e.target.value)} placeholder="enter deso address" />
+                    </div>
+                    <div className='flex flex-row'>
+                        <CustomLabel>Bitcoin Address:</CustomLabel>
+                        <CustomInput className="my-1" type="text" value={BTCAddress} onChange={(e) => setBTCAddress(e.target.value)} placeholder="enter btc address" />
+                    </div>
+                    <div className='flex flex-row'>
+                        <CustomLabel>Ethereum Address:</CustomLabel>
+                        <CustomInput className="my-1" type="text" value={ETHAddress} onChange={(e) => setETHAddress(e.target.value)} placeholder="enter eth address" />
+                    </div>
+                    <div className='flex flex-row'>
+                        <CustomLabel>Solana Address:</CustomLabel>
+                        <CustomInput className="my-1" type="text" value={SOLAddress} onChange={(e) => setSOLAddress(e.target.value)} placeholder="enter sol address" />
+                    </div>
+                    <div className='flex flex-row'>
+                        <CustomLabel>Upload Profile Picture:</CustomLabel>
+                        <CustomInput className="my-1" type="file" onChange={uploadImage}
+                            id="profilePic" name="profilePic" multiple={false}
+                            accept="image/png, image/jpeg" />
+                    </div>
+                    <img src={profilePic} alt="profile pic" />
+                    <CustomButton onClick={updateInfo}>Save</CustomButton>
+                    <br />
+                </div>
