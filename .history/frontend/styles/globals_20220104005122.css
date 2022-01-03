@@ -20,7 +20,7 @@ body {
 
 a {
   color: inherit;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 * {
@@ -29,27 +29,27 @@ a {
 
 .input-text {
   font-family: 'Quicksand', Arial, Helvetica, sans-serif;
-font-weight: 600
+font-weight: 400
 }
 
 .input-placeholder::-webkit-input-placeholder {
   font-family: 'Quicksand', Arial, Helvetica, sans-serif;
-font-weight: 600
+font-weight: 500
 }
 
 .input-placeholder:-ms-input-placeholder {
   font-family: 'Quicksand', Arial, Helvetica, sans-serif;
-  font-weight: 600
+  font-weight: 500
 }
 
 .input-placeholder:-moz-placeholder {
   font-family: 'Quicksand', Arial, Helvetica, sans-serif;
-font-weight: 600
+font-weight: 500
 }
 
 .input-placeholder::-moz-placeholder {
   font-family: 'Quicksand', Arial, Helvetica, sans-serif;
-font-weight: 600
+font-weight: 500
 }
 
 a {

@@ -12,7 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import CustomInput from './components/customInput';
 import CustomLabel from './components/customLabel';
 import * as web3 from '@solana/web3.js'
-import CustomBrandedButton from './components/customBrandedButton';
 
 function validSolAddress(s) {
     try {
@@ -51,7 +50,7 @@ export default function UserDashboard() {
     const [ETHAddress, setETHAddress] = useState("");
     const [SOLAddress, setSOLAddress] = useState("");
     const [profilePic, setProfilePic] = useState("");
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     // handling logouts
     useEffect(() => {
@@ -356,7 +355,7 @@ export default function UserDashboard() {
                         <div className="flex flex-row">
                             {/* <CustomButton onClick={goToDashboard}>Dashboard</CustomButton> */}
                             {/* <h1><Link href="/dashboard">Dashboard</Link></h1> */}
-                            <CustomBrandedButton onClick={redirectToProfile} className="">View Profile</CustomBrandedButton>
+                            <CustomButton onClick={redirectToProfile} className="text-white bg-brand-primary-medium hover:bg-brand-primary-dark">View Profile</CustomButton>
                             <CustomButton onClick={handleLogout}>Logout</CustomButton>
                         </div>
                         : (
@@ -369,32 +368,32 @@ export default function UserDashboard() {
                 </div>
             </div>
             {userAccount.address ? hasUsername ?
-                <main id="dashboard" className='flex flex-col items-center mt-4 w-screen m-6'>
+                <main id="dashboard" className='flex flex-col items-center mt-4'>
 
                     <CustomLabel className="text-2xl mb-3">Update Profile Information</CustomLabel>
-                    <div className='flex flex-col w-screen items-center' id="form">
+                    <div className='flex flex-col' id="form">
 
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Bio:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
+                            <CustomInput className="my-1" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
                         </div>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">DESO Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={DESOAddress} onChange={(e) => setDESOAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={DESOAddress} onChange={(e) => setDESOAddress(e.target.value)}
                                 placeholder="enter deso address" /></div>
                         {DESOAddress ? "" :
                             <CustomLabel className="text-gray-500 font-normal text-sm">don't have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank">sign up</a> now and get up to $5!</CustomLabel>}
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Bitcoin Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={BTCAddress} onChange={(e) => setBTCAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={BTCAddress} onChange={(e) => setBTCAddress(e.target.value)}
                                 placeholder="enter btc address" /></div>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Ethereum Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={ETHAddress} onChange={(e) => setETHAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={ETHAddress} onChange={(e) => setETHAddress(e.target.value)}
                                 placeholder="enter eth address" /></div>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Solana Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={SOLAddress} onChange={(e) => setSOLAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={SOLAddress} onChange={(e) => setSOLAddress(e.target.value)}
                                 placeholder="enter sol address" /></div>
                         <div className='flex flex-col mt-4 mb-5'>
                             {/* <CustomLabel>Upload Profile Picture:</CustomLabel>
@@ -404,7 +403,7 @@ export default function UserDashboard() {
 
                             <div className=''>
                                 <CustomLabel className="">Profile Picture:</CustomLabel>
-                                <div className="mx-4 w-96 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                <div className="mx-4 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                     <div className="space-y-1 text-center">
                                         <svg
                                             className="mx-auto h-12 w-12 text-gray-400"
@@ -426,7 +425,7 @@ export default function UserDashboard() {
                                                 className="relative cursor-pointer bg-white rounded-md font-medium text-brand-primary-medium hover:text-brand-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                                             >
                                                 <span>Upload a file</span>
-                                                <CustomInput className="my-1 sr-only w-96" type="file" onChange={uploadImage}
+                                                <CustomInput className="my-1 sr-only" type="file" onChange={uploadImage}
                                                     id="file-upload" name="file-upload" multiple={false}
                                                     accept="image/png, image/jpeg" />
                                             </label>
@@ -438,7 +437,7 @@ export default function UserDashboard() {
                             </div>
                         </div>
                         <div className='flex flex-row justify-around'>
-                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                            <CustomButton className="px-6 text-white bg-brand-primary-medium hover:bg-brand-primary-dark" onClick={updateInfo}>Save</CustomButton>
                         </div>
 
                     </div>

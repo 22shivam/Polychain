@@ -12,7 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import CustomInput from './components/customInput';
 import CustomLabel from './components/customLabel';
 import * as web3 from '@solana/web3.js'
-import CustomBrandedButton from './components/customBrandedButton';
 
 function validSolAddress(s) {
     try {
@@ -51,7 +50,7 @@ export default function UserDashboard() {
     const [ETHAddress, setETHAddress] = useState("");
     const [SOLAddress, setSOLAddress] = useState("");
     const [profilePic, setProfilePic] = useState("");
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     // handling logouts
     useEffect(() => {
@@ -82,10 +81,10 @@ export default function UserDashboard() {
             console.log("useisloggedin", processedResponse.isLoggedIn)
             if (!processedResponse.isLoggedIn) {
                 setUserAccount({})
-                // setLoading(false)
+                setLoading(false)
                 return toastError("Please login to access your account")
             } else {
-                // setLoading(false)
+                setLoading(false)
                 setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                 // const response = await createPostRequest("http://localhost:3001/userDetails", {
                 //     address: processedResponse.address,
@@ -132,7 +131,6 @@ export default function UserDashboard() {
                 if (!response.success) {
                     toastError("No account is associated with this wallet address.")
                     setHasUsername(false)
-                    setLoading(false)
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     return
                 }
@@ -148,7 +146,6 @@ export default function UserDashboard() {
                 setLoading(false)
                 // }
             }
-            setLoading(false)
         })()
     }, [userAccount]) // this dependency is so that if from backend i ever send an updated cookie to logout on any random request, this reruns
 
@@ -324,15 +321,7 @@ export default function UserDashboard() {
         window.open(`http://localhost:3000/${username}`, "_self");
     }
 
-    if (loading) {
-        return <div type="button" class="flex justify-center items-center h-screen px-4 py-2 font-semibold leading-6 text-lg transition ease-in-out duration-150 cursor-not-allowed" disabled="">
-            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-brand-primary-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Loading...
-        </div>
-    }
+
 
     return (
         <div className="flex flex-col">
@@ -347,7 +336,7 @@ export default function UserDashboard() {
                 draggable
             />
             <div className="flex flex-row shadow-md py-1 px-2" id="nav_bar">
-                <div onClick={() => { window.open("http://localhost:3000/", "_self") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
+                <div onClick={() => { window.open("http://localhost:3000/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
                     <img classname="" src="/croppedPolychainLogo.png" alt="Polychain Logo" width="150" />
                 </div>
                 <div className="grow" id="spacer">  </div>
@@ -356,7 +345,7 @@ export default function UserDashboard() {
                         <div className="flex flex-row">
                             {/* <CustomButton onClick={goToDashboard}>Dashboard</CustomButton> */}
                             {/* <h1><Link href="/dashboard">Dashboard</Link></h1> */}
-                            <CustomBrandedButton onClick={redirectToProfile} className="">View Profile</CustomBrandedButton>
+                            <CustomButton onClick={redirectToProfile} className="text-white bg-brand-primary-medium hover:bg-brand-primary-dark">View Profile</CustomButton>
                             <CustomButton onClick={handleLogout}>Logout</CustomButton>
                         </div>
                         : (
@@ -369,32 +358,31 @@ export default function UserDashboard() {
                 </div>
             </div>
             {userAccount.address ? hasUsername ?
-                <main id="dashboard" className='flex flex-col items-center mt-4 w-screen m-6'>
+                <main id="dashboard" className='flex flex-col items-center mt-4'>
 
                     <CustomLabel className="text-2xl mb-3">Update Profile Information</CustomLabel>
-                    <div className='flex flex-col w-screen items-center' id="form">
+                    <div className='flex flex-col' id="form">
 
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Bio:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
+                            <CustomInput className="my-1" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
                         </div>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">DESO Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={DESOAddress} onChange={(e) => setDESOAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={DESOAddress} onChange={(e) => setDESOAddress(e.target.value)}
                                 placeholder="enter deso address" /></div>
-                        {DESOAddress ? "" :
-                            <CustomLabel className="text-gray-500 font-normal text-sm">don't have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank">sign up</a> now and get up to $5!</CustomLabel>}
+                        <CustomLabel className="text-gray-500 font-normal text-sm">don't have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank">sign up</a> now and get up to $5!</CustomLabel>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Bitcoin Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={BTCAddress} onChange={(e) => setBTCAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={BTCAddress} onChange={(e) => setBTCAddress(e.target.value)}
                                 placeholder="enter btc address" /></div>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Ethereum Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={ETHAddress} onChange={(e) => setETHAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={ETHAddress} onChange={(e) => setETHAddress(e.target.value)}
                                 placeholder="enter eth address" /></div>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Solana Address:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={SOLAddress} onChange={(e) => setSOLAddress(e.target.value)}
+                            <CustomInput className="my-1" type="text" value={SOLAddress} onChange={(e) => setSOLAddress(e.target.value)}
                                 placeholder="enter sol address" /></div>
                         <div className='flex flex-col mt-4 mb-5'>
                             {/* <CustomLabel>Upload Profile Picture:</CustomLabel>
@@ -404,7 +392,7 @@ export default function UserDashboard() {
 
                             <div className=''>
                                 <CustomLabel className="">Profile Picture:</CustomLabel>
-                                <div className="mx-4 w-96 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                <div className="mx-4 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                     <div className="space-y-1 text-center">
                                         <svg
                                             className="mx-auto h-12 w-12 text-gray-400"
@@ -426,7 +414,7 @@ export default function UserDashboard() {
                                                 className="relative cursor-pointer bg-white rounded-md font-medium text-brand-primary-medium hover:text-brand-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                                             >
                                                 <span>Upload a file</span>
-                                                <CustomInput className="my-1 sr-only w-96" type="file" onChange={uploadImage}
+                                                <CustomInput className="my-1 sr-only" type="file" onChange={uploadImage}
                                                     id="file-upload" name="file-upload" multiple={false}
                                                     accept="image/png, image/jpeg" />
                                             </label>
@@ -438,11 +426,11 @@ export default function UserDashboard() {
                             </div>
                         </div>
                         <div className='flex flex-row justify-around'>
-                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                            <CustomButton className="px-6 text-white bg-brand-primary-medium hover:bg-brand-primary-dark" onClick={updateInfo}>Save</CustomButton>
                         </div>
 
                     </div>
-                </main> : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. Buy one <a className='underline inline' href={`http://localhost:3000/`} target='_self'>now!</a></span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
+                </main> : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. Buy one <a className='underline inline' href={`http://localhost:3000/`} target='_blank'>now!</a></span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
         </div>
     )
 }

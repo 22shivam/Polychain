@@ -13,28 +13,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import toastError from '../lib/toastError'
 import toastSuccess from '../lib/toastSuccess'
 import toastInfo from "../lib/toastInfo";
-import CustomBrandedButton from "./components/customBrandedButton";
 
 let checkifUsernameAvailable = async (username) => {
     let response = await fetch(`http://localhost:3001/api/${username}`)
     response = await response.json()
-    if (response.success) { // user with username found
+    if (response.success) {
         toastError("Username unavailable")
         return false
     }
     return true
 }
-
-let checkIfETHAddressAvailable = async (address) => {
-    let response = await fetch(`http://localhost:3001/api/address/eth/${address}`)
-    response = await response.json()
-    if (response.success) {
-        toastError("The address with which you are trying to buy the username is already linked with another account. Try again with another wallet.")
-        return false
-    }
-    return true
-}
-
 
 
 
@@ -44,7 +32,7 @@ export default function App() {
     const [username, setUsername] = useState("")
     const [promoCode, setPromoCode] = useState("");
     const { userAccount, setUserAccount } = useContext(UserContext);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const handleLogout = async () => {
         console.log(userAccount.blockchain)
@@ -141,14 +129,13 @@ export default function App() {
         if (!(await checkifUsernameAvailable(username))) {
             return
         }
-
         console.log("trying to reg")
 
         const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
         const data = await coinbaseResponse.json()
         const solPerUSD = data.data.rates.SOL
         const SOLpayValue = solPerUSD * 5
-        const hash = await transferSOL(SOLpayValue, "AA6bqLgTzYPpFFH2R9XLdudibWcemLkKDRtZmPQEsEiS", setUserAccount, true);
+        const hash = await transferSOL(SOLpayValue, "AA6bqLgTzYPpFFH2R9XLdudibWcemLkKDRtZmPQEsEiS", setUserAccount);
         if (!hash) { return }
 
         const requestObject = {
@@ -181,8 +168,6 @@ export default function App() {
             console.log("checking")
             return
         }
-
-
 
         const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
         const data = await coinbaseResponse.json()
@@ -304,7 +289,7 @@ export default function App() {
     }
 
     if (loading) {
-        return <div type="button" class="flex justify-center items-center h-screen px-4 py-2 font-semibold leading-6 text-lg transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+        return <div type="button" class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-lg transition ease-in-out duration-150 cursor-not-allowed" disabled="">
             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-brand-primary-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -334,7 +319,7 @@ export default function App() {
                 <div className="grow-0 my-2 mr-4 flex" id="right_nav_bar">
                     {userAccount.address ?
                         <div className="flex flex-row">
-                            <CustomBrandedButton className="" onClick={goToDashboard}>Dashboard</CustomBrandedButton>
+                            <CustomButton className="text-white bg-brand-primary-medium hover:bg-brand-primary-dark" onClick={goToDashboard}>Dashboard</CustomButton>
                             {/* <h1><Link href="/dashboard">Dashboard</Link></h1> */}
                             <CustomButton onClick={handleLogout}>Logout</CustomButton>
                         </div>
@@ -346,7 +331,7 @@ export default function App() {
 
 
                 </div>
-            </div >
+            </div>
 
             <br />
             <div id="main_body" class="flex flex-col justify-center align-middle">
@@ -363,7 +348,7 @@ export default function App() {
 
                 </div>
             </div>
-        </div >
+        </div>
 
     );
 }

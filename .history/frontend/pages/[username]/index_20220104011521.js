@@ -105,8 +105,7 @@ export default function UserPayment() {
             if (response.success) {
                 let currencyArray = []
 
-                if (response.user.ETHAddress && response.user.ETHAddress != "") {
-                    console.log("user:", response.user.ETHAddress)
+                if (response.user.ETHAddress != "") {
                     setETHAddress(response.user.ETHAddress)
                     currencyArray.push({
                         id: 2,
@@ -115,7 +114,7 @@ export default function UserPayment() {
                     })
 
                 }
-                if (response.user.SOLAddress && response.user.SOLAddress != "") {
+                if (response.user.SOLAddress != "") {
                     setSOLAddress(response.user.SOLAddress)
                     currencyArray.push(
                         {
@@ -125,7 +124,7 @@ export default function UserPayment() {
                         })
                 }
 
-                if (response.user.DESOAddress && response.user.DESOAddress != "") {
+                if (response.user.DESOAddress != "") {
                     setDESOAddress(response.user.DESOAddress)
                     currencyArray.push(
                         {
@@ -134,7 +133,7 @@ export default function UserPayment() {
                             avatar: '/DeSoLogo.png',
                         })
                 }
-                if (response.user.BTCAddress && response.user.BTCAddress != "") {
+                if (response.user.BTCAddress != "") {
                     setBTCAddress(response.user.BTCAddress)
                     currencyArray.push(
                         {
@@ -216,7 +215,7 @@ export default function UserPayment() {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div> : <CustomLabel className="text-lg">No account with this username exists. <a className="" href="http://localhost:3000/" target="_self">Buy</a> this username</CustomLabel>}
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <a className="underline" href="http://localhost:3000/" target="_self">Buy</a> this username</CustomLabel>}
             <CustomBrandedButton onClick={() => { window.open("http://localhost:3000/", "_self") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
             <div id="spacer" className="grow"></div>
         </div>

@@ -12,7 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import CustomInput from './components/customInput';
 import CustomLabel from './components/customLabel';
 import * as web3 from '@solana/web3.js'
-import CustomBrandedButton from './components/customBrandedButton';
 
 function validSolAddress(s) {
     try {
@@ -51,7 +50,7 @@ export default function UserDashboard() {
     const [ETHAddress, setETHAddress] = useState("");
     const [SOLAddress, setSOLAddress] = useState("");
     const [profilePic, setProfilePic] = useState("");
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     // handling logouts
     useEffect(() => {
@@ -356,7 +355,7 @@ export default function UserDashboard() {
                         <div className="flex flex-row">
                             {/* <CustomButton onClick={goToDashboard}>Dashboard</CustomButton> */}
                             {/* <h1><Link href="/dashboard">Dashboard</Link></h1> */}
-                            <CustomBrandedButton onClick={redirectToProfile} className="">View Profile</CustomBrandedButton>
+                            <CustomButton onClick={redirectToProfile} className="text-white bg-brand-primary-medium hover:bg-brand-primary-dark">View Profile</CustomButton>
                             <CustomButton onClick={handleLogout}>Logout</CustomButton>
                         </div>
                         : (
@@ -376,7 +375,7 @@ export default function UserDashboard() {
 
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Bio:</CustomLabel>
-                            <CustomInput className="my-1 w-96" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
+                            <CustomInput className="my-1 w-96 font-normal" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="enter bio" />
                         </div>
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">DESO Address:</CustomLabel>
@@ -438,7 +437,7 @@ export default function UserDashboard() {
                             </div>
                         </div>
                         <div className='flex flex-row justify-around'>
-                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                            <CustomButton className="px-6 text-white bg-brand-primary-medium hover:bg-brand-primary-dark" onClick={updateInfo}>Save</CustomButton>
                         </div>
 
                     </div>

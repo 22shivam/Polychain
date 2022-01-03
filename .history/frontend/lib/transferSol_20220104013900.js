@@ -28,6 +28,7 @@ export default async function transferSOL(solAmount, toAddr, setUserAccount, che
         console.log(checkIfSOLAddressAvailable)
         if (checkSolAddressAvailability) {
             if (!(await checkIfSOLAddressAvailable(provider.publicKey.toString()))) {
+                toastError("The address with which you are trying to buy the username is already linked with another account. Try again with another wallet.")
                 return
             }
         }

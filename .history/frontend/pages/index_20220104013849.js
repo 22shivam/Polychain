@@ -29,7 +29,17 @@ let checkIfETHAddressAvailable = async (address) => {
     let response = await fetch(`http://localhost:3001/api/address/eth/${address}`)
     response = await response.json()
     if (response.success) {
-        toastError("The address with which you are trying to buy the username is already linked with another account. Try again with another wallet.")
+        toastError("Address unavailable")
+        return false
+    }
+    return true
+}
+
+let checkIfSOLAddressAvailable = async (address) => {
+    let response = await fetch(`http://localhost:3001/api/address/sol/${address}`)
+    response = await response.json()
+    if (response.success) {
+        toastError("Address unavailable")
         return false
     }
     return true

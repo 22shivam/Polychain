@@ -356,7 +356,7 @@ export default function UserDashboard() {
                         <div className="flex flex-row">
                             {/* <CustomButton onClick={goToDashboard}>Dashboard</CustomButton> */}
                             {/* <h1><Link href="/dashboard">Dashboard</Link></h1> */}
-                            <CustomBrandedButton onClick={redirectToProfile} className="">View Profile</CustomBrandedButton>
+                            <CustomBrandedButton onClick={redirectToProfile} className="text-white bg-brand-primary-medium hover:bg-brand-primary-dark">View Profile</CustomBrandedButton>
                             <CustomButton onClick={handleLogout}>Logout</CustomButton>
                         </div>
                         : (
@@ -438,7 +438,7 @@ export default function UserDashboard() {
                             </div>
                         </div>
                         <div className='flex flex-row justify-around'>
-                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                            <CustomButton className="px-6 text-white bg-brand-primary-medium hover:bg-brand-primary-dark" onClick={updateInfo}>Save</CustomButton>
                         </div>
 
                     </div>

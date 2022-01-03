@@ -105,8 +105,8 @@ export default function UserPayment() {
             if (response.success) {
                 let currencyArray = []
 
-                if (response.user.ETHAddress && response.user.ETHAddress != "") {
-                    console.log("user:", response.user.ETHAddress)
+                if (response.user.ETHAddress != "") {
+                    console.log(response.user.ETHAddress)
                     setETHAddress(response.user.ETHAddress)
                     currencyArray.push({
                         id: 2,
@@ -115,7 +115,7 @@ export default function UserPayment() {
                     })
 
                 }
-                if (response.user.SOLAddress && response.user.SOLAddress != "") {
+                if (response.user.SOLAddress != "") {
                     setSOLAddress(response.user.SOLAddress)
                     currencyArray.push(
                         {
@@ -125,7 +125,7 @@ export default function UserPayment() {
                         })
                 }
 
-                if (response.user.DESOAddress && response.user.DESOAddress != "") {
+                if (response.user.DESOAddress != "") {
                     setDESOAddress(response.user.DESOAddress)
                     currencyArray.push(
                         {
@@ -134,7 +134,7 @@ export default function UserPayment() {
                             avatar: '/DeSoLogo.png',
                         })
                 }
-                if (response.user.BTCAddress && response.user.BTCAddress != "") {
+                if (response.user.BTCAddress != "") {
                     setBTCAddress(response.user.BTCAddress)
                     currencyArray.push(
                         {

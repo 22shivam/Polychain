@@ -31,25 +31,8 @@ app.use(cookieParser(process.env.COOKIE_SECRET))
 
 
 app.get("/api/:username", async (req, res) => {
+    console.log(req.params.username)
     const user = await User.findOne({ username: req.params.username }).exec()
-    if (!user) {
-        return res.json({ success: false, message: "User not found" })
-    } else {
-        return res.json({ success: true, user: user, message: "User found" })
-    }
-})
-
-app.get("/api/address/eth/:address", async (req, res) => {
-    const user = await User.findOne({ ETHAddress: req.params.address }).exec()
-    if (!user) {
-        return res.json({ success: false, message: "User not found" })
-    } else {
-        return res.json({ success: true, user: user, message: "User found" })
-    }
-})
-
-app.get("/api/address/sol/:address", async (req, res) => {
-    const user = await User.findOne({ SOLAddress: req.params.address }).exec()
     if (!user) {
         return res.json({ success: false, message: "User not found" })
     } else {
@@ -244,6 +227,7 @@ app.get("/isLoggedIn", async (req, res) => {
 
     jwt.verify(token, process.env.COOKIE_SECRET as string, async (err: any, decoded: any) => {
         if (err) {
+            console.log("not logged in")
             res.clearCookie("token").json({
                 isLoggedIn: false
             })
@@ -295,8 +279,12 @@ app.post("/login/sol", async (req, res) => {
 
 app.post("/login/eth", async (req, res) => {
     const { signature, message, address } = req.body
+    console.log(address)
+    console.log(signature)
+    console.log(message)
 
     const signer = ethers.utils.verifyMessage(message, signature)
+    console.log("signer", signer)
     if (signer.toUpperCase() !== address.toUpperCase()) {
         return res.json({ success: false, message: "Invalid signature" })
     }
@@ -309,6 +297,7 @@ app.post("/login/eth", async (req, res) => {
     });
 
     // send jwt
+    console.log("token", token)
     res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
     res.json({ success: true, message: "Logged in successfully", address: signer })
 })
@@ -464,7 +453,7 @@ app.post("/register/sol", async (req, res) => {
 
     // verify that amount paid to right address
     console.log(to)
-    if (to.toUpperCase() !== "AA6BQLGTZYPPFFH2R9XLDUDIBWCEMLKKDRTZMPQESEIS") {
+    if (to !== "AA6BQLGTZYPPFFH2R9XLDUDIBWCEMLKKDRTZMPQESEIS") {
         return res.json({
             success: false,
             message: "USD paid to wrong address"

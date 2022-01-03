@@ -438,7 +438,7 @@ export default function UserDashboard() {
                             </div>
                         </div>
                         <div className='flex flex-row justify-around'>
-                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                            <CustomButton className="px-6 text-white bg-brand-primary-medium hover:bg-brand-primary-dark" onClick={updateInfo}>Save</CustomButton>
                         </div>
 
                     </div>

@@ -52,7 +52,6 @@ export default function UserPayment() {
     const [profilePic, setProfilePic] = useState("")
     const [currencies, setCurrencies] = useState([])
     const [loading, setLoading] = useState(true)
-    const [accountExists, setAccountExists] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -105,8 +104,7 @@ export default function UserPayment() {
             if (response.success) {
                 let currencyArray = []
 
-                if (response.user.ETHAddress && response.user.ETHAddress != "") {
-                    console.log("user:", response.user.ETHAddress)
+                if (response.user.ETHAddress != "") {
                     setETHAddress(response.user.ETHAddress)
                     currencyArray.push({
                         id: 2,
@@ -115,7 +113,7 @@ export default function UserPayment() {
                     })
 
                 }
-                if (response.user.SOLAddress && response.user.SOLAddress != "") {
+                if (response.user.SOLAddress != "") {
                     setSOLAddress(response.user.SOLAddress)
                     currencyArray.push(
                         {
@@ -125,7 +123,7 @@ export default function UserPayment() {
                         })
                 }
 
-                if (response.user.DESOAddress && response.user.DESOAddress != "") {
+                if (response.user.DESOAddress != "") {
                     setDESOAddress(response.user.DESOAddress)
                     currencyArray.push(
                         {
@@ -134,7 +132,7 @@ export default function UserPayment() {
                             avatar: '/DeSoLogo.png',
                         })
                 }
-                if (response.user.BTCAddress && response.user.BTCAddress != "") {
+                if (response.user.BTCAddress != "") {
                     setBTCAddress(response.user.BTCAddress)
                     currencyArray.push(
                         {
@@ -147,9 +145,9 @@ export default function UserPayment() {
                 setCurrencies(currencyArray)
                 setBio(response.user.bio)
                 setProfilePic(response.user.profilePic)
-                setAccountExists(true)
+                setLoading(false)
             }
-            setLoading(false)
+
         })()
     }, [username])
 
@@ -191,13 +189,13 @@ export default function UserPayment() {
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 Loading...
-            </div> : accountExists ? <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-6 bg-white">
+            </div> : <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-6 bg-white">
                 <div id="profile_header mt-6" className="flex flex-row">
                     {profilePic ?
                         <img width="60" className="rounded-full" src={profilePic}></img> : ""}
                     <div className="flex flex-col">
-                        <CustomLabel className="px-0">{username}</CustomLabel>
-                        <CustomLabel style={{ fontWeight: "500" }} className="px-0">{bio}</CustomLabel>
+                        <CustomLabel>{username}</CustomLabel>
+                        <CustomLabel style={{ fontWeight: "500" }} className="">{bio}</CustomLabel>
                     </div>
                 </div>
                 <div class="flex justify-center my-6">
@@ -216,7 +214,7 @@ export default function UserPayment() {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div> : <CustomLabel className="text-lg">No account with this username exists. <a className="" href="http://localhost:3000/" target="_self">Buy</a> this username</CustomLabel>}
+            </div>}
             <CustomBrandedButton onClick={() => { window.open("http://localhost:3000/", "_self") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
             <div id="spacer" className="grow"></div>
         </div>
