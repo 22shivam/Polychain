@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     (async () => {
       // setLoading(true)
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/isLoggedIn`, {
+      const response = await fetch("http://localhost:3001/isLoggedIn", {
         credentials: 'include'
       })
       const processedResponse = await response.json()

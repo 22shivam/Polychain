@@ -14,7 +14,7 @@ const UserContext = createContext({
 
 
 function MyApp({ Component, pageProps }) {
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
+  console.log(process.env.BACKEND_URL)
   const [userAccount, setUserAccount] = useState({});
   const value = { userAccount, setUserAccount };
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     (async () => {
       // setLoading(true)
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/isLoggedIn`, {
+      const response = await fetch("http://localhost:3001/isLoggedIn", {
         credentials: 'include'
       })
       const processedResponse = await response.json()

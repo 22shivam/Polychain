@@ -14,7 +14,6 @@ const UserContext = createContext({
 
 
 function MyApp({ Component, pageProps }) {
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
   const [userAccount, setUserAccount] = useState({});
   const value = { userAccount, setUserAccount };
   const [loading, setLoading] = useState(true);

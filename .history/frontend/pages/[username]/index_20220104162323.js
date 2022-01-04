@@ -101,7 +101,7 @@ export default function UserPayment() {
         // console.log("fetching username details")
         (async () => {
             setLoading(true)
-            let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${username}`)
+            let response = await fetch(`http://localhost:3001/api/${username}`)
             response = await response.json()
             if (response.success) {
                 let currencyArray = []
