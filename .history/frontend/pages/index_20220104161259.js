@@ -321,7 +321,7 @@ export default function App() {
             />
             <div className="flex flex-row shadow-md py-1 px-2 w-screen" id="nav_bar">
                 <div onClick={() => { router.push("http://localhost:3000/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
-                    <img className="" src="/croppedPolychainLogo.png" alt="Polychain Logo" width="150" />
+                    <img classname="" src="/croppedPolychainLogo.png" alt="Polychain Logo" width="150" />
                 </div>
                 <div className="grow" id="spacer">  </div>
                 <div className="grow-0 my-2 mr-4 flex" id="right_nav_bar">

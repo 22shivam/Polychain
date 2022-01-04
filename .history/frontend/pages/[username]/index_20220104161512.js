@@ -13,7 +13,6 @@ import toastError from "../../lib/toastError";
 import toastInfo from "../../lib/toastInfo";
 import toastSuccess from "../../lib/toastSuccess";
 import { ToastContainer } from "react-toastify";
-import Link from "next/link";
 import CustomBrandedButton from "../components/customBrandedButton";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
@@ -217,7 +216,7 @@ export default function UserPayment() {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="http://localhost:3000/">Buy</Link> this username</CustomLabel>}
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <a className="" href="http://localhost:3000/" target="_self">Buy</a> this username</CustomLabel>}
             <CustomBrandedButton onClick={() => { router.push("http://localhost:3000/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
             <div id="spacer" className="grow"></div>
         </div>

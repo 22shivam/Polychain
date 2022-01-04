@@ -13,7 +13,6 @@ import toastError from "../../lib/toastError";
 import toastInfo from "../../lib/toastInfo";
 import toastSuccess from "../../lib/toastSuccess";
 import { ToastContainer } from "react-toastify";
-import Link from "next/link";
 import CustomBrandedButton from "../components/customBrandedButton";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
@@ -204,7 +203,7 @@ export default function UserPayment() {
                 <div className="flex justify-center my-6">
                     {/* <span className="border border-gray-300 shadow-sm border-r-0 rounded-l-md px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-semibold">localhost:3000/</span> */}
                     <div className="flex flex-col">
-                        <CustomInput inputMode="decimal" placeholder="Amount" value={payValue} onChange={(e) => { setPayValue(e.target.value) }} name="field_name" className="ml-0 input-placeholder py-3" type="text" />
+                        <CustomInput inputmode="decimal" placeholder="Amount" value={payValue} onChange={(e) => { setPayValue(e.target.value) }} name="field_name" className="ml-0 input-placeholder py-3" type="text" />
                         <CustomLabel className="text-gray-500 text-normal mx-0 px-0">USD {parseFloat((USDPerCurrency * payValue)).toFixed(3)}</CustomLabel>
                     </div>
 
@@ -217,7 +216,7 @@ export default function UserPayment() {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="http://localhost:3000/">Buy</Link> this username</CustomLabel>}
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <a className="" href="http://localhost:3000/" target="_self">Buy</a> this username</CustomLabel>}
             <CustomBrandedButton onClick={() => { router.push("http://localhost:3000/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
             <div id="spacer" className="grow"></div>
         </div>

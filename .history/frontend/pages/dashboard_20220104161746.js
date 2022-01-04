@@ -14,7 +14,6 @@ import CustomLabel from './components/customLabel';
 import * as web3 from '@solana/web3.js'
 import CustomBrandedButton from './components/customBrandedButton';
 import { useRouter } from 'next/router'
-import Link from 'next/link';
 
 function validSolAddress(s) {
     try {
@@ -407,7 +406,7 @@ export default function UserDashboard() {
                             <CustomInput className="my-1 w-96" type="text" value={DESOAddress} onChange={(e) => setDESOAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
                                 placeholder="enter deso address" /></div>
                         {DESOAddress ? "" :
-                            <CustomLabel className="text-gray-500 font-normal text-sm">don't have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank" rel="noreferrer">sign up</a> now and get up to $5!</CustomLabel>}
+                            <CustomLabel className="text-gray-500 font-normal text-sm">don't have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank">sign up</a> now and get up to $5!</CustomLabel>}
                         <div className='flex flex-col mt-4'>
                             <CustomLabel className="">Bitcoin Address:</CustomLabel>
                             <CustomInput className="my-1 w-96" type="text" value={BTCAddress} onChange={(e) => setBTCAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
@@ -466,7 +465,7 @@ export default function UserDashboard() {
                         </div>
 
                     </div>
-                </main> : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`http://localhost:3000/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
+                </main> : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. Buy one <Link className='underline inline' href={`http://localhost:3000/`}>now!</Link></span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
         </div>
     )
 }

@@ -217,7 +217,7 @@ export default function UserPayment() {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="http://localhost:3000/">Buy</Link> this username</CustomLabel>}
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="http://localhost:3000/" target="_self">Buy</Link> this username</CustomLabel>}
             <CustomBrandedButton onClick={() => { router.push("http://localhost:3000/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
             <div id="spacer" className="grow"></div>
         </div>

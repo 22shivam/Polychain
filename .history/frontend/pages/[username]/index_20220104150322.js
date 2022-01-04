@@ -13,7 +13,6 @@ import toastError from "../../lib/toastError";
 import toastInfo from "../../lib/toastInfo";
 import toastSuccess from "../../lib/toastSuccess";
 import { ToastContainer } from "react-toastify";
-import Link from "next/link";
 import CustomBrandedButton from "../components/customBrandedButton";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
@@ -186,10 +185,10 @@ export default function UserPayment() {
             <div onClick={() => { router.push("http://localhost:3000/", "_self") }} className="my-10 cursor-pointer">
                 <img src="croppedPolychainLogo.png" width="200"></img>
             </div>
-            {loading ? <div type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-lg transition ease-in-out duration-150 cursor-not-allowed" disabled="">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-brand-primary-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            {loading ? <div type="button" class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-lg transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-brand-primary-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 Loading...
             </div> : accountExists ? <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-6 bg-white">
@@ -201,10 +200,10 @@ export default function UserPayment() {
                         <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">lorem ipsum dolor hehehe alol biral aijf sdhgfbref sdfberfbiu dsfberfuiewfb refiueribufiw wuefiberib wiofheigvbb iowefeorigberi wioefeiorfbn woiferiobg ioweefio</CustomLabel>
                     </div>
                 </div>
-                <div className="flex justify-center my-6">
-                    {/* <span className="border border-gray-300 shadow-sm border-r-0 rounded-l-md px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-semibold">localhost:3000/</span> */}
+                <div class="flex justify-center my-6">
+                    {/* <span class="border border-gray-300 shadow-sm border-r-0 rounded-l-md px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-semibold">localhost:3000/</span> */}
                     <div className="flex flex-col">
-                        <CustomInput inputMode="decimal" placeholder="Amount" value={payValue} onChange={(e) => { setPayValue(e.target.value) }} name="field_name" className="ml-0 input-placeholder py-3" type="text" />
+                        <CustomInput inputmode="decimal" placeholder="Amount" value={payValue} onChange={(e) => { setPayValue(e.target.value) }} name="field_name" className="ml-0 input-placeholder py-3" type="text" />
                         <CustomLabel className="text-gray-500 text-normal mx-0 px-0">USD {parseFloat((USDPerCurrency * payValue)).toFixed(3)}</CustomLabel>
                     </div>
 
@@ -217,7 +216,7 @@ export default function UserPayment() {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="http://localhost:3000/">Buy</Link> this username</CustomLabel>}
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <a className="" href="http://localhost:3000/" target="_self">Buy</a> this username</CustomLabel>}
             <CustomBrandedButton onClick={() => { router.push("http://localhost:3000/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
             <div id="spacer" className="grow"></div>
         </div>
