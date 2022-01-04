@@ -708,7 +708,7 @@ try {
     mongoose.connect(process.env.MONGO_URI as string, {}, (e) => {
         if (e) { console.log(e) }
         console.log("connected to mongodb")
-        app.listen(8081, () => {
+        app.listen(3001, () => {
             console.log('listening on port 3001')
         })
 
