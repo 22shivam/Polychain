@@ -375,7 +375,7 @@ app.post("/login/eth", async (req, res) => {
     });
 
     // send jwt
-    res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
+    res.cookie("token", token, { httpOnly: true, secure: true })
     res.json({ success: true, message: "Logged in successfully", address: signer })
 })
 
