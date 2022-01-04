@@ -26,7 +26,8 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'https://polychain.vercel.app',
-        'https://polychain.tech'
+        'https://polychain.tech',
+        'https://www.polychain.tech'
     ],
     credentials: true
 }))
