@@ -25,7 +25,8 @@ app.use(express.json())
 app.use(cors({
     origin: [
         'http://localhost:3000',
-        'https://mypage.com',
+        'https://polychain.vercel.com',
+        'https://polychain.tech'
     ],
     credentials: true
 }))
