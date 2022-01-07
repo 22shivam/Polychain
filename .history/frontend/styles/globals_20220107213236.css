@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --primary-color-light: #FD853A;
+  --primary-color-medium: #FB6514;
+  --primary-color-dark: #EC4A0A;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Quicksand, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-weight: bold; */
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.input-text {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+font-weight: 600;
+}
+
+.input-placeholder::-webkit-input-placeholder {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+font-weight: 600
+}
+
+.input-placeholder:-ms-input-placeholder {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+  font-weight: 600
+}
+
+.input-placeholder:-moz-placeholder {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+font-weight: 600
+}
+
+.input-placeholder::-moz-placeholder {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+font-weight: 600
+}
+
+a {
+  transition: all
+}
+
+a:hover {
+  color: var(--primary-color-medium)
+}
+
+.buyHomePage {
+  display: inline
+}
+
+@media (max-width: 500px) {
+  body {
+    font-size: 14px
+  }
+  .buyHomePage {
+  display: block
+}
+.logo {
+  display: none
+}
+}
+
+@media (max-width: 420px) {
+  body {
+    font-size: 13px
+  }
+
+  .input-text {
+    width: 8.5rem;
+  }
+
+  
+}
+
+@media (max-width: 370px) {
+  body {
+    font-size: 12px
+  }
+
+  .input-text {
+    width: 7rem;
+  }
+
+  
+}
+@media (max-width: 330px) {
+  body {
+    font-size: 11px
+  }
+
+  .input-text {
+    width: 6rem;
+  }
+
+  
+}
+
+.homepageInput {
+  
+}
+
+
+.typewrite {
+        white-space: nowrap;
+        overflow: hidden;
+        transition: none;
+        animation: typewriter infinite alternate,
+          blink 400ms infinite normal;
+        border-right: 5px solid black;
+      }
+
+      @keyframes typewriter {
+        0% {
+          width: 0%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+      @keyframes blink {
+        0% {
+          border-color: black;
+        }
+        100% {
+          border-color: transparent;
+        }
+      }
+
+.Typewriter {
+  display: inline-block;
+}
+
+
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 4rem
+}
+
+@media (max-width: 640px) {
+  .text-5xl {
+    font-size: 2rem;
+    line-height: 2.25rem
+  }
+  .input-text {
+    font-weight: 500;
+  }
+
+
+  .input-placeholder::-webkit-input-placeholder {
+font-weight: 500
+}
+
+.input-placeholder:-ms-input-placeholder {
+  font-weight: 500
+}
+
+.input-placeholder:-moz-placeholder {
+font-weight: 500
+}
+
+.input-placeholder::-moz-placeholder {
+font-weight: 500
+}
+}
+
