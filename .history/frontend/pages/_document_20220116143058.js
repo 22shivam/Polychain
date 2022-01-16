@@ -37,7 +37,7 @@ class MyDocument extends Document {
                     <meta property="og:image:width" content="96" />
                     <meta property="og:image:height" content="96" />
                     <meta name="description" property="og:description" content="Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
-                    <meta name="twitter:card" content="Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
+                    <meta name="twitter:card" content="" />
                     <meta name="twitter:site" description="@polychainhq" />
                     <meta name="twitter:title" content="Polychain" />
                     <meta name="twitter:description" content="Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
