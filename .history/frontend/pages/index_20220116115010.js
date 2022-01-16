@@ -17,7 +17,7 @@ import CustomBrandedButton from "./components/customBrandedButton";
 import CustomLabel from "./components/customLabel";
 import Typewriter from 'typewriter-effect';
 import Link from "next/link";
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 
 
 

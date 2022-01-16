@@ -39,6 +39,7 @@ const handleSubmitDESO = async (addr) => {
 
 export default function UserPayment() {
 
+    console.log("rerendering")
     const router = useRouter()
     const [selectedCurrency, setSelectedCurrency] = useState(defaultCurrencies[0]);
     const { username } = router.query
@@ -69,22 +70,27 @@ export default function UserPayment() {
             if (selectedCurrency.name === "ETH") {
                 let coinbaseResponse = await fetch(COINBASE_URL_ETH)
                 coinbaseResponse = await coinbaseResponse.json()
+                console.log(coinbaseResponse)
                 const USDPerETH = coinbaseResponse.data.rates.USD
+                console.log(USDPerETH)
                 setUSDPerCurrency(USDPerETH)
             } else if (selectedCurrency.name === "SOL") {
                 let coinbaseResponse = await fetch(COINBASE_URL_SOL)
                 coinbaseResponse = await coinbaseResponse.json()
                 const USDPerETH = coinbaseResponse.data.rates.USD
+                console.log(USDPerETH)
                 setUSDPerCurrency(USDPerETH)
             } else if (selectedCurrency.name === "BTC") {
                 let coinbaseResponse = await fetch(COINBASE_URL_BTC)
                 coinbaseResponse = await coinbaseResponse.json()
                 const USDPerETH = coinbaseResponse.data.rates.USD
+                console.log(USDPerETH)
                 setUSDPerCurrency(USDPerETH)
             } else if (selectedCurrency.name === "DESO") {
                 let coinbaseResponse = await fetch(COINBASE_URL_DESO)
                 coinbaseResponse = await coinbaseResponse.json()
                 const USDPerETH = coinbaseResponse.data.rates.USD
+                console.log(USDPerETH)
                 setUSDPerCurrency(USDPerETH)
             }
         })();
@@ -93,6 +99,7 @@ export default function UserPayment() {
 
     // ensures only available options are shown
     useEffect(() => {
+        // console.log("fetching username details")
         (async () => {
             setLoading(true)
             let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${username}`)
@@ -101,6 +108,7 @@ export default function UserPayment() {
                 let currencyArray = []
 
                 if (response.user.ETHAddress && response.user.ETHAddress != "") {
+                    console.log("user:", response.user.ETHAddress)
                     setETHAddress(response.user.ETHAddress)
                     currencyArray.push({
                         id: 2,

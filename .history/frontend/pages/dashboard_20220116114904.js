@@ -41,6 +41,7 @@ const options = {
 
 
 export default function UserDashboard() {
+    console.log("rerendering")
     const router = useRouter()
     const { userAccount, setUserAccount } = useContext(UserContext); // records whether logged in
     const [hasUsername, setHasUsername] = useState(false) // records whether logged in account has username
@@ -74,6 +75,46 @@ export default function UserDashboard() {
         }
     }, [])
 
+    // checks whether user logged in when page loaded using jwt and context state. 
+    // useEffect(() => {
+    //     (async () => {
+    //         setLoading(true)
+    //         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/isLoggedIn`, {
+    //             credentials: 'include'
+    //         })
+    //         const processedResponse = await response.json()
+    //         if (!processedResponse.isLoggedIn) {
+    //             setUserAccount({})
+    //             setHasUsername(false)
+    //             console.log("not logged in")
+    //             // setLoading(false)
+    //             return toastError("Please login to access your account")
+    //         } else {
+    //             // setLoading(false)
+    //             setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
+    //             console.log("user logged in")
+    //             // const response = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/userDetails`, {
+    //             //     address: processedResponse.address,
+    //             //     blockchain: processedResponse.blockchain
+    //             // })
+    //             // if (!response.success) {
+    //             //     toastError("No account is associated with this wallet address.")
+    //             //     setHasUsername(false)
+    //             //     setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
+    //             //     return
+    //             // }
+    //             // setUsername(response.user.username)
+    //             // setETHAddress(response.user.ETHAddress || "")
+    //             // setSOLAddress(response.user.SOLAddress || "")
+    //             // setDESOAddress(response.user.DESOAddress || "")
+    //             // setBTCAddress(response.user.BTCAddress || "")
+    //             // setBio(response.user.bio || "")
+    //             // setProfilePic(response.user.profilePic)
+    //             // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
+    //             // setHasUsername(true)
+    //         }
+    //     })()
+    // }, [])
 
     // fetches user information when useraccount changed
     useEffect(() => {
@@ -84,6 +125,7 @@ export default function UserDashboard() {
             //     credentials: 'include'
             // })
             // const processedResponse = await response.json()
+            // console.log("heisloggedin", processedResponse.isLoggedIn)
             // if (!processedResponse.isLoggedIn) {
             //     // setUserAccount({})
             //     return toastError("Please login to access your account")
@@ -127,6 +169,9 @@ export default function UserDashboard() {
     const updateInfo = async (e) => { // TODO:add try catch
         try {
             if (userAccount.blockchain === "eth" && userAccount.address.toUpperCase() !== ETHAddress.toUpperCase() || userAccount.blockchain === "sol" && userAccount.address.toUpperCase() !== SOLAddress.toUpperCase()) {
+                console.log(userAccount.blockchain)
+                console.log(userAccount.address)
+                console.log(ETHAddress, SOLAddress)
                 const response = confirm("You are changing the address with which you are logged in. Hence, you will be logged out.")
                 if (!response) {
                     return
@@ -198,6 +243,7 @@ export default function UserDashboard() {
         reader.readAsDataURL(compressedImage)
         reader.onload = async () => {
             toastSuccess("Image uploaded successfully")
+            console.log(reader.result)
             setProfilePic(reader.result)
         }
     }
