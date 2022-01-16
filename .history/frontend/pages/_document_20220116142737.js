@@ -41,9 +41,9 @@ class MyDocument extends Document {
                     <meta name="twitter:site" description="@polychainhq" />
                     <meta name="twitter:title" content="Polychain" />
                     <meta name="twitter:description" content="Send and recieve bitcoin, ethereum, sol, etc. with a shareable link!" />
-                    <meta name="twitter:image:src" content="/images/favicon-96x96.png" />
-                    <meta name="twitter:domain" content="https://polychain.tech/"></meta>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <meta name="twitter:image:src" content="/images/favicon-96x96.png">
+                        <meta name="twitter:domain" content="https://polychain.tech/"></meta>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
                 </Head>
                 <body className=''>

@@ -28,31 +28,31 @@ class MyDocument extends Document {
                     <link rel="preconnect" href="https://fonts.googleapis.com" />
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-                    <meta property="og:site_name" content="Polychain" />
-                    <meta property="og:url" content="https://polychain.tech/" />
+                    <meta property="og:site_name" content="$site_name" />
+                    <meta property="og:url" content="$site_url" />
                     <meta property="og:type" content="website" />
-                    <meta name="title" property="og:title" content="Polychain" />
-                    <meta name="image" property="og:image" content="/images/favicon-96x96.png" />
-                    <meta property="og:image:type" content="image/png" />
-                    <meta property="og:image:width" content="96" />
-                    <meta property="og:image:height" content="96" />
-                    <meta name="description" property="og:description" content="Send and recieve bitcoin, ethereum, sol, etc. with a shareable link!" />
-                    <meta name="twitter:card" content="" />
-                    <meta name="twitter:site" description="@polychainhq" />
-                    <meta name="twitter:title" content="Polychain" />
-                    <meta name="twitter:description" content="Send and recieve bitcoin, ethereum, sol, etc. with a shareable link!" />
-                    <meta name="twitter:image:src" content="/images/favicon-96x96.png" />
-                    <meta name="twitter:domain" content="https://polychain.tech/"></meta>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <meta name="title" property="og:title" content="$the_title" />
+                    <meta name="image" property="og:image" content="$site_logo" />
+                    <meta property="og:image:type" content="image/png">
+                        <meta property="og:image:width" content="1024">
+                            <meta property="og:image:height" content="1024">
+                                <meta name="description" property="og:description" content="$site_description" />
+                                <meta name="twitter:card" content="summary" />
+                                <meta name="twitter:site" description="@username" />
+                                <meta name="twitter:title" content="$the_title" />
+                                <meta name="twitter:description" content="$site_description" />
+                                <meta name="twitter:image:src" content="$site_logo">
+                                    <meta name="twitter:domain" content="$site_url"></meta>
+                                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-                </Head>
-                <body className=''>
-                    <Main />
-                    <NextScript />
-                </body>
-            </Html>
-        )
+                                </Head>
+                                <body className=''>
+                                    <Main />
+                                    <NextScript />
+                                </body>
+                            </Html>
+                            )
     }
 }
 
-export default MyDocument
+                            export default MyDocument
