@@ -46,7 +46,7 @@ const bitcoin_address_validation_1 = require("bitcoin-address-validation");
 const web3 = __importStar(require("@solana/web3.js"));
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH";
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL";
-const SOLANA_EXPLORER_URL = "https://api.devnet.solana.com";
+const SOLANA_EXPLORER_URL = "https://api.mainnet-beta.solana.com/";
 const SOLANA_ADDRESS = "wFQcfUuXkyb7puHS7mSbrjETEhnBDCfdbnLLDftKNLg";
 const ETHEREUM_ADDRESS = "0X76AEB5092D8EABCEC324BE739B8BA5DF473F0055";
 dotenv_1.default.config();
@@ -681,7 +681,7 @@ app.post("/register/eth", (req, res) => __awaiter(void 0, void 0, void 0, functi
         const coinbaseResponse = yield axios_1.default.get(COINBASE_URL_ETH);
         const USDPerETH = coinbaseResponse.data.data.rates.USD;
         // check whether transaction hash is there on etherscan and check the amount paid
-        const etherscanResponse = yield axios_1.default.get(`https://api-ropsten.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${tx.hash}&apikey=${process.env.ETHERSCAN_API_KEY}`);
+        const etherscanResponse = yield axios_1.default.get(`https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${tx.hash}&apikey=${process.env.ETHERSCAN_API_KEY}`);
         const txDetailsFromEtherscan = etherscanResponse.data.result;
         if (!txDetailsFromEtherscan) {
             return res.json({

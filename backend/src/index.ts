@@ -14,7 +14,7 @@ import * as web3 from '@solana/web3.js'
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
-const SOLANA_EXPLORER_URL: string = "https://api.devnet.solana.com"
+const SOLANA_EXPLORER_URL: string = "https://api.mainnet-beta.solana.com/"
 const SOLANA_ADDRESS = "wFQcfUuXkyb7puHS7mSbrjETEhnBDCfdbnLLDftKNLg"
 const ETHEREUM_ADDRESS = "0X76AEB5092D8EABCEC324BE739B8BA5DF473F0055"
 
@@ -698,7 +698,7 @@ app.post("/register/eth", async (req, res) => {
         const USDPerETH = coinbaseResponse.data.data.rates.USD
 
         // check whether transaction hash is there on etherscan and check the amount paid
-        const etherscanResponse = await axios.get(`https://api-ropsten.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${tx.hash}&apikey=${process.env.ETHERSCAN_API_KEY}`)
+        const etherscanResponse = await axios.get(`https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${tx.hash}&apikey=${process.env.ETHERSCAN_API_KEY}`)
         const txDetailsFromEtherscan = etherscanResponse.data.result
 
         if (!txDetailsFromEtherscan) {
