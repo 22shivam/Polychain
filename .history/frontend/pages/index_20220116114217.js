@@ -327,7 +327,7 @@ export default function App() {
                 style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
             />
             <div className="flex flex-row shadow-md py-1 px-0 sm:px-2 w-screen items-center justify-center fixed bg-white z-20" id="nav_bar">
-                <div onClick={() => { router.push("/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
+                <div onClick={() => { router.push("http://localhost:3000/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
                     <img className="ml-2" src="/croppedPolychainLogo.png" alt="Polychain Logo" style={{ width: "150px" }} />
                 </div>
                 <div className="grow" id="spacer">  </div>
@@ -403,7 +403,7 @@ export default function App() {
                         <p>Apart from adding support for more cryptocurrencies, we hope to make personal token creation and airdrops easier. </p>
                         <h5 className="mt-10 mb-3 font-semibold text-gray-900">What cryptocurrencies are currently supported?</h5>
                         <p>
-                            Bitcoin, Ethereum, Solana, and DeSo are currently supported. ERC20 tokens and other popular cryptocurrencies will also be added to the platform in the near future. If you have any recommendations, then drop us a message <a href="https://twitter.com/polychainhq" target="_blank" rel="noreferrer">@polychainhq</a> on twitter.
+                            Bitcoin, Ethereum, Solana, and DeSo are currently supported. ERC20 tokens and other popular cryptocurrencies will also be added to the platform in the near future. If you have any recommendations, then drop us a message <a href="https://twitter.com/polychainhq" target="_blank">@polychainhq</a> on twitter.
                         </p>
                         <h5 className="mt-10 mb-3 font-semibold text-gray-900">Have any other questions or suggestions?</h5>
                         <p>Feel free to drop us a message @polychainhq on twitter</p>

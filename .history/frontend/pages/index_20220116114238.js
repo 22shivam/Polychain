@@ -327,7 +327,7 @@ export default function App() {
                 style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
             />
             <div className="flex flex-row shadow-md py-1 px-0 sm:px-2 w-screen items-center justify-center fixed bg-white z-20" id="nav_bar">
-                <div onClick={() => { router.push("/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
+                <div onClick={() => { router.push("http://localhost:3000/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
                     <img className="ml-2" src="/croppedPolychainLogo.png" alt="Polychain Logo" style={{ width: "150px" }} />
                 </div>
                 <div className="grow" id="spacer">  </div>

@@ -373,7 +373,7 @@ export default function UserDashboard() {
                 style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
             />
             <div className="flex flex-row shadow-md py-1 px-2 w-screen" id="nav_bar">
-                <div onClick={() => { router.push("/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
+                <div onClick={() => { router.push("http://localhost:3000/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
                     <img className="" src="/croppedPolychainLogo.png" alt="Polychain Logo" width="150" />
                 </div>
                 <div className="grow" id="spacer">  </div>
@@ -468,7 +468,7 @@ export default function UserDashboard() {
                         </div>
 
                     </div>
-                </main> : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
+                </main> : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`http://localhost:3000/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
 
         </div>
     )

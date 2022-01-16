@@ -185,7 +185,7 @@ export default function UserPayment() {
                 draggable
                 style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
             />
-            <div onClick={() => { router.push("/", "_self") }} className="my-10 cursor-pointer">
+            <div onClick={() => { router.push("http://localhost:3000/", "_self") }} className="my-10 cursor-pointer">
                 <img src="croppedPolychainLogo.png" width="200"></img>
             </div>
             {loading ? <div type="button" className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-lg transition ease-in-out duration-150 cursor-not-allowed" disabled="">
@@ -219,8 +219,8 @@ export default function UserPayment() {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="/">Buy</Link> this username</CustomLabel>}
-            <CustomBrandedButton onClick={() => { router.push("/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="http://localhost:3000/">Buy</Link> this username</CustomLabel>}
+            <CustomBrandedButton onClick={() => { router.push("http://localhost:3000/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
             <div id="spacer" className="grow"></div>
         </div>
 
