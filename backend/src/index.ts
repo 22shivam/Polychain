@@ -133,12 +133,12 @@ app.post("/userDetails/update", (req: any, res: any) => {
                         message: "Invalid SOL address"
                     })
                 }
-                if (DESOAddress && !validate(DESOAddress)) {
-                    return res.json({
-                        success: false,
-                        message: "Invalid DESO address"
-                    })
-                }
+                // if (DESOAddress && !validate(DESOAddress)) {
+                //     return res.json({
+                //         success: false,
+                //         message: "Invalid DESO address"
+                //     })
+                // }
 
                 if (bio && bio.length > 160) {
                     return res.json({

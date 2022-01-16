@@ -162,12 +162,12 @@ app.post("/userDetails/update", (req, res) => {
                         message: "Invalid SOL address"
                     });
                 }
-                if (DESOAddress && !(0, bitcoin_address_validation_1.validate)(DESOAddress)) {
-                    return res.json({
-                        success: false,
-                        message: "Invalid DESO address"
-                    });
-                }
+                // if (DESOAddress && !validate(DESOAddress)) {
+                //     return res.json({
+                //         success: false,
+                //         message: "Invalid DESO address"
+                //     })
+                // }
                 if (bio && bio.length > 160) {
                     return res.json({
                         success: false,
