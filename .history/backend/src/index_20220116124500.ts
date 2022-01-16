@@ -15,8 +15,6 @@ import * as web3 from '@solana/web3.js'
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
 const SOLANA_EXPLORER_URL: string = "https://api.devnet.solana.com"
-const SOLANA_ADDRESS = "wFQcfUuXkyb7puHS7mSbrjETEhnBDCfdbnLLDftKNLg"
-const ETHEREUM_ADDRESS = "0X76AEB5092D8EABCEC324BE739B8BA5DF473F0055"
 
 dotenv.config()
 const app = express()
@@ -38,7 +36,6 @@ function validSolAddress(s: any) {
         return new web3.PublicKey(s);
     } catch (e) {
         return null;
-
     }
 }
 
@@ -68,6 +65,7 @@ app.get("/api/:username", async (req, res) => {
 
 app.get("/api/address/eth/:address", async (req, res) => {
     try {
+        console.log(req.params.address)
         const user = await User.findOne({ ETHAddress: req.params.address }).exec()
         if (!user) {
             return res.json({ success: false, message: "User not found" })
@@ -75,13 +73,13 @@ app.get("/api/address/eth/:address", async (req, res) => {
             return res.json({ success: true, user: user, message: "User found" })
         }
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: true, message: "Something went wrong while serving your request" })
     }
 })
 
 app.get("/api/address/sol/:address", async (req, res) => {
     try {
+        console.log(req.params.address)
         const user = await User.findOne({ SOLAddress: req.params.address }).exec()
         if (!user) {
             return res.json({ success: false, message: "User not found" })
@@ -89,7 +87,6 @@ app.get("/api/address/sol/:address", async (req, res) => {
             return res.json({ success: true, user: user, message: "User found" })
         }
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: true, message: "Something went wrong while serving your request" })
     }
 })
@@ -133,6 +130,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                         message: "Invalid SOL address"
                     })
                 }
+                console.log(DESOAddress)
                 if (DESOAddress && !validate(DESOAddress)) {
                     return res.json({
                         success: false,
@@ -174,6 +172,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                                     })
                                 } else { // sol address is available
                                     // sol addr is available + eth addr is available -- therefore make changes!
+                                    console.log("user updated")
                                     res.clearCookie("token") // NO RETURN here as need to make updates
                                     user = await User.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic })
                                     return res.json({
@@ -197,7 +196,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                                 })
                             } else { // sol address is available
                                 // sol addr is available + eth addr is available -- therefore make changes!
-
+                                console.log("user updated")
                                 user = await User.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic })
                                 return res.json({
                                     success: true,
@@ -234,7 +233,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                                 } else { // eth address is available
                                     // eth addr is available + sol addr is available -- therefore make changes!
                                     res.clearCookie("token") // NO RETURN here as need to make updates
-
+                                    console.log("user updated")
                                     user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic })
                                     return res.json({
                                         success: true,
@@ -254,7 +253,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                                 })
                             } else { // eth address is available
                                 // eth addr is available + sol addr is available -- therefore make changes!
-
+                                console.log("user updated")
                                 user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic })
                                 return res.json({
                                     success: true,
@@ -273,7 +272,6 @@ app.post("/userDetails/update", (req: any, res: any) => {
             }
         })
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: false, message: "Server error" })
     }
 })
@@ -309,7 +307,6 @@ app.post("/userDetails", async (req: any, res: any) => {
             }
         })
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: false, message: "Server Error", isLoggedIn: false })
     }
 })
@@ -477,7 +474,7 @@ app.post("/register/promo", async (req, res) => {
                 }
 
                 // check if address not already used
-
+                console.log(blockchain)
                 if (blockchain == "eth") {
                     existingUser = await User.findOne({ ETHAddress: address }).exec()
                     if (existingUser) {
@@ -583,7 +580,7 @@ app.post("/register/sol", async (req, res) => {
         // check coinbase rate
         const coinbaseResponse = await axios.get(COINBASE_URL_SOL)
         const USDPerSOL = coinbaseResponse.data.data.rates.USD
-
+        console.log(SOLANA_EXPLORER_URL)
         const solanaExplorerResponse = await axios.post(SOLANA_EXPLORER_URL, {
             "jsonrpc": "2.0",
             "id": 1,
@@ -613,11 +610,11 @@ app.post("/register/sol", async (req, res) => {
 
         const solPaid = (preBalanceSender - postBalanceSender - fee) / (10 ** 9)
         const solPaidUSD = solPaid * USDPerSOL
-
+        console.log(solPaidUSD)
 
         // verify that amount paid to right address
-
-        if (to.toUpperCase() !== SOLANA_ADDRESS.toUpperCase()) {
+        console.log(to)
+        if (to.toUpperCase() !== "AA6BQLGTZYPPFFH2R9XLDUDIBWCEMLKKDRTZMPQESEIS") {
             return res.json({
                 success: false,
                 message: "USD paid to wrong address"
@@ -711,7 +708,7 @@ app.post("/register/eth", async (req, res) => {
         const ethPaidUSD = ethPaid * USDPerETH
 
         // verify that amount paid to right address
-        if (txDetailsFromEtherscan.toUpperCae() !== ETHEREUM_ADDRESS.toUpperCase()) {
+        if (txDetailsFromEtherscan.toUpperCae() !== "0X76AEB5092D8EABCEC324BE739B8BA5DF473F0055") {
             return res.json({
                 success: false,
                 message: "USD paid to wrong address"
@@ -741,6 +738,7 @@ app.post("/register/eth", async (req, res) => {
             ETHAddress: txDetailsFromEtherscan.from
         })
         await newuser.save()
+        console.log("new user created!")
 
         const token = jwt.sign({
             data: { address: txDetailsFromEtherscan.from, blockchain: "eth" }
@@ -771,5 +769,4 @@ try {
     })
 } catch (err) {
     console.log("could not connect to mongodb and app uninitialized")
-    console.log(err)
 }

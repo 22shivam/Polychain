@@ -38,7 +38,6 @@ function validSolAddress(s: any) {
         return new web3.PublicKey(s);
     } catch (e) {
         return null;
-
     }
 }
 
@@ -75,7 +74,6 @@ app.get("/api/address/eth/:address", async (req, res) => {
             return res.json({ success: true, user: user, message: "User found" })
         }
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: true, message: "Something went wrong while serving your request" })
     }
 })
@@ -89,7 +87,6 @@ app.get("/api/address/sol/:address", async (req, res) => {
             return res.json({ success: true, user: user, message: "User found" })
         }
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: true, message: "Something went wrong while serving your request" })
     }
 })
@@ -273,7 +270,6 @@ app.post("/userDetails/update", (req: any, res: any) => {
             }
         })
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: false, message: "Server error" })
     }
 })
@@ -309,7 +305,6 @@ app.post("/userDetails", async (req: any, res: any) => {
             }
         })
     } catch (e) {
-        console.log(e)
         res.status(500).json({ success: false, message: "Server Error", isLoggedIn: false })
     }
 })
@@ -771,5 +766,4 @@ try {
     })
 } catch (err) {
     console.log("could not connect to mongodb and app uninitialized")
-    console.log(err)
 }

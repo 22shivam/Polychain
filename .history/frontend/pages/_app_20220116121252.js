@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
       } catch (e) {
         setUserAccount({})
         setLoading(false)
-        toastError("Something went wrong. Please try again.")
+        toastError("Something went wrong. Please try agaiun.")
       }
     })()
   }, [])

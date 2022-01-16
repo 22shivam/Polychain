@@ -75,12 +75,12 @@ export default function UserDashboard() {
                     }
                 } catch (err) {
                     setLoading(false);
-                    console.log(err.message)
+                    toastError(err.message)
                 }
             }
         } catch (e) {
             setLoading(false)
-            console.log(e.message)
+            toastError(e.message)
         }
     }, [])
 
@@ -89,57 +89,52 @@ export default function UserDashboard() {
     useEffect(() => {
         // ask them to login either through solana or eth
         (async () => {
-            try {
-                setLoading(true)
-                // const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/isLoggedIn`, {
-                //     credentials: 'include'
-                // })
-                // const processedResponse = await response.json()
-                // if (!processedResponse.isLoggedIn) {
-                //     // setUserAccount({})
-                //     return toastError("Please login to access your account")
-                // } else {
-                if (userAccount.address) {
-                    const response = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/userDetails`, {
-                        address: userAccount.address,
-                        blockchain: userAccount.blockchain
-                    })
-                    if (!response.success) {
-                        if (!response.isLoggedIn) {
-                            setUserAccount({})
-                            setHasUsername(false)
-                            setLoading(false)
-                            toastError("Please login to access this page")
-                            return
-                        }
-                        toastError("No account is associated with this wallet address.")
+            setLoading(true)
+            // const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/isLoggedIn`, {
+            //     credentials: 'include'
+            // })
+            // const processedResponse = await response.json()
+            // if (!processedResponse.isLoggedIn) {
+            //     // setUserAccount({})
+            //     return toastError("Please login to access your account")
+            // } else {
+            if (userAccount.address) {
+                const response = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/userDetails`, {
+                    address: userAccount.address,
+                    blockchain: userAccount.blockchain
+                })
+                if (!response.success) {
+                    if (!response.isLoggedIn) {
+                        setUserAccount({})
                         setHasUsername(false)
                         setLoading(false)
-                        // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
+                        toastError("Please login to access this page")
                         return
                     }
-                    setUsername(response.user.username)
-                    setETHAddress(response.user.ETHAddress || "")
-                    setSOLAddress(response.user.SOLAddress || "")
-                    setDESOAddress(response.user.DESOAddress || "")
-                    setBTCAddress(response.user.BTCAddress || "")
-                    setBio(response.user.bio || "")
-                    setProfilePic(response.user.profilePic)
-                    // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
-                    setHasUsername(true)
+                    toastError("No account is associated with this wallet address.")
+                    setHasUsername(false)
                     setLoading(false)
-                    // }
+                    // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
+                    return
                 }
-                // this causes the temproary "please login"
+                setUsername(response.user.username)
+                setETHAddress(response.user.ETHAddress || "")
+                setSOLAddress(response.user.SOLAddress || "")
+                setDESOAddress(response.user.DESOAddress || "")
+                setBTCAddress(response.user.BTCAddress || "")
+                setBio(response.user.bio || "")
+                setProfilePic(response.user.profilePic)
+                // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
+                setHasUsername(true)
                 setLoading(false)
-            } catch (e) {
-                setLoading(false)
-                toastError(e.message)
+                // }
             }
+            // this causes the temproary "please login"
+            setLoading(false)
         })()
     }, [userAccount]) // this dependency is so that if from backend i ever send an updated cookie to logout on any random request, this reruns
 
-    const updateInfo = async (e) => {
+    const updateInfo = async (e) => { // TODO:add try catch
         try {
             if (userAccount.blockchain === "eth" && userAccount.address.toUpperCase() !== ETHAddress.toUpperCase() || userAccount.blockchain === "sol" && userAccount.address.toUpperCase() !== SOLAddress.toUpperCase()) {
                 const response = confirm("You are changing the address with which you are logged in. Hence, you will be logged out.")
@@ -197,54 +192,45 @@ export default function UserDashboard() {
                 return
             }
         } catch (err) {
-            toastError("Something went wrong. Please try again.")
-            toastError(err.message);
+
+            toastError("Something went wrong.Please try again.")
         }
 
     }
 
     const uploadImage = async (e) => {
-        try {
-            const file = e.target.files[0]
-            if (!file instanceof Blob && !file instanceof File) {
-                return toastError("Invalid file added")
-            }
-            const compressedImage = await imageCompression(file, options)
-            const reader = new FileReader()
-            reader.readAsDataURL(compressedImage)
-            reader.onload = async () => {
-                toastSuccess("Image uploaded successfully")
-                setProfilePic(reader.result)
-            }
-        } catch (e) {
-            toastError("Error uploading image")
-            toastError(e.message)
+        const file = e.target.files[0]
+        if (!file instanceof Blob && !file instanceof File) {
+            return toastError("Invalid file added")
+        }
+        const compressedImage = await imageCompression(file, options)
+        const reader = new FileReader()
+        reader.readAsDataURL(compressedImage)
+        reader.onload = async () => {
+            toastSuccess("Image uploaded successfully")
+            setProfilePic(reader.result)
         }
     }
 
     const handleLogout = async () => {
-        try {
-            if (userAccount.blockchain == "sol") {
-                window.solana.disconnect()
-            }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`, {
-                credentials: 'include'
-            })
-
-            const processedResponse = await response.json()
-            toast.info('Logout Successful!', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-            });
-            setUserAccount({})
-        } catch (e) {
-            toastError("Error logging out. " + e.message)
+        if (userAccount.blockchain == "sol") {
+            window.solana.disconnect()
         }
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`, {
+            credentials: 'include'
+        })
+
+        const processedResponse = await response.json()
+        toast.info('Logout Successful!', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+        setUserAccount({})
     }
 
 

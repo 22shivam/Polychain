@@ -75,12 +75,12 @@ export default function UserDashboard() {
                     }
                 } catch (err) {
                     setLoading(false);
-                    console.log(err.message)
+                    toastError(err.message)
                 }
             }
         } catch (e) {
             setLoading(false)
-            console.log(e.message)
+            toastError(e.message)
         }
     }, [])
 

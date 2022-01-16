@@ -34,11 +34,7 @@ let defaultCurrencies = [
 ]
 
 const handleSubmitDESO = async (addr) => {
-    try {
-        window.open(`https://diamondapp.com/send-deso?public_key=${addr}`, "_blank");
-    } catch (error) {
-        toastError("Something went wrong. Please try again")
-    }
+    window.open(`https://diamondapp.com/send-deso?public_key=${addr}`, "_blank");
 }
 
 export default function UserPayment() {
@@ -61,12 +57,8 @@ export default function UserPayment() {
 
     useEffect(() => {
         (async () => {
-            try {
-                const qrCode = await generateQR(`bitcoin:${BTCAddress}`)
-                setQrCode(qrCode)
-            } catch (e) {
-                toastError("Something went wrong. Please try again")
-            }
+            const qrCode = await generateQR(`bitcoin:${BTCAddress}`)
+            setQrCode(qrCode)
         })()
     }, [BTCAddress])
 
@@ -74,30 +66,26 @@ export default function UserPayment() {
         // get currency deets from coinbase
 
         (async () => {
-            try {
-                if (selectedCurrency.name === "ETH") {
-                    let coinbaseResponse = await fetch(COINBASE_URL_ETH)
-                    coinbaseResponse = await coinbaseResponse.json()
-                    const USDPerETH = coinbaseResponse.data.rates.USD
-                    setUSDPerCurrency(USDPerETH)
-                } else if (selectedCurrency.name === "SOL") {
-                    let coinbaseResponse = await fetch(COINBASE_URL_SOL)
-                    coinbaseResponse = await coinbaseResponse.json()
-                    const USDPerETH = coinbaseResponse.data.rates.USD
-                    setUSDPerCurrency(USDPerETH)
-                } else if (selectedCurrency.name === "BTC") {
-                    let coinbaseResponse = await fetch(COINBASE_URL_BTC)
-                    coinbaseResponse = await coinbaseResponse.json()
-                    const USDPerETH = coinbaseResponse.data.rates.USD
-                    setUSDPerCurrency(USDPerETH)
-                } else if (selectedCurrency.name === "DESO") {
-                    let coinbaseResponse = await fetch(COINBASE_URL_DESO)
-                    coinbaseResponse = await coinbaseResponse.json()
-                    const USDPerETH = coinbaseResponse.data.rates.USD
-                    setUSDPerCurrency(USDPerETH)
-                }
-            } catch (e) {
-                toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
+            if (selectedCurrency.name === "ETH") {
+                let coinbaseResponse = await fetch(COINBASE_URL_ETH)
+                coinbaseResponse = await coinbaseResponse.json()
+                const USDPerETH = coinbaseResponse.data.rates.USD
+                setUSDPerCurrency(USDPerETH)
+            } else if (selectedCurrency.name === "SOL") {
+                let coinbaseResponse = await fetch(COINBASE_URL_SOL)
+                coinbaseResponse = await coinbaseResponse.json()
+                const USDPerETH = coinbaseResponse.data.rates.USD
+                setUSDPerCurrency(USDPerETH)
+            } else if (selectedCurrency.name === "BTC") {
+                let coinbaseResponse = await fetch(COINBASE_URL_BTC)
+                coinbaseResponse = await coinbaseResponse.json()
+                const USDPerETH = coinbaseResponse.data.rates.USD
+                setUSDPerCurrency(USDPerETH)
+            } else if (selectedCurrency.name === "DESO") {
+                let coinbaseResponse = await fetch(COINBASE_URL_DESO)
+                coinbaseResponse = await coinbaseResponse.json()
+                const USDPerETH = coinbaseResponse.data.rates.USD
+                setUSDPerCurrency(USDPerETH)
             }
         })();
 
@@ -106,80 +94,72 @@ export default function UserPayment() {
     // ensures only available options are shown
     useEffect(() => {
         (async () => {
-            try {
-                setLoading(true)
-                let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${username}`)
-                response = await response.json()
-                if (response.success) {
-                    let currencyArray = []
+            setLoading(true)
+            let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${username}`)
+            response = await response.json()
+            if (response.success) {
+                let currencyArray = []
 
-                    if (response.user.ETHAddress && response.user.ETHAddress != "") {
-                        setETHAddress(response.user.ETHAddress)
-                        currencyArray.push({
-                            id: 2,
-                            name: 'ETH',
-                            avatar: '/ethereumLogo.png',
-                        })
+                if (response.user.ETHAddress && response.user.ETHAddress != "") {
+                    setETHAddress(response.user.ETHAddress)
+                    currencyArray.push({
+                        id: 2,
+                        name: 'ETH',
+                        avatar: '/ethereumLogo.png',
+                    })
 
-                    }
-                    if (response.user.SOLAddress && response.user.SOLAddress != "") {
-                        setSOLAddress(response.user.SOLAddress)
-                        currencyArray.push(
-                            {
-                                id: 3,
-                                name: 'SOL',
-                                avatar: '/solanaLogo.png',
-                            })
-                    }
-
-                    if (response.user.DESOAddress && response.user.DESOAddress != "") {
-                        setDESOAddress(response.user.DESOAddress)
-                        currencyArray.push(
-                            {
-                                id: 4,
-                                name: 'DESO',
-                                avatar: '/DeSoLogo.png',
-                            })
-                    }
-                    if (response.user.BTCAddress && response.user.BTCAddress != "") {
-                        setBTCAddress(response.user.BTCAddress)
-                        currencyArray.push(
-                            {
-                                id: 1,
-                                name: 'BTC',
-                                avatar: '/bitcoinLogo.png',
-                            })
-                    }
-                    setSelectedCurrency(currencyArray[0])
-                    setCurrencies(currencyArray)
-                    setBio(response.user.bio)
-                    setProfilePic(response.user.profilePic)
-                    setAccountExists(true)
                 }
-                setLoading(false)
-            } catch (e) {
-                setLoading(false)
-                toastError("Something went wrong. Please try again")
+                if (response.user.SOLAddress && response.user.SOLAddress != "") {
+                    setSOLAddress(response.user.SOLAddress)
+                    currencyArray.push(
+                        {
+                            id: 3,
+                            name: 'SOL',
+                            avatar: '/solanaLogo.png',
+                        })
+                }
+
+                if (response.user.DESOAddress && response.user.DESOAddress != "") {
+                    setDESOAddress(response.user.DESOAddress)
+                    currencyArray.push(
+                        {
+                            id: 4,
+                            name: 'DESO',
+                            avatar: '/DeSoLogo.png',
+                        })
+                }
+                if (response.user.BTCAddress && response.user.BTCAddress != "") {
+                    setBTCAddress(response.user.BTCAddress)
+                    currencyArray.push(
+                        {
+                            id: 1,
+                            name: 'BTC',
+                            avatar: '/bitcoinLogo.png',
+                        })
+                }
+                setSelectedCurrency(currencyArray[0])
+                setCurrencies(currencyArray)
+                setBio(response.user.bio)
+                setProfilePic(response.user.profilePic)
+                setAccountExists(true)
             }
+            setLoading(false)
         })()
     }, [username])
 
     const transferAmount = async () => {
-        try {
-            if (selectedCurrency.name == "ETH") {
-                await transferEth({ ether: payValue, addr: ETHAddress })
-            } else if (selectedCurrency.name == "SOL") {
-                await transferSOL(payValue, SOLAddress)
-            } else if (selectedCurrency.name == "DESO") {
-                await handleSubmitDESO(DESOAddress)
-            } else if (selectedCurrency.name == "BTC") {
-                // nothing
-                window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
-                toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
-            }
-        } catch (e) {
-            toastError("Something went wrong. Please try again")
+        if (selectedCurrency.name == "ETH") {
+            await transferEth({ ether: payValue, addr: ETHAddress })
+        } else if (selectedCurrency.name == "SOL") {
+            await transferSOL(payValue, SOLAddress)
+        } else if (selectedCurrency.name == "DESO") {
+            await handleSubmitDESO(DESOAddress)
+        } else if (selectedCurrency.name == "BTC") {
+            // nothing
+            window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
+            toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
         }
+
     }
 
 

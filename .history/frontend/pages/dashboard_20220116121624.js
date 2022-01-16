@@ -75,12 +75,12 @@ export default function UserDashboard() {
                     }
                 } catch (err) {
                     setLoading(false);
-                    console.log(err.message)
+                    toastError(err.message)
                 }
             }
         } catch (e) {
             setLoading(false)
-            console.log(e.message)
+            toastError(e.message)
         }
     }, [])
 
@@ -139,7 +139,7 @@ export default function UserDashboard() {
         })()
     }, [userAccount]) // this dependency is so that if from backend i ever send an updated cookie to logout on any random request, this reruns
 
-    const updateInfo = async (e) => {
+    const updateInfo = async (e) => { // TODO:add try catch
         try {
             if (userAccount.blockchain === "eth" && userAccount.address.toUpperCase() !== ETHAddress.toUpperCase() || userAccount.blockchain === "sol" && userAccount.address.toUpperCase() !== SOLAddress.toUpperCase()) {
                 const response = confirm("You are changing the address with which you are logged in. Hence, you will be logged out.")
@@ -197,54 +197,45 @@ export default function UserDashboard() {
                 return
             }
         } catch (err) {
-            toastError("Something went wrong. Please try again.")
-            toastError(err.message);
+
+            toastError("Something went wrong.Please try again.")
         }
 
     }
 
     const uploadImage = async (e) => {
-        try {
-            const file = e.target.files[0]
-            if (!file instanceof Blob && !file instanceof File) {
-                return toastError("Invalid file added")
-            }
-            const compressedImage = await imageCompression(file, options)
-            const reader = new FileReader()
-            reader.readAsDataURL(compressedImage)
-            reader.onload = async () => {
-                toastSuccess("Image uploaded successfully")
-                setProfilePic(reader.result)
-            }
-        } catch (e) {
-            toastError("Error uploading image")
-            toastError(e.message)
+        const file = e.target.files[0]
+        if (!file instanceof Blob && !file instanceof File) {
+            return toastError("Invalid file added")
+        }
+        const compressedImage = await imageCompression(file, options)
+        const reader = new FileReader()
+        reader.readAsDataURL(compressedImage)
+        reader.onload = async () => {
+            toastSuccess("Image uploaded successfully")
+            setProfilePic(reader.result)
         }
     }
 
     const handleLogout = async () => {
-        try {
-            if (userAccount.blockchain == "sol") {
-                window.solana.disconnect()
-            }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`, {
-                credentials: 'include'
-            })
-
-            const processedResponse = await response.json()
-            toast.info('Logout Successful!', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-            });
-            setUserAccount({})
-        } catch (e) {
-            toastError("Error logging out. " + e.message)
+        if (userAccount.blockchain == "sol") {
+            window.solana.disconnect()
         }
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`, {
+            credentials: 'include'
+        })
+
+        const processedResponse = await response.json()
+        toast.info('Logout Successful!', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+        setUserAccount({})
     }
 
 

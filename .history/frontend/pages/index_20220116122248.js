@@ -119,7 +119,7 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.", err.message)
+            toastError(err.message)
         }
 
     }
@@ -137,7 +137,7 @@ export default function App() {
             const data = await coinbaseResponse.json()
             const solPerUSD = data.data.rates.SOL
             const SOLpayValue = solPerUSD * 5
-            const hash = await transferSOL(SOLpayValue, "wFQcfUuXkyb7puHS7mSbrjETEhnBDCfdbnLLDftKNLg", setUserAccount, true);
+            const hash = await transferSOL(SOLpayValue, "AA6bqLgTzYPpFFH2R9XLdudibWcemLkKDRtZmPQEsEiS", setUserAccount, true);
             if (!hash) { return }
 
             const requestObject = {
@@ -153,37 +153,37 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.", err.message)
+            toastError(err.message)
         }
 
 
     }
 
     const registerUsingEthereum = async (e) => {
+        // make get request to https://api.coinbase.com/v2/exchange-rates
+        // get the USD value of ETH
+
+        // check if username available
+        if (!(await checkifUsernameAvailable(username))) {
+            return
+        }
+
+        const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
+        const data = await coinbaseResponse.json()
+        const ethPerUSD = data.data.rates.ETH
+        const ETHpayValue = ethPerUSD * 5
+
+        const tx = await transferEth({
+            ether: ETHpayValue.toString(),
+            addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
+        }, setUserAccount, true)
+        if (!tx) { return }
+
+        const requestObject = {
+            tx,
+            username
+        }
         try {
-            // make get request to https://api.coinbase.com/v2/exchange-rates
-            // get the USD value of ETH
-
-            // check if username available
-            if (!(await checkifUsernameAvailable(username))) {
-                return
-            }
-
-            const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
-            const data = await coinbaseResponse.json()
-            const ethPerUSD = data.data.rates.ETH
-            const ETHpayValue = ethPerUSD * 5
-
-            const tx = await transferEth({
-                ether: ETHpayValue.toString(),
-                addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
-            }, setUserAccount, true)
-            if (!tx) { return }
-
-            const requestObject = {
-                tx,
-                username
-            }
             const registrationResponse = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/register/eth`, requestObject)
             if (!registrationResponse.success) {
                 toastError(registrationResponse.message)
@@ -193,7 +193,7 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.", err.message)
+            toastError(err.message)
         }
     }
 
@@ -237,7 +237,7 @@ export default function App() {
             if (err.code == -32002) {
                 return toastInfo('Login request already sent to your ethereum wallet. Kindly connect using your wallet.')
             }
-            toastError("Something went wrong while logging in. Please try again.", err.message)
+            toastError(err.message)
         }
 
     }
@@ -275,15 +275,11 @@ export default function App() {
                 toastSuccess('Login Successful')
                 setUserAccount({ address: signedMessage.publicKey.toString(), blockchain: "sol" })
             }
-        } catch (err) { toastError("Something went wrong while logging in. Please try again.", err.message) }
+        } catch (err) { toastError(err.message) }
     }
 
     const goToDashboard = () => {
-        try {
-            router.push("/dashboard")
-        } catch (e) {
-            console.log(e)
-        }
+        router.push("/dashboard")
     }
 
 

@@ -31,6 +31,8 @@ export default async function transferSOL(solAmount, toAddr, setUserAccount, che
             web3.clusterApiUrl('devnet'), // change to mainnet-beta when deploying
         );
         var recieverWallet = new web3.PublicKey(toAddr);
+        console.log("pblickey of sender", provider.publicKey.toString())
+        console.log(checkIfSOLAddressAvailable)
         if (checkSolAddressAvailability) {
             if (!(await checkIfSOLAddressAvailable(provider.publicKey.toString()))) {
                 return
@@ -55,6 +57,7 @@ export default async function transferSOL(solAmount, toAddr, setUserAccount, che
         let hash = await connection.sendRawTransaction(signed.serialize());
         toastInfo("Please wait while we confirm your transaction. This may take a minute.")
         // Confirm whether the transaction went through or not
+        console.log(provider.publicKey)
         if (setUserAccount) {
             setUserAccount({ address: provider.publicKey.toString(), blockchain: "sol" })
         }
@@ -62,6 +65,7 @@ export default async function transferSOL(solAmount, toAddr, setUserAccount, che
         toastSuccess("Congrats! Amount transferred successfully.")
         return hash
     } catch (error) {
+        console.log(error)
         toastError(error.message)
 
     }

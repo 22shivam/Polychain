@@ -4,11 +4,12 @@ import transferEth from "../lib/transferEth";
 import createPostRequest from "../lib/createPostRequest";
 import { ethers } from "ethers";
 import { UserContext } from "./_app";
+import * as web3 from "@solana/web3.js";
 import DropDownComponent from './components/DropDown'
 import { useRouter } from "next/dist/client/router";
 import CustomButton from "./components/customButton";
 import CustomInput from "./components/customInput";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import toastError from '../lib/toastError'
 import toastSuccess from '../lib/toastSuccess'
 import toastInfo from "../lib/toastInfo";
@@ -22,7 +23,7 @@ import Footer from "./components/footer";
 
 let checkifUsernameAvailable = async (username) => {
     try {
-        let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/${username}`)
+        let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/${username}`)
         response = await response.json()
         if (response.success) { // user with username found
             toastError("Username unavailable")
@@ -45,66 +46,67 @@ export default function App() {
     const { userAccount, setUserAccount } = useContext(UserContext);
 
     const handleLogout = async () => {
-        try {
-            if (userAccount.blockchain == "sol") {
-                window.solana.disconnect()
-            }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`, {
-                credentials: 'include'
-            })
-
-            const processedResponse = await response.json()
-            toastInfo("Logged out")
-            setUserAccount({})
-        } catch (e) {
-            toastError("Error logging out. " + e.message)
+        if (userAccount.blockchain == "sol") {
+            window.solana.disconnect()
         }
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`, {
+            credentials: 'include'
+        })
+
+        const processedResponse = await response.json()
+        toastInfo("Logged out")
+        setUserAccount({})
     }
 
 
     useEffect(() => {
-        try {
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', handleLogout);
+        }
+        if (window.solana) {
+            window.solana.on("disconnect", handleLogout)
+        }
+        return () => {
             if (window.ethereum) {
-                window.ethereum.on('accountsChanged', handleLogout);
+                window.ethereum.removeListener('accountsChanged', handleLogout);
             }
             if (window.solana) {
-                window.solana.on("disconnect", handleLogout)
+                window.solana.removeListener("disconnect", handleLogout);
             }
-            return () => {
-                try {
-                    if (window.ethereum) {
-                        window.ethereum.removeListener('accountsChanged', handleLogout);
-                    }
-                    if (window.solana) {
-                        window.solana.removeListener("disconnect", handleLogout);
-                    }
-                } catch (e) {
-                    console.log(e)
-                }
-            }
-        } catch (e) {
-            console.log(e)
         }
     }, [])
 
     const registerUsingPromoCode = async (e) => {
+
+        if (!(await checkifUsernameAvailable(username))) {
+            return
+        }
+
+        if (!userAccount.address) {
+            // ask them to login either through solana or eth
+            return toastError("Please login before registering using a promocode")
+        }
+
+        // if (userAccount.blockchain == "eth") {
+        //     let bool = await checkIfETHAddressAvailable(userAccount.address)
+        //     if (!bool) {
+        //         return
+        //     }
+        // } else if (userAccount.blockchain == "sol") {
+        //     let bool = await checkIfSOLAddressAvailable(userAccount.address)
+        //     if (!bool) {
+        //         return
+        //     }
+        // }
+
+        const requestObject = {
+            username,
+            promoCode,
+            address: userAccount.address,
+            blockchain: userAccount.blockchain
+        }
+
         try {
-
-            if (!(await checkifUsernameAvailable(username))) {
-                return
-            }
-
-            if (!userAccount.address) {
-                // ask them to login either through solana or eth
-                return toastError("Please login before registering using a promocode")
-            }
-
-            const requestObject = {
-                username,
-                promoCode,
-                address: userAccount.address,
-                blockchain: userAccount.blockchain
-            }
             const registrationResponse = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/register/promo`, requestObject)
 
             if (!registrationResponse.success) {
@@ -119,31 +121,31 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.", err.message)
+            toastError(err.message)
         }
 
     }
 
     const registerUsingSolana = async (e) => {
 
+        if (!(await checkifUsernameAvailable(username))) {
+            return
+        }
+
+
+        const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
+        const data = await coinbaseResponse.json()
+        const solPerUSD = data.data.rates.SOL
+        const SOLpayValue = solPerUSD * 5
+        const hash = await transferSOL(SOLpayValue, "AA6bqLgTzYPpFFH2R9XLdudibWcemLkKDRtZmPQEsEiS", setUserAccount, true);
+        if (!hash) { return }
+
+        const requestObject = {
+            hash,
+            username
+        }
+
         try {
-
-            if (!(await checkifUsernameAvailable(username))) {
-                return
-            }
-
-
-            const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
-            const data = await coinbaseResponse.json()
-            const solPerUSD = data.data.rates.SOL
-            const SOLpayValue = solPerUSD * 5
-            const hash = await transferSOL(SOLpayValue, "wFQcfUuXkyb7puHS7mSbrjETEhnBDCfdbnLLDftKNLg", setUserAccount, true);
-            if (!hash) { return }
-
-            const requestObject = {
-                hash,
-                username
-            }
             const registrationResponse = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/register/sol`, requestObject)
             if (!registrationResponse.success) {
                 toastError(registrationResponse.message)
@@ -153,37 +155,37 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.", err.message)
+            toastError(err.message)
         }
 
 
     }
 
     const registerUsingEthereum = async (e) => {
+        // make get request to https://api.coinbase.com/v2/exchange-rates
+        // get the USD value of ETH
+
+        // check if username available
+        if (!(await checkifUsernameAvailable(username))) {
+            return
+        }
+
+        const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
+        const data = await coinbaseResponse.json()
+        const ethPerUSD = data.data.rates.ETH
+        const ETHpayValue = ethPerUSD * 5
+
+        const tx = await transferEth({
+            ether: ETHpayValue.toString(),
+            addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
+        }, setUserAccount, true)
+        if (!tx) { return }
+
+        const requestObject = {
+            tx,
+            username
+        }
         try {
-            // make get request to https://api.coinbase.com/v2/exchange-rates
-            // get the USD value of ETH
-
-            // check if username available
-            if (!(await checkifUsernameAvailable(username))) {
-                return
-            }
-
-            const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
-            const data = await coinbaseResponse.json()
-            const ethPerUSD = data.data.rates.ETH
-            const ETHpayValue = ethPerUSD * 5
-
-            const tx = await transferEth({
-                ether: ETHpayValue.toString(),
-                addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
-            }, setUserAccount, true)
-            if (!tx) { return }
-
-            const requestObject = {
-                tx,
-                username
-            }
             const registrationResponse = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/register/eth`, requestObject)
             if (!registrationResponse.success) {
                 toastError(registrationResponse.message)
@@ -193,7 +195,7 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.", err.message)
+            toastError(err.message)
         }
     }
 
@@ -237,7 +239,7 @@ export default function App() {
             if (err.code == -32002) {
                 return toastInfo('Login request already sent to your ethereum wallet. Kindly connect using your wallet.')
             }
-            toastError("Something went wrong while logging in. Please try again.", err.message)
+            toastError(err.message)
         }
 
     }
@@ -275,15 +277,11 @@ export default function App() {
                 toastSuccess('Login Successful')
                 setUserAccount({ address: signedMessage.publicKey.toString(), blockchain: "sol" })
             }
-        } catch (err) { toastError("Something went wrong while logging in. Please try again.", err.message) }
+        } catch (err) { toastError(err.message) }
     }
 
     const goToDashboard = () => {
-        try {
-            router.push("/dashboard")
-        } catch (e) {
-            console.log(e)
-        }
+        router.push("/dashboard")
     }
 
 

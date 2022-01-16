@@ -165,21 +165,18 @@ export default function UserPayment() {
     }, [username])
 
     const transferAmount = async () => {
-        try {
-            if (selectedCurrency.name == "ETH") {
-                await transferEth({ ether: payValue, addr: ETHAddress })
-            } else if (selectedCurrency.name == "SOL") {
-                await transferSOL(payValue, SOLAddress)
-            } else if (selectedCurrency.name == "DESO") {
-                await handleSubmitDESO(DESOAddress)
-            } else if (selectedCurrency.name == "BTC") {
-                // nothing
-                window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
-                toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
-            }
-        } catch (e) {
-            toastError("Something went wrong. Please try again")
+        if (selectedCurrency.name == "ETH") {
+            await transferEth({ ether: payValue, addr: ETHAddress })
+        } else if (selectedCurrency.name == "SOL") {
+            await transferSOL(payValue, SOLAddress)
+        } else if (selectedCurrency.name == "DESO") {
+            await handleSubmitDESO(DESOAddress)
+        } else if (selectedCurrency.name == "BTC") {
+            // nothing
+            window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
+            toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
         }
+
     }
 
 
