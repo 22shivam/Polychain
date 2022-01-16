@@ -45,6 +45,13 @@ class MyDocument extends Document {
                     <meta name="twitter:domain" content="https://polychain.tech/"></meta>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNPH2KPEQN"></script>
+                    <script>
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+
+                        gtag('config', 'G-FNPH2KPEQN');
+                    </script>
 
                 </Head>
                 <body className=''>
