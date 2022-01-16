@@ -159,7 +159,7 @@ export default function UserDashboard() {
             if (!validSolAddress(SOLAddress) && SOLAddress) {
                 return toastError("Please enter a valid Solana address")
             }
-            // TODO: add validation for deso address
+
             if (DESOAddress) {
                 return toastError("Please enter a valid Deso address")
             }
