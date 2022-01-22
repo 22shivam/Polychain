@@ -279,7 +279,7 @@ export default function UserPayment() {
                 </div>
 
                 {anySocialUrl ? <div className="flex flex-row justify-center mt-4 items-center">
-                    {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="images/facebook.svg" width="30"></img></a> : ""}
+                    {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="facebook.png" width="30"></img></a> : ""}
                     {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="instagram.png" width="30"></img></a> : ""}
                     {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="github.png" width="30"></img></a> : ""}
                     {linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><img src="linkedin.png" width="30"></img></a> : ""}
