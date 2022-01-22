@@ -139,7 +139,7 @@ app.post("/userDetails/update", (req, res) => {
             else { // logged in
                 let { address, blockchain } = decoded.data;
                 address = address;
-                let { ETHAddress, BTCAddress, DESOAddress, SOLAddress, bio, profilePic } = req.body;
+                let { ETHAddress, BTCAddress, DESOAddress, SOLAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName } = req.body;
                 ETHAddress = ETHAddress && ETHAddress;
                 BTCAddress = BTCAddress && BTCAddress;
                 DESOAddress = DESOAddress && DESOAddress;
@@ -203,7 +203,7 @@ app.post("/userDetails/update", (req, res) => {
                                 else { // sol address is available
                                     // sol addr is available + eth addr is available -- therefore make changes!
                                     res.clearCookie("token"); // NO RETURN here as need to make updates
-                                    user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic });
+                                    user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                     return res.json({
                                         success: true,
                                         message: "Changes saved",
@@ -224,7 +224,7 @@ app.post("/userDetails/update", (req, res) => {
                             }
                             else { // sol address is available
                                 // sol addr is available + eth addr is available -- therefore make changes!
-                                user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic });
+                                user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                 return res.json({
                                     success: true,
                                     message: "Changes saved",
@@ -263,7 +263,7 @@ app.post("/userDetails/update", (req, res) => {
                                 else { // eth address is available
                                     // eth addr is available + sol addr is available -- therefore make changes!
                                     res.clearCookie("token"); // NO RETURN here as need to make updates
-                                    user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic });
+                                    user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                     return res.json({
                                         success: true,
                                         message: "Changes saved",
@@ -284,7 +284,7 @@ app.post("/userDetails/update", (req, res) => {
                             }
                             else { // eth address is available
                                 // eth addr is available + sol addr is available -- therefore make changes!
-                                user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic });
+                                user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                 return res.json({
                                     success: true,
                                     message: "Changes saved",
@@ -376,17 +376,19 @@ app.get("/isLoggedIn", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(e);
     }
 }));
-app.post("/promocode", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { promoCode } = req.body;
-        yield PromoCode_1.default.build({ promoCode: promoCode }).save();
-        res.send("Promo code added");
-    }
-    catch (e) {
-        res.status(500).json({ success: false, message: "Server Error" });
-        console.log(e);
-    }
-}));
+// app.post("/promocode", async (req, res) => {
+//     try {
+//         for (let i = 0; i < 101; i++) {
+//             let promoCode = Math.random().toString(36).slice(6);
+//             console.log(promoCode)
+//             await PromoCode.build({ promoCode: promoCode }).save()
+//         }
+//         return res.send("Promo cods added")
+//     } catch (e) {
+//         res.status(500).json({ success: false, message: "Server Error" })
+//         return console.log(e)
+//     }
+// })
 app.post("/login/sol", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { signedMessage, message, address, publicKey } = req.body;
