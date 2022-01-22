@@ -76,6 +76,9 @@ label.smtext-2xl {
 }
 
 @media (max-width: 500px) {
+  body {
+    font-size: 14px
+  }
   .buyHomePage {
   display: block
 }
@@ -170,9 +173,6 @@ font-weight: 600;
 }
 
 @media (max-width: 640px) {
-  body {
-    font-size: 14px
-  }
   .text-5xl {
     font-size: 2rem;
     line-height: 2.25rem

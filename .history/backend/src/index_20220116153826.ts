@@ -348,19 +348,19 @@ app.get("/isLoggedIn", async (req, res) => {
     }
 })
 
-// app.post("/promocode", async (req, res) => {
-//     try {
-//         for (let i = 0; i < 101; i++) {
-//             let promoCode = Math.random().toString(36).slice(6);
-//             console.log(promoCode)
-//             await PromoCode.build({ promoCode: promoCode }).save()
-//         }
-//         return res.send("Promo cods added")
-//     } catch (e) {
-//         res.status(500).json({ success: false, message: "Server Error" })
-//         return console.log(e)
-//     }
-// })
+app.post("/promocode", async (req, res) => {
+    try {
+        for (let i = 0; i < 101; i++) {
+            let promoCode = Math.random().toString(36).slice(6);
+            console.log(promoCode)
+            await PromoCode.build({ promoCode: promoCode }).save()
+        }
+        return res.send("Promo codes added")
+    } catch (e) {
+        res.status(500).json({ success: false, message: "Server Error" })
+        return console.log(e)
+    }
+})
 
 
 app.post("/login/sol", async (req, res) => {

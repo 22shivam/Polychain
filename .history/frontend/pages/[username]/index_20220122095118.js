@@ -58,7 +58,6 @@ export default function UserPayment() {
     const [currencies, setCurrencies] = useState([])
     const [loading, setLoading] = useState(true)
     const [accountExists, setAccountExists] = useState(false)
-    const [displayedAddress, setDisplayedAddress] = useState("")
 
     useEffect(() => {
         (async () => {
@@ -81,25 +80,21 @@ export default function UserPayment() {
                     coinbaseResponse = await coinbaseResponse.json()
                     const USDPerETH = coinbaseResponse.data.rates.USD
                     setUSDPerCurrency(USDPerETH)
-                    setDisplayedAddress(ETHAddress)
                 } else if (selectedCurrency.name === "SOL") {
                     let coinbaseResponse = await fetch(COINBASE_URL_SOL)
                     coinbaseResponse = await coinbaseResponse.json()
                     const USDPerETH = coinbaseResponse.data.rates.USD
                     setUSDPerCurrency(USDPerETH)
-                    setDisplayedAddress(SOLAddress)
                 } else if (selectedCurrency.name === "BTC") {
                     let coinbaseResponse = await fetch(COINBASE_URL_BTC)
                     coinbaseResponse = await coinbaseResponse.json()
                     const USDPerETH = coinbaseResponse.data.rates.USD
                     setUSDPerCurrency(USDPerETH)
-                    setDisplayedAddress(BTCAddress)
                 } else if (selectedCurrency.name === "DESO") {
                     let coinbaseResponse = await fetch(COINBASE_URL_DESO)
                     coinbaseResponse = await coinbaseResponse.json()
                     const USDPerETH = coinbaseResponse.data.rates.USD
                     setUSDPerCurrency(USDPerETH)
-                    setDisplayedAddress(DESOAddress)
                 }
             } catch (e) {
                 toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
@@ -220,12 +215,10 @@ export default function UserPayment() {
                         <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">{bio}</CustomLabel>
                     </div>
                 </div>
-
-                <div className="flex flex-row justify-between mt-6 mb-1 items-center">
-                    <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold text-sm text-gray-400">{displayedAddress}</CustomLabel>
-                    <img onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(displayedAddress) }} style={{ height: "16px", width: "16px" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
+                <div className="flex flex-row justify-center">
+                    <span>Address</span>
                 </div>
-                <div className="flex flex-row justify-center mb-6">
+                <div className="flex justify-center my-6">
                     {/* <span className="border border-gray-300 shadow-sm border-r-0 rounded-l-md px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-semibold">localhost:3000/</span> */}
                     <div className="flex flex-col">
                         <CustomInput inputMode="decimal" placeholder="Amount" value={payValue} onChange={(e) => { setPayValue(e.target.value) }} name="field_name" className="px-1 sm:px-2 ml-0 mr-1.5 sm:mr-4 input-placeholder py-3" type="text" />
@@ -238,7 +231,6 @@ export default function UserPayment() {
                     </div>
 
                 </div>
-
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 

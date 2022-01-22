@@ -220,25 +220,25 @@ export default function UserPayment() {
                         <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">{bio}</CustomLabel>
                     </div>
                 </div>
-
-                <div className="flex flex-row justify-between mt-6 mb-1 items-center">
-                    <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold text-sm text-gray-400">{displayedAddress}</CustomLabel>
-                    <img onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(displayedAddress) }} style={{ height: "16px", width: "16px" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
-                </div>
-                <div className="flex flex-row justify-center mb-6">
-                    {/* <span className="border border-gray-300 shadow-sm border-r-0 rounded-l-md px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-semibold">localhost:3000/</span> */}
-                    <div className="flex flex-col">
-                        <CustomInput inputMode="decimal" placeholder="Amount" value={payValue} onChange={(e) => { setPayValue(e.target.value) }} name="field_name" className="px-1 sm:px-2 ml-0 mr-1.5 sm:mr-4 input-placeholder py-3" type="text" />
-                        <CustomLabel className="text-gray-500 sm:text-normal mx-0 px-0">USD {parseFloat((USDPerCurrency * payValue)).toFixed(3)}</CustomLabel>
+                <div className="flex flex-col">
+                    <div className="flex flex-row justify-between mt-6 mb-1 items-center">
+                        <CustomLabel style={{ fontSize: "0.875rem" }} className="font-semibold text-sm text-gray-400">{displayedAddress}</CustomLabel>
+                        <img style={{ height: "16px", width: "16px" }} src="/images/clipboard.png"></img>
                     </div>
+                    <div className="flex flex-row justify-center mb-6">
+                        {/* <span className="border border-gray-300 shadow-sm border-r-0 rounded-l-md px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-semibold">localhost:3000/</span> */}
+                        <div className="flex flex-col">
+                            <CustomInput inputMode="decimal" placeholder="Amount" value={payValue} onChange={(e) => { setPayValue(e.target.value) }} name="field_name" className="px-1 sm:px-2 ml-0 mr-1.5 sm:mr-4 input-placeholder py-3" type="text" />
+                            <CustomLabel className="text-gray-500 sm:text-normal mx-0 px-0">USD {parseFloat((USDPerCurrency * payValue)).toFixed(3)}</CustomLabel>
+                        </div>
 
-                    <div className="flex flex-col">
-                        <CurrencySelector currencies={currencies.length == 0 ? defaultCurrencies : currencies} selected={selectedCurrency} setSelected={setSelectedCurrency}></CurrencySelector>
-                        <CustomLabel className="text-gray-500 text-normal px-0"> 1 {selectedCurrency.name} = USD {parseFloat(USDPerCurrency).toFixed(3)}</CustomLabel>
+                        <div className="flex flex-col">
+                            <CurrencySelector currencies={currencies.length == 0 ? defaultCurrencies : currencies} selected={selectedCurrency} setSelected={setSelectedCurrency}></CurrencySelector>
+                            <CustomLabel className="text-gray-500 text-normal px-0"> 1 {selectedCurrency.name} = USD {parseFloat(USDPerCurrency).toFixed(3)}</CustomLabel>
+                        </div>
+
                     </div>
-
                 </div>
-
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
