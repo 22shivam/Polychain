@@ -6,8 +6,6 @@ import { validate } from "bitcoin-address-validation"
 import imageCompression from 'browser-image-compression';
 import toastError from "../lib/toastError";
 import toastSuccess from "../lib/toastSuccess";
-import CustomButton from "./components/customButton";
-import DropDownComponent from "./components/DropDown";
 import { ToastContainer, toast } from 'react-toastify';
 import CustomInput from './components/customInput';
 import CustomLabel from './components/customLabel';
@@ -15,6 +13,7 @@ import * as web3 from '@solana/web3.js'
 import CustomBrandedButton from './components/customBrandedButton';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
+import Header from './components/Header';
 
 function validSolAddress(s) {
     try {
@@ -280,81 +279,6 @@ export default function UserDashboard() {
         }
     }
 
-
-    const ethLogin = async (e) => {
-        try {
-            if (!window.ethereum) {
-                window.open(`https://metamask.io/`, "_blank");
-                return toastError('No Ethereum Crypto wallet found. Please install one like Metamask.')
-            }
-            const accounts = await window.ethereum.request({
-                method: "wallet_requestPermissions",
-                params: [{
-                    eth_accounts: {}
-                }]
-            }).then(() => ethereum.request({
-                method: 'eth_requestAccounts'
-            }))
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const message = `Logging in.... \n \n Random ID: ${Math.random().toString(36).slice(2)}`
-            const signature = await signer.signMessage(message)
-            const requestObject = {
-                signature,
-                message,
-                address: accounts[0]
-            }
-            const loginResponse = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login/eth`, requestObject)
-
-            if (!loginResponse.success) {
-                toastError('Login Failed')
-            }
-
-            if (loginResponse.success) {
-                toastSuccess('Login Successful')
-                setUserAccount({ address: loginResponse.address, blockchain: "eth" })
-            }
-
-        } catch (err) { toastError(err.message) }
-
-    }
-
-    const solLogin = async (e) => {
-        try {
-            const provider = await (async () => {
-                if ("solana" in window) {
-                    await window.solana.connect();
-                    const provider = window.solana;
-                    return provider
-                } else {
-                    window.open("https://www.phantom.app/", "_blank");
-                }
-            })()
-            const message = `Logging in.... \n \n Random ID: ${Math.random().toString(36).slice(2)}`
-            const encodedMessage = new TextEncoder().encode(message);
-            const signedMessage = await window.solana.signMessage(encodedMessage, "utf8")
-
-            const requestObject = {
-                signedMessage: signedMessage,
-                message,
-                address: signedMessage.publicKey.toBytes(),
-                publicKey: signedMessage.publicKey.toBase58()
-
-            }
-            const loginResponse = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login/sol`, requestObject)
-
-            if (!loginResponse.success) {
-                toastError('Login Failed')
-            }
-
-            if (loginResponse.success) {
-                toastSuccess('Login Successful')
-                setUserAccount({ address: loginResponse.address, blockchain: "sol" })
-            }
-
-        } catch (err) { toastError(err.message) }
-    }
-
     const redirectToProfile = () => {
         router.push(`/${username}`);
     }
@@ -382,31 +306,9 @@ export default function UserDashboard() {
                 draggable
                 style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
             />
-            <div className="flex flex-row shadow-md py-1 px-2 w-screen" id="nav_bar">
-                <div onClick={() => { router.push("/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
-                    <img className="" src="/croppedPolychainLogo.png" alt="Polychain Logo" width="150" />
-                </div>
-                <div className="grow" id="spacer">  </div>
-                <div className="grow-0 my-2 sm:mr-4 flex" id="right_nav_bar">
-                    {userAccount.address ?
-                        <div className="flex flex-row">
-                            {/* <CustomButton onClick={goToDashboard}>Dashboard</CustomButton> */}
-                            {/* <h1><Link href="/dashboard">Dashboard</Link></h1> */}
-                            <CustomBrandedButton onClick={redirectToProfile} className="">View Profile</CustomBrandedButton>
-                            <CustomButton onClick={handleLogout}>Logout</CustomButton>
-                        </div>
-                        : (
-                            <div>
-                                <DropDownComponent primaryLabel="Login" label1="Ethereum" label2="Solana" label1onClick={ethLogin} label2onClick={solLogin} />
-                            </div>
-                        )}
-
-
-                </div>
-            </div>
+            <Header brandedButtonLabel="View Profile" brandedButtonCallback={redirectToProfile} />
             {userAccount.address ? hasUsername ?
                 <main id="dashboard" className='flex flex-col items-center mt-10 mb-20 w-screen justify-center'>
-
                     <CustomLabel className="text-xl smtext-2xl mb-3">Update Profile Information</CustomLabel>
                     <div className='flex flex-col w-screen items-center' id="form">
 
@@ -523,7 +425,8 @@ export default function UserDashboard() {
                         </div>
 
                     </div>
-                </main> : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
+                </main>
+                : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
 
         </div>
     )
