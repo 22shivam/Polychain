@@ -70,7 +70,6 @@ export default function UserPayment() {
     const [redditUrl, setRedditUrl] = useState("");
     const [snapchatUrl, setSnapchatUrl] = useState("");
     const [fullName, setFullName] = useState("");
-    const [anySocialUrl, setAnySocialUrl] = useState(false);
 
 
     useEffect(() => {
@@ -173,43 +172,33 @@ export default function UserPayment() {
                     }
                     if (response.user.twitterUsername && response.user.twitterUsername != "") {
                         setTwitterUrl("https://twitter.com/" + response.user.twitterUsername)
-                        setAnySocialUrl(true)
                     }
                     if (response.user.instagramUsername && response.user.instagramUsername != "") {
                         setInstagramUrl("https://instagram.com/" + response.user.instagramUsername)
-                        setAnySocialUrl(true)
                     }
                     if (response.user.githubUsername && response.user.githubUsername != "") {
                         setGithubUrl("https://github.com/" + response.user.githubUsername)
-                        setAnySocialUrl(true)
                     }
                     if (response.user.facebookUsername && response.user.facebookUsername != "") {
                         setFacebookUrl("https://facebook.com/" + response.user.facebookUsername)
-                        setAnySocialUrl(true)
                     }
                     if (response.user.youtubeUsername && response.user.youtubeUsername != "") {
                         setYoutubeUrl("https://youtube.com/" + response.user.youtubeUsername)
-                        setAnySocialUrl(true)
                     }
                     if (response.user.linkedinUsername && response.user.linkedinUsername != "") {
-                        setLinkedinUrl("https://linkedin.com/in/" + response.user.linkedinUsername)
-                        setAnySocialUrl(true)
+                        setLinkedinUrl("https://linkedin.com/" + response.user.linkedinUsername)
                     }
                     if (response.user.pinterestUsername && response.user.pinterestUsername != "") {
                         setPinterestUrl("https://pinterest.com/" + response.user.pinterestUsername)
-                        setAnySocialUrl(true)
                     }
                     if (response.user.redditUsername && response.user.redditUsername != "") {
-                        setRedditUrl("https://reddit.com/u/" + response.user.redditUsername)
-                        setAnySocialUrl(true)
+                        setRedditUrl("https://reddit.com/" + response.user.redditUsername)
                     }
                     if (response.user.snapchatUsername && response.user.snapchatUsername != "") {
-                        setSnapchatUrl("https://snapchat.com/add/" + response.user.snapchatUsername)
-                        setAnySocialUrl(true)
+                        setSnapchatUrl("https://snapchat.com/" + response.user.snapchatUsername)
                     }
                     if (response.user.tiktokUsername && response.user.tiktokUsername != "") {
-                        setTiktokUrl("https://tiktok.com/@" + response.user.tiktokUsername)
-                        setAnySocialUrl(true)
+                        setTikTokUrl("https://tiktok.com/" + response.user.tiktokUsername)
                     }
 
                     setSelectedCurrency(currencyArray[0])
@@ -274,22 +263,24 @@ export default function UserPayment() {
                         <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : ""}
                     <div className="flex flex-col ml-2">
                         {fullName ? <CustomLabel className="px-0">{fullName}</CustomLabel> : <CustomLabel className="px-0">{username}</CustomLabel>}
+
                         <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">{bio}</CustomLabel>
                     </div>
                 </div>
 
-                {anySocialUrl ? <div className="flex flex-row justify-center mt-4 items-center">
-                    {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="/images/facebook.svg" width="30"></img></a> : ""}
-                    {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="/images/instagram.svg" width="30"></img></a> : ""}
-                    {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="/images/github.svg" width="30"></img></a> : ""}
-                    {linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><img src="/images/linkedin.svg" width="30"></img></a> : ""}
-                    {redditUrl ? <a href={redditUrl} target="_blank" rel="noopener noreferrer"><img src="/images/reddit.svg" width="30"></img></a> : ""}
-                    {snapchatUrl ? <a href={snapchatUrl} target="_blank" rel="noopener noreferrer"><img src="/images/snapchat.svg" width="30"></img></a> : ""}
-                    {tiktokUrl ? <a href={tiktokUrl} target="_blank" rel="noopener noreferrer"><img src="/images/tiktok.svg" width="30"></img></a> : ""}
-                    {pinterestUrl ? <a href={pinterestUrl} target="_blank" rel="noopener noreferrer"><img src="/images/pinterest.svg" width="30"></img></a> : ""}
-                    {twitterUrl ? <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><img src="/images/twitter.svg" width="30"></img></a> : ""}
-                    {youtubeUrl ? <a href={youtubeUrl} target="_blank" rel="noopener noreferrer"><img src="/images/youtube.svg" width="30"></img></a> : ""}
-                </div> : ""}
+                <div className="flex flex-row justify-center mt-4 items-center">
+                    <img style={{ height: "30px" }} src="/images/facebook.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/twitter.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/reddit.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/tiktok.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/pinterest.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/github.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/instagram.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/snapchat.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/linkedin.svg"></img>
+                    <img style={{ height: "30px" }} src="/images/youtube.svg"></img>
+
+                </div>
 
                 <div className="flex flex-row justify-between mt-6 mb-1 items-center">
                     <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold text-sm text-gray-400">{displayedAddress}</CustomLabel>

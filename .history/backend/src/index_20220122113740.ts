@@ -235,7 +235,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                                     // eth addr is available + sol addr is available -- therefore make changes!
                                     res.clearCookie("token") // NO RETURN here as need to make updates
 
-                                    user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
+                                    user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic })
                                     return res.json({
                                         success: true,
                                         message: "Changes saved",
@@ -255,7 +255,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                             } else { // eth address is available
                                 // eth addr is available + sol addr is available -- therefore make changes!
 
-                                user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
+                                user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic })
                                 return res.json({
                                     success: true,
                                     message: "Changes saved",

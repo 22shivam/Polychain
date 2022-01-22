@@ -192,7 +192,7 @@ export default function UserPayment() {
                         setAnySocialUrl(true)
                     }
                     if (response.user.linkedinUsername && response.user.linkedinUsername != "") {
-                        setLinkedinUrl("https://linkedin.com/in/" + response.user.linkedinUsername)
+                        setLinkedinUrl("https://linkedin.com/" + response.user.linkedinUsername)
                         setAnySocialUrl(true)
                     }
                     if (response.user.pinterestUsername && response.user.pinterestUsername != "") {

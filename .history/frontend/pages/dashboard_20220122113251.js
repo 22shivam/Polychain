@@ -136,17 +136,6 @@ export default function UserDashboard() {
                     setBTCAddress(response.user.BTCAddress || "")
                     setBio(response.user.bio || "")
                     setProfilePic(response.user.profilePic)
-                    setFullName(response.user.fullName || "")
-                    setTwitterUsername(response.user.twitterUsername || "")
-                    setGithubUsername(response.user.githubUsername || "")
-                    setFacebookUsername(response.user.facebookUsername || "")
-                    setInstagramUsername(response.user.instagramUsername || "")
-                    setTiktokUsername(response.user.tiktokUsername || "")
-                    setYoutubeUsername(response.user.youtubeUsername || "")
-                    setLinkedinUsername(response.user.linkedinUsername || "")
-                    setPinterestUsername(response.user.pinterestUsername || "")
-                    setRedditUsername(response.user.redditUsername || "")
-                    setSnapchatUsername(response.user.snapchatUsername || "")
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)
@@ -210,7 +199,6 @@ export default function UserDashboard() {
                 pinterestUsername,
                 redditUsername,
                 snapchatUsername,
-                fullName
             })
             if (!response.success) {
                 if (response.isNotLoggedIn) {
@@ -409,11 +397,6 @@ export default function UserDashboard() {
 
                     <CustomLabel className="text-xl smtext-2xl mb-3">Update Profile Information</CustomLabel>
                     <div className='flex flex-col w-screen items-center' id="form">
-
-                        <div className='flex flex-col mt-4 items-start'>
-                            <CustomLabel className="ml-2">Full Name:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={fullName} onChange={(e) => setFullName((e.target.value))} placeholder="enter full name" />
-                        </div>
 
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Bio:</CustomLabel>

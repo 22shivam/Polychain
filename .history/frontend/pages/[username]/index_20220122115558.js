@@ -192,7 +192,7 @@ export default function UserPayment() {
                         setAnySocialUrl(true)
                     }
                     if (response.user.linkedinUsername && response.user.linkedinUsername != "") {
-                        setLinkedinUrl("https://linkedin.com/in/" + response.user.linkedinUsername)
+                        setLinkedinUrl("https://linkedin.com/" + response.user.linkedinUsername)
                         setAnySocialUrl(true)
                     }
                     if (response.user.pinterestUsername && response.user.pinterestUsername != "") {
@@ -200,11 +200,11 @@ export default function UserPayment() {
                         setAnySocialUrl(true)
                     }
                     if (response.user.redditUsername && response.user.redditUsername != "") {
-                        setRedditUrl("https://reddit.com/u/" + response.user.redditUsername)
+                        setRedditUrl("https://reddit.com/" + response.user.redditUsername)
                         setAnySocialUrl(true)
                     }
                     if (response.user.snapchatUsername && response.user.snapchatUsername != "") {
-                        setSnapchatUrl("https://snapchat.com/add/" + response.user.snapchatUsername)
+                        setSnapchatUrl("https://snapchat.com/add" + response.user.snapchatUsername)
                         setAnySocialUrl(true)
                     }
                     if (response.user.tiktokUsername && response.user.tiktokUsername != "") {

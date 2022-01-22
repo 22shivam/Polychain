@@ -147,6 +147,7 @@ export default function UserDashboard() {
                     setPinterestUsername(response.user.pinterestUsername || "")
                     setRedditUsername(response.user.redditUsername || "")
                     setSnapchatUsername(response.user.snapchatUsername || "")
+
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)

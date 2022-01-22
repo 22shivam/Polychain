@@ -52,17 +52,16 @@ export default function UserDashboard() {
     const [ETHAddress, setETHAddress] = useState("");
     const [SOLAddress, setSOLAddress] = useState("");
     const [profilePic, setProfilePic] = useState("");
-    const [twitterUsername, setTwitterUsername] = useState("");
-    const [githubUsername, setGithubUsername] = useState("");
-    const [facebookUsername, setFacebookUsername] = useState("");
-    const [instagramUsername, setInstagramUsername] = useState("");
-    const [tiktokUsername, setTiktokUsername] = useState("");
-    const [youtubeUsername, setYoutubeUsername] = useState("");
-    const [linkedinUsername, setLinkedinUsername] = useState("");
-    const [pinterestUsername, setPinterestUsername] = useState("");
-    const [redditUsername, setRedditUsername] = useState("");
-    const [snapchatUsername, setSnapchatUsername] = useState("");
-    const [fullName, setFullName] = useState("");
+    const [twitterUrl, setTwitterUrl] = useState("");
+    const [githubUrl, setGithubUrl] = useState("");
+    const [facebookUrl, setFacebookUrl] = useState("");
+    const [instagramUrl, setInstagramUrl] = useState("");
+    const [tiktokUrl, setTiktokUrl] = useState("");
+    const [youtubeUrl, setYoutubeUrl] = useState("");
+    const [linkedinUrl, setLinkedinUrl] = useState("");
+    const [pinterestUrl, setPinterestUrl] = useState("");
+    const [redditUrl, setRedditUrl] = useState("");
+    const [snapchatUrl, setSnapchatUrl] = useState("");
     const [loading, setLoading] = useState(true)
 
     // handling logouts
@@ -136,17 +135,6 @@ export default function UserDashboard() {
                     setBTCAddress(response.user.BTCAddress || "")
                     setBio(response.user.bio || "")
                     setProfilePic(response.user.profilePic)
-                    setFullName(response.user.fullName || "")
-                    setTwitterUsername(response.user.twitterUsername || "")
-                    setGithubUsername(response.user.githubUsername || "")
-                    setFacebookUsername(response.user.facebookUsername || "")
-                    setInstagramUsername(response.user.instagramUsername || "")
-                    setTiktokUsername(response.user.tiktokUsername || "")
-                    setYoutubeUsername(response.user.youtubeUsername || "")
-                    setLinkedinUsername(response.user.linkedinUsername || "")
-                    setPinterestUsername(response.user.pinterestUsername || "")
-                    setRedditUsername(response.user.redditUsername || "")
-                    setSnapchatUsername(response.user.snapchatUsername || "")
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)
@@ -199,18 +187,7 @@ export default function UserDashboard() {
                 DESOAddress,
                 BTCAddress,
                 bio,
-                profilePic,
-                twitterUsername,
-                githubUsername,
-                facebookUsername,
-                instagramUsername,
-                tiktokUsername,
-                youtubeUsername,
-                linkedinUsername,
-                pinterestUsername,
-                redditUsername,
-                snapchatUsername,
-                fullName
+                profilePic
             })
             if (!response.success) {
                 if (response.isNotLoggedIn) {
@@ -411,11 +388,6 @@ export default function UserDashboard() {
                     <div className='flex flex-col w-screen items-center' id="form">
 
                         <div className='flex flex-col mt-4 items-start'>
-                            <CustomLabel className="ml-2">Full Name:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={fullName} onChange={(e) => setFullName((e.target.value))} placeholder="enter full name" />
-                        </div>
-
-                        <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Bio:</CustomLabel>
                             <CustomInput maxLength="160" className="my-1 w-72 sm:w-96" type="text" value={bio} onChange={(e) => setBio((e.target.value).slice(0, 160))} placeholder="enter bio" />
                         </div>
@@ -480,45 +452,45 @@ export default function UserDashboard() {
                         </div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Twitter Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={twitterUsername} onChange={(e) => setTwitterUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={twitterUrl} onChange={(e) => setTwitterUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Facebook Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={facebookUsername} onChange={(e) => setFacebookUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={facebookUrl} onChange={(e) => setFacebookUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Instagram Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={instagramUsername} onChange={(e) => setInstagramUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={instagramUrl} onChange={(e) => setInstagramUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Pinterest Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={pinterestUsername} onChange={(e) => setPinterestUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={pinterestUrl} onChange={(e) => setPinterestUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Reddit Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={redditUsername} onChange={(e) => setRedditUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={redditUrl} onChange={(e) => setRedditUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Youtube Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={youtubeUsername} onChange={(e) => setYoutubeUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={youtubeUrl} onChange={(e) => setYoutubeUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Linkedin Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={linkedinUsername} onChange={(e) => setLinkedinUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={linkedinUrl} onChange={(e) => setLinkedinUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Tiktok Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tiktokUsername} onChange={(e) => setTiktokUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tiktokUrl} onChange={(e) => setTiktokUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Github Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={githubUsername} onChange={(e) => setGithubUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={githubUrl} onChange={(e) => setGithubUrl((e.target.value))}
                                 placeholder="enter username" /></div>
                         <div className='flex flex-col mt-4 items-start'>
                             <CustomLabel className="ml-2">Snapchat Username:</CustomLabel>
-                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={snapchatUsername} onChange={(e) => setSnapchatUsername((e.target.value))}
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={snapchatUrl} onChange={(e) => setSnapchatUrl((e.target.value))}
                                 placeholder="enter username" /></div>
-                        <div className='flex flex-row justify-around mt-5'>
+                        <div className='flex flex-row justify-around'>
                             <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
                         </div>
 

@@ -57,51 +57,46 @@ const UserSchema = new mongoose.Schema({
         required: false,
         default: ""
     },
-    twitterUsername: {
+    twitterUrl: {
         type: String,
         required: false,
     },
-    facebookUsername: {
+    facebookUrl: {
         type: String,
         required: false,
     },
-    instagramUsername: {
+    instagramUrl: {
         type: String,
         required: false,
     },
-    linkedinUsername: {
+    linkedinUrl: {
         type: String,
         required: false,
     },
-    youtubeUsername: {
+    youtubeUrl: {
         type: String,
         required: false,
     },
-    githubUsername: {
+    githubUrl: {
         type: String,
         required: false,
     },
-    redditUsername: {
+    redditUrl: {
         type: String,
         required: false,
     },
-    tiktokUsername: {
+    tiktokUrl: {
         type: String,
         required: false,
     },
-    snapchatUsername: {
+    snapchatUrl: {
         type: String,
         required: false,
     },
-    pinterestUsername: {
+    pinterestUrl: {
         type: String,
         required: false,
     },
-    fullName: {
-        type: String,
-        required: false,
-    },
-
 
 
     // twitterLink: {

@@ -192,7 +192,7 @@ export default function UserPayment() {
                         setAnySocialUrl(true)
                     }
                     if (response.user.linkedinUsername && response.user.linkedinUsername != "") {
-                        setLinkedinUrl("https://linkedin.com/in/" + response.user.linkedinUsername)
+                        setLinkedinUrl("https://linkedin.com/" + response.user.linkedinUsername)
                         setAnySocialUrl(true)
                     }
                     if (response.user.pinterestUsername && response.user.pinterestUsername != "") {
@@ -200,15 +200,15 @@ export default function UserPayment() {
                         setAnySocialUrl(true)
                     }
                     if (response.user.redditUsername && response.user.redditUsername != "") {
-                        setRedditUrl("https://reddit.com/u/" + response.user.redditUsername)
+                        setRedditUrl("https://reddit.com/" + response.user.redditUsername)
                         setAnySocialUrl(true)
                     }
                     if (response.user.snapchatUsername && response.user.snapchatUsername != "") {
-                        setSnapchatUrl("https://snapchat.com/add/" + response.user.snapchatUsername)
+                        setSnapchatUrl("https://snapchat.com/" + response.user.snapchatUsername)
                         setAnySocialUrl(true)
                     }
                     if (response.user.tiktokUsername && response.user.tiktokUsername != "") {
-                        setTiktokUrl("https://tiktok.com/@" + response.user.tiktokUsername)
+                        setTiktokUrl("https://tiktok.com/" + response.user.tiktokUsername)
                         setAnySocialUrl(true)
                     }
 
@@ -278,7 +278,7 @@ export default function UserPayment() {
                     </div>
                 </div>
 
-                {anySocialUrl ? <div className="flex flex-row justify-center mt-4 items-center">
+                {/* {anySocialUrl ? <div className="flex flex-row justify-center mt-4 items-center">
                     {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="/images/facebook.svg" width="30"></img></a> : ""}
                     {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="/images/instagram.svg" width="30"></img></a> : ""}
                     {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="/images/github.svg" width="30"></img></a> : ""}
@@ -289,7 +289,7 @@ export default function UserPayment() {
                     {pinterestUrl ? <a href={pinterestUrl} target="_blank" rel="noopener noreferrer"><img src="/images/pinterest.svg" width="30"></img></a> : ""}
                     {twitterUrl ? <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><img src="/images/twitter.svg" width="30"></img></a> : ""}
                     {youtubeUrl ? <a href={youtubeUrl} target="_blank" rel="noopener noreferrer"><img src="/images/youtube.svg" width="30"></img></a> : ""}
-                </div> : ""}
+                </div> : ""} */}
 
                 <div className="flex flex-row justify-between mt-6 mb-1 items-center">
                     <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold text-sm text-gray-400">{displayedAddress}</CustomLabel>
