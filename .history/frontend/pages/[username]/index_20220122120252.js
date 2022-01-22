@@ -293,7 +293,7 @@ export default function UserPayment() {
 
                 <div className="flex flex-row justify-between mt-6 mb-1 items-center">
                     <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold text-sm text-gray-400">{displayedAddress}</CustomLabel>
-                    <img onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(displayedAddress) }} style={{ height: "16px", width: "16px", cursor: "pointer" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
+                    <img onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(displayedAddress) }} style={{ height: "16px", width: "16px" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
                 </div>
                 <div className="flex flex-row justify-center mb-6">
                     {/* <span className="border border-gray-300 shadow-sm border-r-0 rounded-l-md px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-semibold">localhost:3000/</span> */}
