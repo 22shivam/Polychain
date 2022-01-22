@@ -212,3 +212,11 @@ font-weight: 500
 }
 
 }
+
+.script-textarea {
+  resize: none;
+  width: 500px;
+  height: 100px;
+  overflow: hidden;
+  outline: none;
+}
