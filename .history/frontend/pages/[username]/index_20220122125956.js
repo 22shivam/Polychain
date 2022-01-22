@@ -279,16 +279,16 @@ export default function UserPayment() {
                 </div>
 
                 {anySocialUrl ? <div className="flex flex-row justify-center mt-4 items-center">
-                    {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="images/Facebook.svg" width="30"></img></a> : ""}
-                    {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="Instagram.png" width="30"></img></a> : ""}
-                    {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="Github.png" width="30"></img></a> : ""}
-                    {linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><img src="Linkedin.png" width="30"></img></a> : ""}
-                    {redditUrl ? <a href={redditUrl} target="_blank" rel="noopener noreferrer"><img src="Reddit.png" width="30"></img></a> : ""}
-                    {snapchatUrl ? <a href={snapchatUrl} target="_blank" rel="noopener noreferrer"><img src="Snapchat.png" width="30"></img></a> : ""}
-                    {tiktokUrl ? <a href={tiktokUrl} target="_blank" rel="noopener noreferrer"><img src="Tiktok.png" width="30"></img></a> : ""}
-                    {pinterestUrl ? <a href={pinterestUrl} target="_blank" rel="noopener noreferrer"><img src="Pinterest.png" width="30"></img></a> : ""}
-                    {twitterUrl ? <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><img src="Twitter.png" width="30"></img></a> : ""}
-                    {youtubeUrl ? <a href={youtubeUrl} target="_blank" rel="noopener noreferrer"><img src="Youtube.png" width="30"></img></a> : ""}
+                    {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="images/facebook.svg" width="30"></img></a> : ""}
+                    {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="instagram.png" width="30"></img></a> : ""}
+                    {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="github.png" width="30"></img></a> : ""}
+                    {linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><img src="linkedin.png" width="30"></img></a> : ""}
+                    {redditUrl ? <a href={redditUrl} target="_blank" rel="noopener noreferrer"><img src="reddit.png" width="30"></img></a> : ""}
+                    {snapchatUrl ? <a href={snapchatUrl} target="_blank" rel="noopener noreferrer"><img src="snapchat.png" width="30"></img></a> : ""}
+                    {tiktokUrl ? <a href={tiktokUrl} target="_blank" rel="noopener noreferrer"><img src="tiktok.png" width="30"></img></a> : ""}
+                    {pinterestUrl ? <a href={pinterestUrl} target="_blank" rel="noopener noreferrer"><img src="pinterest.png" width="30"></img></a> : ""}
+                    {twitterUrl ? <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><img src="twitter.png" width="30"></img></a> : ""}
+                    {youtubeUrl ? <a href={youtubeUrl} target="_blank" rel="noopener noreferrer"><img src="youtube.png" width="30"></img></a> : ""}
                 </div> : ""}
 
                 <div className="flex flex-row justify-between mt-6 mb-1 items-center">
