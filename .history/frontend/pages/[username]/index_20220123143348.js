@@ -14,7 +14,7 @@ import Link from "next/link";
 import CustomBrandedButton from "../components/customBrandedButton";
 import Image from "next/image";
 import Head from "next/head";
-import Loading from "../components/Loading";
+import Loading from "../components/loading";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"

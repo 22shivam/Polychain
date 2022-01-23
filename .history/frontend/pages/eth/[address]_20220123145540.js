@@ -10,7 +10,7 @@ import toastSuccess from "../../lib/toastSuccess";
 import toastError from "../../lib/toastError";
 import { useState, useEffect } from "react";
 import transferEth from "../../lib/transferEth";
-import Loading from "../components/Loading";
+import Loading from "../components/loading";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 
