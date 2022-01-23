@@ -50,6 +50,7 @@ app.post('/api/tweet', async (req, res) => {
         res.json({ data: info, success: true });
     } catch (e) {
         res.json({
+            error: e.message,
             success: false
         })
     }

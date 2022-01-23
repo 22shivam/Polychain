@@ -12,7 +12,6 @@ import { useState, useEffect } from "react";
 import transferEth from "../../lib/transferEth";
 import Loading from "../components/Loading";
 import Identicon from 'react-identicons';
-import Page from "../components/Page";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 
@@ -70,11 +69,7 @@ export default function ETHGateway() {
 
     if (!ethers.utils.isAddress(address)) {
         // TODO: create base page
-        return (
-            <Page>
-                <CustomLabel className="mt-4 self-center">Invalid Address</CustomLabel>
-            </Page>
-        )
+        return <div>Invalid address</div>
     }
 
     const transferAmount = async () => {
@@ -109,9 +104,9 @@ export default function ETHGateway() {
                 <div id="profile_header mt-6" className="flex flex-row items-start">
 
                     {/* <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> */}
-                    <div className="flex flex-row items-center justify-between mb-5 ml-2 cursor-pointer flex-1" onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(address) }}>
-                        <Identicon className="rounded-full object-cover" string={address} size={50} />
-                        <CustomLabel className="px-0 sm-address-overflow">{address}</CustomLabel>
+                    <div className="flex flex-row items-center justify-center mb-5 ml-2 cursor-pointer" onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(address) }}>
+                        <Identicon string={address} size={50} />
+                        <CustomLabel className="px-0 xsm-address-overflow sm:sm-address-overflow">{address}</CustomLabel>
                         <img style={{ height: "16px", width: "16px", cursor: "pointer" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
                         {/* <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0"></CustomLabel> */}
                     </div>

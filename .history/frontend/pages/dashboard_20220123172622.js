@@ -268,7 +268,7 @@ export default function UserDashboard() {
 
             console.log(resp.data.ens)
 
-            return setAddresses(resp.data)
+            return setETHAddress(resp.data)
 
         } catch (e) {
             toastError(e.message)

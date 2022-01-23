@@ -47,12 +47,13 @@ app.post('/api/tweet', async (req, res) => {
     try {
         const { tweetURL } = req.body
         const info = await fetchTweet(tweetURL);
-        res.json({ data: info, success: true });
+        res.json({ data: info, success: true })
+    });
     } catch (e) {
-        res.json({
-            success: false
-        })
-    }
+    res.json({
+        success: false
+    })
+}
 });
 
 

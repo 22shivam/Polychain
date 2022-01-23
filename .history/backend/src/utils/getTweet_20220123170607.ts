@@ -9,7 +9,8 @@ function getEth(str: string) {
 }
 
 function getEns(str: string) {
-    return str.match(/[0-9A-Za-z]+.eth/g);
+    const texts = str.split(' ');
+    return texts.filter(word => word.substr(word.length - 4) == '.eth');
 }
 
 async function fetchTweet(url: string) {
@@ -59,7 +60,7 @@ async function fetchTweet(url: string) {
         }
     }
 
-    addrs = addrs.filter(addr => ethers.utils.isAddress(addr));
+    addrs = addrs.filter(addr => !ethers.utils.isAddress(addr));
 
     return {
         ens: enss,

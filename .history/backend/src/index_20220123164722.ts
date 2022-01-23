@@ -43,15 +43,12 @@ function validSolAddress(s: any) {
     }
 }
 
-app.post('/api/tweet', async (req, res) => {
+app.get('/api/tweet/:url', async (req, res) => {
     try {
-        const { tweetURL } = req.body
-        const info = await fetchTweet(tweetURL);
-        res.json({ data: info, success: true });
-    } catch (e) {
-        res.json({
-            success: false
-        })
+        const info = await fetchTweet(req.params.url);
+        res.json(info);
+    } catch(e) {
+        res.status(400).send("Invalid");
     }
 });
 

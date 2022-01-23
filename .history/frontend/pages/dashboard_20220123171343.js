@@ -82,8 +82,6 @@ export default function UserDashboard() {
     const [selectedNav, setSelectedNav] = useState(1);
     const [totalVisits, setTotalVisits] = useState(0);
     const [transactionList, setTransactionList] = useState([]);
-    const [tweetUrl, setTweetUrl] = useState("");
-    const [addresses, setAddresses] = useState({});
 
     // handling logouts
     useEffect(() => {
@@ -255,24 +253,6 @@ export default function UserDashboard() {
             toastError(err.message);
         }
 
-    }
-
-    const extractAddresses = async (e) => {
-        try {
-            const resp = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tweet`, {
-                tweetURL: tweetUrl
-            })
-            if (!resp.success) {
-                return toastError("Invalid Tweet URL")
-            }
-
-            console.log(resp.data.ens)
-
-            return setAddresses(resp.data)
-
-        } catch (e) {
-            toastError(e.message)
-        }
     }
 
     const uploadImage = async (e) => {
@@ -504,28 +484,7 @@ export default function UserDashboard() {
                     {
                         selectedNav == "3" ?
                             <div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Full Name:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tweetUrl} onChange={(e) => setTweetUrl((e.target.value))} placeholder="enter twitter URL" />
-                                </div>
-                                <CustomBrandedButton className="px-6" onClick={extractAddresses}>Extract</CustomBrandedButton>
-                                {
-                                    addresses.ens ?
-                                        <div>
-                                            <CustomLabel>ENS</CustomLabel>
-                                            {
-                                                addresses.ens.map((item, index) => {
-                                                    return <div>{item}</div>
-                                                })
-                                            }
-                                            <CustomLabel>Addresses</CustomLabel>
-                                            {
-                                                addresses.address.map((item, index) => {
-                                                    return <div>{item}</div>
-                                                })
-                                            }
-                                        </div> : "No addresses"
-                                }
+                                Test
                             </div>
                             : ""
                     }

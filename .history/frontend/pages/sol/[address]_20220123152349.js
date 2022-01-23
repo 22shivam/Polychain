@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { ethers } from "ethers";
+import * as web3 from '@solana/web3.js'
 import CustomLabel from "../components/customLabel";
 import CustomInput from "../components/customInput";
 import CustomBrandedButton from "../components/customBrandedButton";
@@ -9,13 +9,18 @@ import { ToastContainer } from "react-toastify";
 import toastSuccess from "../../lib/toastSuccess";
 import toastError from "../../lib/toastError";
 import { useState, useEffect } from "react";
-import transferEth from "../../lib/transferEth";
+import transferSOL from "../../lib/transferSol";
 import Loading from "../components/Loading";
-import Identicon from 'react-identicons';
-import Page from "../components/Page";
 
-const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
+const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
 
+function validSolAddress(s) {
+    try {
+        return new web3.PublicKey(s);
+    } catch (e) {
+        return null;
+    }
+}
 
 let defaultCurrencies = [
     {
@@ -29,12 +34,12 @@ let defaultCurrencies = [
 let currencies = [
     {
         id: 1,
-        name: 'ETH',
-        avatar: '/ethereumLogo.png',
+        name: 'SOL',
+        avatar: '/solanaLogo.png',
     }
 ]
 
-export default function ETHGateway() {
+export default function SOLGateway() {
     const router = useRouter()
     const { address } = router.query
     const [payValue, setPayValue] = useState("")
@@ -45,7 +50,7 @@ export default function ETHGateway() {
     useEffect(() => {
         try {
             (async () => {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/eth/${address}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/sol/${address}`);
                 let data = await response.json();
                 if (data.user) {
                     router.push(`/${data.user.username}`)
@@ -54,10 +59,10 @@ export default function ETHGateway() {
 
             (async () => {
                 try {
-                    let coinbaseResponse = await fetch(COINBASE_URL_ETH)
+                    let coinbaseResponse = await fetch(COINBASE_URL_SOL)
                     coinbaseResponse = await coinbaseResponse.json()
-                    const USDPerETH = coinbaseResponse.data.rates.USD
-                    setUSDPerCurrency(USDPerETH)
+                    const USDPerSOL = coinbaseResponse.data.rates.USD
+                    setUSDPerCurrency(USDPerSOL)
                     setLoading(false)
                 } catch (e) {
                     toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
@@ -68,18 +73,14 @@ export default function ETHGateway() {
         }
     }, [address])
 
-    if (!ethers.utils.isAddress(address)) {
+    if (!validSolAddress(address)) {
         // TODO: create base page
-        return (
-            <Page>
-                <CustomLabel className="mt-4 self-center">Invalid Address</CustomLabel>
-            </Page>
-        )
+        return <div>Invalid address</div>
     }
 
     const transferAmount = async () => {
         try {
-            await transferEth({ ether: payValue, addr: address })
+            await transferSOL(payValue, address)
         } catch (e) {
             toastError("Something went wrong. Please try again")
         }
@@ -109,8 +110,8 @@ export default function ETHGateway() {
                 <div id="profile_header mt-6" className="flex flex-row items-start">
 
                     {/* <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> */}
-                    <div className="flex flex-row items-center justify-between mb-5 ml-2 cursor-pointer flex-1" onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(address) }}>
-                        <Identicon className="rounded-full object-cover" string={address} size={50} />
+                    <div className="flex flex-row items-center justify-center mb-5 ml-2 cursor-pointer" onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(address) }}>
+                        <Identicon string={address} size={60} />
                         <CustomLabel className="px-0 sm-address-overflow">{address}</CustomLabel>
                         <img style={{ height: "16px", width: "16px", cursor: "pointer" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
                         {/* <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0"></CustomLabel> */}

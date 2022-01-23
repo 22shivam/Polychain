@@ -72,7 +72,7 @@ export default function ETHGateway() {
         // TODO: create base page
         return (
             <Page>
-                <CustomLabel className="mt-4 self-center">Invalid Address</CustomLabel>
+                <CustomLabel className="self-center">Invalid Address</CustomLabel>
             </Page>
         )
     }

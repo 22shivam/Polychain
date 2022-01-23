@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { ethers } from "ethers";
+import * as web3 from '@solana/web3.js'
 import CustomLabel from "../components/customLabel";
 import CustomInput from "../components/customInput";
 import CustomBrandedButton from "../components/customBrandedButton";
@@ -9,13 +9,21 @@ import { ToastContainer } from "react-toastify";
 import toastSuccess from "../../lib/toastSuccess";
 import toastError from "../../lib/toastError";
 import { useState, useEffect } from "react";
-import transferEth from "../../lib/transferEth";
+import transferSOL from "../../lib/transferSol";
 import Loading from "../components/Loading";
 import Identicon from 'react-identicons';
-import Page from "../components/Page";
+import Header from "../components/Header";
+import Footer from "../components/footer";
 
-const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
+const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
 
+function validSolAddress(s) {
+    try {
+        return new web3.PublicKey(s);
+    } catch (e) {
+        return null;
+    }
+}
 
 let defaultCurrencies = [
     {
@@ -29,12 +37,12 @@ let defaultCurrencies = [
 let currencies = [
     {
         id: 1,
-        name: 'ETH',
-        avatar: '/ethereumLogo.png',
+        name: 'SOL',
+        avatar: '/solanaLogo.png',
     }
 ]
 
-export default function ETHGateway() {
+export default function SOLGateway() {
     const router = useRouter()
     const { address } = router.query
     const [payValue, setPayValue] = useState("")
@@ -45,7 +53,7 @@ export default function ETHGateway() {
     useEffect(() => {
         try {
             (async () => {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/eth/${address}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/sol/${address}`);
                 let data = await response.json();
                 if (data.user) {
                     router.push(`/${data.user.username}`)
@@ -54,10 +62,10 @@ export default function ETHGateway() {
 
             (async () => {
                 try {
-                    let coinbaseResponse = await fetch(COINBASE_URL_ETH)
+                    let coinbaseResponse = await fetch(COINBASE_URL_SOL)
                     coinbaseResponse = await coinbaseResponse.json()
-                    const USDPerETH = coinbaseResponse.data.rates.USD
-                    setUSDPerCurrency(USDPerETH)
+                    const USDPerSOL = coinbaseResponse.data.rates.USD
+                    setUSDPerCurrency(USDPerSOL)
                     setLoading(false)
                 } catch (e) {
                     toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
@@ -68,18 +76,21 @@ export default function ETHGateway() {
         }
     }, [address])
 
-    if (!ethers.utils.isAddress(address)) {
+    if (!validSolAddress(address)) {
         // TODO: create base page
         return (
-            <Page>
+            <div className="flex flex-col w-screen h-screen">
+                <Header brandedButtonLabel="Dashboard" brandedButtonCallback={() => { router.push("/dashboard") }} />
                 <CustomLabel className="mt-4 self-center">Invalid Address</CustomLabel>
-            </Page>
+                <div className="flex-1" id="spacer"></div>
+                <Footer />
+            </div>
         )
     }
 
     const transferAmount = async () => {
         try {
-            await transferEth({ ether: payValue, addr: address })
+            await transferSOL(payValue, address)
         } catch (e) {
             toastError("Something went wrong. Please try again")
         }

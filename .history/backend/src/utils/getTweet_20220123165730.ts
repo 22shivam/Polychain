@@ -9,7 +9,8 @@ function getEth(str: string) {
 }
 
 function getEns(str: string) {
-    return str.match(/[0-9A-Za-z]+.eth/g);
+    const texts = str.split(' ');
+    return texts.filter(word => word.substr(word.length - 4) == '.eth');
 }
 
 async function fetchTweet(url: string) {
@@ -42,12 +43,7 @@ async function fetchTweet(url: string) {
     for await (const tweet of tweets) {
         if (tweet.conversation_id == root.data.conversation_id && root.data.author_id == tweet.in_reply_to_user_id) {
             const eth = getEth(tweet.text);
-            if (eth) {
-                // for (let i = 0; i < eth.length; i++) {
-                //     if (ethers.utils.isAddress(eth[i])) {
-                //         addrs.push(eth[i]);
-                //     }
-                // }
+            if (eth && eth.forEach(eth => { ethers.utils.isAddress(eth) })) {
                 addrs = addrs.concat(eth);
             }
 
@@ -58,8 +54,6 @@ async function fetchTweet(url: string) {
 
         }
     }
-
-    addrs = addrs.filter(addr => ethers.utils.isAddress(addr));
 
     return {
         ens: enss,

@@ -12,7 +12,8 @@ import { useState, useEffect } from "react";
 import transferEth from "../../lib/transferEth";
 import Loading from "../components/Loading";
 import Identicon from 'react-identicons';
-import Page from "../components/Page";
+import Header from "../components/Header";
+import footer from "../components/footer";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 
@@ -71,9 +72,13 @@ export default function ETHGateway() {
     if (!ethers.utils.isAddress(address)) {
         // TODO: create base page
         return (
-            <Page>
-                <CustomLabel className="mt-4 self-center">Invalid Address</CustomLabel>
-            </Page>
+
+            <div className="flex flex-col">
+                <Header />
+                <CustomLabel>Invalid Address</CustomLabel>
+                <div className="flex-grow" id="spacer"></div>
+                <Footer />
+            </div>
         )
     }
 

@@ -266,9 +266,7 @@ export default function UserDashboard() {
                 return toastError("Invalid Tweet URL")
             }
 
-            console.log(resp.data.ens)
-
-            return setAddresses(resp.data)
+            return setETHAddress(resp.data)
 
         } catch (e) {
             toastError(e.message)
@@ -510,17 +508,17 @@ export default function UserDashboard() {
                                 </div>
                                 <CustomBrandedButton className="px-6" onClick={extractAddresses}>Extract</CustomBrandedButton>
                                 {
-                                    addresses.ens ?
+                                    tweetAddresses.ens ?
                                         <div>
                                             <CustomLabel>ENS</CustomLabel>
                                             {
-                                                addresses.ens.map((item, index) => {
+                                                tweetAddresses.ens.map((item, index) => {
                                                     return <div>{item}</div>
                                                 })
                                             }
                                             <CustomLabel>Addresses</CustomLabel>
                                             {
-                                                addresses.address.map((item, index) => {
+                                                tweetAddresses.address.map((item, index) => {
                                                     return <div>{item}</div>
                                                 })
                                             }

@@ -266,9 +266,7 @@ export default function UserDashboard() {
                 return toastError("Invalid Tweet URL")
             }
 
-            console.log(resp.data.ens)
-
-            return setAddresses(resp.data)
+            return setETHAddress(resp.data)
 
         } catch (e) {
             toastError(e.message)

@@ -268,7 +268,7 @@ export default function UserDashboard() {
 
             console.log(resp.data.ens)
 
-            return setAddresses(resp.data)
+            return setETHAddress(resp.data)
 
         } catch (e) {
             toastError(e.message)
@@ -510,13 +510,11 @@ export default function UserDashboard() {
                                 </div>
                                 <CustomBrandedButton className="px-6" onClick={extractAddresses}>Extract</CustomBrandedButton>
                                 {
-                                    addresses.ens ?
+                                    addresses ?
                                         <div>
                                             <CustomLabel>ENS</CustomLabel>
                                             {
-                                                addresses.ens.map((item, index) => {
-                                                    return <div>{item}</div>
-                                                })
+
                                             }
                                             <CustomLabel>Addresses</CustomLabel>
                                             {
