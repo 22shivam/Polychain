@@ -8,8 +8,7 @@ function getEth(str: string) {
 }
 
 function getEns(str: string) {
-    const texts = str.split(' ');
-    return texts.filter(word => word.substr(word.length - 4) == '.eth' && /[0-9A-Za-z.]/g.test(word.substr(word.length - 4)));
+    return str.match(/[0-9A-Za-z]+.eth/g);
 }
 
 async function fetchTweet(url: string) {
