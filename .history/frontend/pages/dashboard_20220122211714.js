@@ -402,9 +402,10 @@ export default function UserDashboard() {
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">DESO Address:</CustomLabel>
                                     <CustomInput className="my-1 w-72 sm:w-96" type="text" value={DESOAddress} onChange={(e) => setDESOAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
-                                        placeholder="enter deso address" />
-                                    {DESOAddress ? "" :
-                                        <CustomLabel className="text-gray-500 text-xs font-normal sm:text-sm w-72 sm:w-96">don&apos;t have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank" rel="noreferrer">sign up</a> now and get up to $5!</CustomLabel>}</div>
+                                        placeholder="enter deso address" /></div>
+                                <CustomLabel className="text-gray-500 text-xs font-normal sm:text-sm w-72 sm:w-96">don&apos;t have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank" rel="noreferrer">sign up</a> now and get up to $5!</CustomLabel>}
+                                {DESOAddress ? "" :
+                                    <CustomLabel className="text-gray-500 text-xs font-normal sm:text-sm w-72 sm:w-96">don&apos;t have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank" rel="noreferrer">sign up</a> now and get up to $5!</CustomLabel>}
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Bitcoin Address:</CustomLabel>
                                     <CustomInput className="my-1 w-72 sm:w-96" type="text" value={BTCAddress} onChange={(e) => setBTCAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
