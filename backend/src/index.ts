@@ -11,6 +11,7 @@ import PromoCode from "./models/PromoCode";
 import nacl from "tweetnacl";
 import { validate } from "bitcoin-address-validation"
 import * as web3 from '@solana/web3.js'
+import fetchTweet from "./utils/getTweet";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -41,6 +42,15 @@ function validSolAddress(s: any) {
 
     }
 }
+
+app.get('/api/tweet/:url', async (req, res) => {
+    try {
+        const info = await fetchTweet(req.params.url);
+        res.json(info);
+    } catch(e) {
+        res.status(400).send("Invalid");
+    }
+});
 
 
 app.get("/api/:username", async (req, res) => {
@@ -784,3 +794,4 @@ try {
     console.log("could not connect to mongodb and app uninitialized")
     console.log(err)
 }
+
