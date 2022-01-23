@@ -58,6 +58,12 @@ app.get("/api/:username", async (req, res) => {
         if (!user) {
             return res.json({ success: false, message: "User not found" })
         } else {
+            if (user.totalVisits) {
+                user.totalVisits += 1;
+            } else {
+                user.totalVisits = 1;
+            }
+            user.save()
             return res.json({ success: true, user: user, message: "User found" })
         }
     } catch (e) {
@@ -297,7 +303,9 @@ app.post("/userDetails", async (req: any, res: any) => {
                 if (!user) {
                     return res.json({ success: false, message: "No User Found", isLoggedIn: true })
                 }
-                res.json({ success: true, user, isLoggedIn: true })
+                const resp = await axios.get(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${process.env.ETHERSCAN_API_KEY}`);
+
+                res.json({ success: true, user, isLoggedIn: true, ethereumTransactions: resp.data.result })
             } else if (blockchain === "sol") {
                 const user = await User.findOne({ SOLAddress: address }).exec()
                 if (!user) {

@@ -10,6 +10,7 @@ export interface userAttr {
     DESOAddress?: string;
     bio?: string;
     profilePic?: string;
+    totalVisits?: number;
 }
 
 // interface that describes the properties a user model has
@@ -101,6 +102,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    totalVisits: {
+        type: Number,
+        required: false,
+        default: 0
+    }
 
 
 
