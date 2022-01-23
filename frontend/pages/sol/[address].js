@@ -12,6 +12,8 @@ import { useState, useEffect } from "react";
 import transferSOL from "../../lib/transferSol";
 import Loading from "../components/Loading";
 import Identicon from 'react-identicons';
+import Header from "../components/Header";
+import Footer from "../components/footer";
 
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
 
