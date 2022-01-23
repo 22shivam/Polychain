@@ -11,6 +11,7 @@ import toastError from "../../lib/toastError";
 import { useState, useEffect } from "react";
 import transferSOL from "../../lib/transferSol";
 import Loading from "../components/Loading";
+import Identicon from 'react-identicons';
 
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
 
@@ -110,8 +111,9 @@ export default function SOLGateway() {
                 <div id="profile_header mt-6" className="flex flex-row items-start">
 
                     {/* <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> */}
-                    <div className="flex flex-row items-center justify-center mb-5 ml-2 cursor-pointer" onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(address) }}>
-                        <CustomLabel className="px-0 address-overflow">{address}</CustomLabel>
+                    <div className="flex flex-row items-center justify-between mb-5 ml-2 cursor-pointer flex-1" onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(address) }}>
+                        <Identicon className="rounded-full object-cover" string={address} size={50} />
+                        <CustomLabel className="px-0 sm-address-overflow">{address}</CustomLabel>
                         <img style={{ height: "16px", width: "16px", cursor: "pointer" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
                         {/* <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0"></CustomLabel> */}
                     </div>

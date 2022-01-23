@@ -15,6 +15,7 @@ import CustomBrandedButton from "../components/customBrandedButton";
 import Image from "next/image";
 import Head from "next/head";
 import Loading from "../components/Loading";
+import Identicon from 'react-identicons';
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -271,10 +272,10 @@ export default function UserPayment() {
             {loading ? <Loading /> : accountExists ? <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 bg-white">
                 <div id="profile_header mt-6" className="flex flex-row items-start">
                     {profilePic ?
-                        <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : ""}
+                        <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : <Identicon className="rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
                     <div className="flex flex-col ml-2">
                         {fullName ? <CustomLabel className="px-0">{fullName}</CustomLabel> : <CustomLabel className="px-0">{username}</CustomLabel>}
-                        <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">{bio}</CustomLabel>
+                        <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">{bio ? bio : "Welcome to my Polychain Page!"}</CustomLabel>
                     </div>
                 </div>
 

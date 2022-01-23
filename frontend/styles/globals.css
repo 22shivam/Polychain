@@ -43,6 +43,12 @@ font-weight: 600
   text-overflow: ellipsis;
   max-width: 40ch;
 }
+.sm-address-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30ch;
+}
 
 .input-placeholder:-ms-input-placeholder {
   font-family: 'Quicksand', Arial, Helvetica, sans-serif;
@@ -113,100 +119,6 @@ label.smtext-2xl {
   line-height: 2rem
 }
 
-@media (max-width: 500px) {
-  .buyHomePage {
-  display: block
-}
-.logo {
-  display: none
-}
-}
-
-@media (max-width: 420px) {
-  body {
-    font-size: 13px
-  }
-
-  
-  .homepageInput {
-    width: 8.5rem;
-  }
-
-  
-}
-
-@media (max-width: 370px) {
-  body {
-    font-size: 12px
-  }
-
-  .homepageInput {
-    width: 7rem;
-  }
-
-  label.smtext-2xl {
-  font-size: 1.2rem;
-  line-height: 1.5rem
-}
-  
-}
-
-
-@media (max-width: 330px) {
-  body {
-    font-size: 11px
-  }
-
-  .homepageInput {
-    width: 6rem;
-  }
-
-  
-}
-
-.homepageInput {
-  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
-font-weight: 600;
-}
-
-
-.typewrite {
-        white-space: nowrap;
-        overflow: hidden;
-        transition: none;
-        animation: typewriter infinite alternate,
-          blink 400ms infinite normal;
-        border-right: 5px solid black;
-      }
-
-      @keyframes typewriter {
-        0% {
-          width: 0%;
-        }
-        100% {
-          width: 100%;
-        }
-      }
-      @keyframes blink {
-        0% {
-          border-color: black;
-        }
-        100% {
-          border-color: transparent;
-        }
-      }
-
-.Typewriter {
-  display: inline-block;
-}
-
-
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 4rem
-}
-
 @media (max-width: 640px) {
   body {
     font-size: 14px
@@ -228,6 +140,13 @@ font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 25ch;
+}
+
+.sm-address-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20ch;
 }
 
 
@@ -299,4 +218,112 @@ font-weight: 500
 
 .poly-btn-inverted:hover {
   background-color: #f1f1f1;
+}
+
+
+@media (max-width: 500px) {
+  .buyHomePage {
+  display: block
+}
+.logo {
+  display: none
+}
+}
+
+@media (max-width: 420px) {
+  body {
+    font-size: 13px
+  }
+
+  .sm-address-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 18ch;
+}
+
+  
+  .homepageInput {
+    width: 8.5rem;
+  }
+
+  
+}
+
+@media (max-width: 370px) {
+  body {
+    font-size: 12px
+  }
+
+  .homepageInput {
+    width: 7rem;
+  }
+
+  label.smtext-2xl {
+  font-size: 1.2rem;
+  line-height: 1.5rem
+}
+.sm-address-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 15ch;
+}
+  
+}
+
+
+@media (max-width: 330px) {
+  body {
+    font-size: 11px
+  }
+
+  .homepageInput {
+    width: 6rem;
+  }
+
+  
+}
+
+.homepageInput {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+font-weight: 600;
+}
+
+
+.typewrite {
+        white-space: nowrap;
+        overflow: hidden;
+        transition: none;
+        animation: typewriter infinite alternate,
+          blink 400ms infinite normal;
+        border-right: 5px solid black;
+      }
+
+      @keyframes typewriter {
+        0% {
+          width: 0%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+      @keyframes blink {
+        0% {
+          border-color: black;
+        }
+        100% {
+          border-color: transparent;
+        }
+      }
+
+.Typewriter {
+  display: inline-block;
+}
+
+
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 4rem
 }
