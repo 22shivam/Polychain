@@ -27,8 +27,8 @@ let defaultCurrencies = [
 let currencies = [
     {
         id: 1,
-        name: 'ETH',
-        avatar: '/ethereumLogo.png',
+        name: 'SOL',
+        avatar: '/solanaLogo.png',
     }
 ]
 
@@ -104,7 +104,7 @@ export default function ETHGateway() {
 
                     {/* <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> */}
                     <div className="flex flex-row items-center justify-center mb-5 ml-2 cursor-pointer" onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(address) }}>
-                        <CustomLabel className="px-0 address-overflow">{address}</CustomLabel>
+                        <CustomLabel className="px-0">{address}</CustomLabel>
                         <img style={{ height: "16px", width: "16px", cursor: "pointer" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
                         {/* <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0"></CustomLabel> */}
                     </div>
