@@ -330,7 +330,7 @@ export default function UserDashboard() {
                             {navigationItems.map((item) => {
                                 let className = "transition duration-200 pl-2 pr-36 rounded-md py-2 font-semibold hover:bg-gray-50 text-gray-600" + (item.id == selectedNav ? " bg-gray-100" : "")
                                 return (
-                                    <li key={item.id} onClick={() => { setSelectedNav(item.id) }} className={className}>
+                                    <li onClick={() => { setSelectedNav(item.id) }} className={className}>
                                         {item.name}
                                     </li>
                                 )
