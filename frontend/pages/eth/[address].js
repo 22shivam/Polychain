@@ -74,7 +74,7 @@ export default function ETHGateway() {
         return (
 
             <div className="flex flex-col w-screen h-screen">
-                <Header />
+                <Header brandedButtonLabel="Dashboard" brandedButtonCallback={() => { router.push("/dashboard") }} />
                 <CustomLabel className="mt-4 self-center">Invalid Address</CustomLabel>
                 <div className="flex-1" id="spacer"></div>
                 <Footer />
