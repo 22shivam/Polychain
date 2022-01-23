@@ -76,7 +76,14 @@ export default function SOLGateway() {
 
     if (!validSolAddress(address)) {
         // TODO: create base page
-        return <div>Invalid address</div>
+        return (
+            <div className="flex flex-col w-screen h-screen">
+                <Header />
+                <CustomLabel className="mt-4 self-center">Invalid Address</CustomLabel>
+                <div className="flex-1" id="spacer"></div>
+                <Footer />
+            </div>
+        )
     }
 
     const transferAmount = async () => {
