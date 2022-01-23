@@ -258,3 +258,45 @@ font-weight: 500
   overflow: hidden;
   outline: none;
 }
+
+.poly-btn {
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  height: 40px;
+  display: inline-flex;
+  color: white;
+  font-weight: 800;
+  border: 1px solid #eeee;
+  border-radius: 8px;
+  line-height: 40px;
+  transition: background 0.25s ease-in-out, color 0.25s ease-in-out;
+  background-color: #FB6514;
+}
+
+.poly-btn-inverted {
+  background-color: white;
+}
+
+.poly-btn > img {
+  overflow: hidden;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.poly-btn-text {
+  margin-left: 5px;
+  margin-right: 10px;
+  color: white;
+}
+
+.poly-btn-inverted > .poly-btn-text {
+  color: #FB6514;
+}
+
+.poly-btn:hover {
+  background-color: #EC4A0A	;
+}
+
+.poly-btn-inverted:hover {
+  background-color: #f1f1f1;
+}
