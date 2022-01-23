@@ -509,7 +509,7 @@ export default function UserDashboard() {
                     {
                         selectedNav == "3" ?
                             <div className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                                <CustomLabel className="text-xl smtext-2xl mb-1">Twitter Airdrop</CustomLabel>
+                                <CustomLabel className="text-xl smtext-2xl">Twitter Airdrop</CustomLabel>
                                 <CustomLabel className="block">Use this tool to extract ethereum addresses (including ens addresses) from replies to Tweets on Twitter</CustomLabel>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="mt-4">Enter Tweet URL:</CustomLabel>

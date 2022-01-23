@@ -83,7 +83,7 @@ export default function UserDashboard() {
     const [totalVisits, setTotalVisits] = useState(0);
     const [transactionList, setTransactionList] = useState([]);
     const [tweetUrl, setTweetUrl] = useState("");
-    const [addressCsv, setAddressCsv] = useState("");
+    const [addresses, setAddresses] = useState({});
 
     // handling logouts
     useEffect(() => {
@@ -268,12 +268,7 @@ export default function UserDashboard() {
 
             console.log(resp.data.ens)
 
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += resp.data.ens.join(",\n")
-            csvContent += "\n"
-            csvContent += resp.data.address.join(",\n")
-            let encodedUri = encodeURI(csvContent);
-            setAddressCsv(encodedUri)
+            return setAddresses(resp.data)
 
         } catch (e) {
             toastError(e.message)
@@ -508,26 +503,37 @@ export default function UserDashboard() {
                     }
                     {
                         selectedNav == "3" ?
-                            <div className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                                <CustomLabel className="text-xl smtext-2xl mb-1">Twitter Airdrop</CustomLabel>
-                                <CustomLabel className="block">Use this tool to extract ethereum addresses (including ens addresses) from replies to Tweets on Twitter</CustomLabel>
+                            <div>
                                 <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="mt-4">Enter Tweet URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tweetUrl} onChange={(e) => setTweetUrl((e.target.value))} placeholder="enter tweet URL" />
+                                    <CustomLabel className="ml-2">Full Name:</CustomLabel>
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tweetUrl} onChange={(e) => setTweetUrl((e.target.value))} placeholder="enter twitter URL" />
                                 </div>
-                                <div className='flex mt-6 space-x-2 items-center'>
-                                    <CustomBrandedButton className="px-6 self-start ml-4" onClick={extractAddresses}>Extract</CustomBrandedButton>
-                                    {
-                                        addressCsv ? <a download href={addressCsv}>Download</a>
+                                <CustomBrandedButton className="px-6" onClick={extractAddresses}>Extract</CustomBrandedButton>
+                                {
+                                    addresses.ens ?
+                                        <div>
+                                            <CustomLabel>ENS</CustomLabel>
+                                            <div className='flex flex-wrap'>
+                                                {
+                                                    addresses.ens.map((item, index) => {
+                                                        return <div>{item}</div>
+                                                    })
+                                                }
+                                                <div>
+                                                    <CustomLabel>Addresses</CustomLabel>
+                                                    {
+                                                        addresses.address.map((item, index) => {
+                                                            return <div>{item}</div>
+                                                        })
+                                                    }
+                                                </div> : "No addresses"
+                                }
+                                            </div>
                                             : ""
-                                    }
-                                </div>
-                            </div>
-                            : ""
                     }
-                </div>
-                : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
+                                        </div>
+                                        : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>}
 
-        </div>
+                            </div>
     )
 }
