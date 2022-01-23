@@ -44,6 +44,7 @@ const PromoCode_1 = __importDefault(require("./models/PromoCode"));
 const tweetnacl_1 = __importDefault(require("tweetnacl"));
 const bitcoin_address_validation_1 = require("bitcoin-address-validation");
 const web3 = __importStar(require("@solana/web3.js"));
+const getTweet_1 = __importDefault(require("./utils/getTweet"));
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH";
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL";
 const SOLANA_EXPLORER_URL = "https://api.mainnet-beta.solana.com/";
@@ -71,6 +72,18 @@ function validSolAddress(s) {
         return null;
     }
 }
+app.post('/api/tweet', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { tweetURL } = req.body;
+        const info = yield (0, getTweet_1.default)(tweetURL);
+        res.json({ data: info, success: true });
+    }
+    catch (e) {
+        res.json({
+            success: false
+        });
+    }
+}));
 app.get("/api/:username", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // sanitize username
