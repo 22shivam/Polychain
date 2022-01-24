@@ -88,16 +88,16 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
         }
     }
 
-    // useEffect(() => {
-    //     (async () => {
-    //         try {
-    //             const qrCode = await generateQR(`bitcoin:${BTCAddress}`)
-    //             setQrCode(qrCode)
-    //         } catch (e) {
-    //             toastError("Something went wrong. Please try again")
-    //         }
-    //     })()
-    // }, [BTCAddress])
+    useEffect(() => {
+        (async () => {
+            try {
+                const qrCode = await generateQR(`bitcoin:${BTCAddress}`)
+                setQrCode(qrCode)
+            } catch (e) {
+                toastError("Something went wrong. Please try again")
+            }
+        })()
+    }, [BTCAddress])
 
     useEffect(() => {
         // get currency deets from coinbase
@@ -250,7 +250,7 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
                 toastError("Something went wrong. Please try again")
             }
         })()
-    }, [reload])
+    }, [username])
 
     const transferAmount = async () => {
         try {
