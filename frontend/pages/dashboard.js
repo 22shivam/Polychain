@@ -109,11 +109,13 @@ export default function UserDashboard() {
                 //     // setUserAccount({})
                 //     return toastError("Please login to access your account")
                 // } else {
+                console.log(userAccount);
                 if (userAccount.address) {
                     const response = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/userDetails`, {
                         address: userAccount.address,
                         blockchain: userAccount.blockchain
                     })
+                    console.log(response);
                     if (!response.success) {
                         if (!response.isLoggedIn) {
                             setUserAccount({})
