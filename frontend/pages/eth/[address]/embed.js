@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import Gateway from "../../components/Gateway";
 import { ToastContainer } from "react-toastify";
+import CustomBrandedButton from "../../components/customBrandedButton";
 
 export default function Embed() {
-    const router = useRouter();
-    const { username } = router.query;
-    return <>
+    const router = useRouter()
+    const {address} = router.query
+    return (<>
     <ToastContainer
                 position="top-center"
                 autoClose={3000}
@@ -17,6 +18,6 @@ export default function Embed() {
                 draggable
                 style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
             />
-        <Gateway propUsername={username} />
-    </>
+    
+    <Gateway blockchain="ETH" address={address} advertisement={true} /></>)
 }

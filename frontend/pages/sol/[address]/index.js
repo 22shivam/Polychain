@@ -1,19 +1,19 @@
 import React from "react";
 import { useRouter } from "next/router";
 import * as web3 from '@solana/web3.js'
-import CustomLabel from "../components/customLabel";
-import CustomInput from "../components/customInput";
-import CustomBrandedButton from "../components/customBrandedButton";
-import CurrencySelector from "../components/currencySelector";
+import CustomLabel from "../../components/customLabel";
+import CustomInput from "../../components/customInput";
+import CustomBrandedButton from "../../components/customBrandedButton";
+import CurrencySelector from "../../components/currencySelector";
 import { ToastContainer } from "react-toastify";
-import toastSuccess from "../../lib/toastSuccess";
-import toastError from "../../lib/toastError";
+import toastSuccess from "../../../lib/toastSuccess";
+import toastError from "../../../lib/toastError";
 import { useState, useEffect } from "react";
-import transferSOL from "../../lib/transferSol";
-import Loading from "../components/Loading";
+import transferSOL from "../../../lib/transferSol";
+import Loading from "../../components/Loading";
 import Identicon from 'react-identicons';
-import Header from "../components/Header";
-import Footer from "../components/footer";
+import Header from "../../components/Header";
+import Footer from "../../components/footer";
 
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
 

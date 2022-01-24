@@ -1,18 +1,18 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
-import CustomLabel from "../components/customLabel";
-import CustomInput from "../components/customInput";
-import CustomBrandedButton from "../components/customBrandedButton";
-import CurrencySelector from "../components/currencySelector";
+import CustomLabel from "../../components/customLabel";
+import CustomInput from "../../components/customInput";
+import CustomBrandedButton from "../../components/customBrandedButton";
+import CurrencySelector from "../../components/currencySelector";
 import { ToastContainer } from "react-toastify";
-import toastSuccess from "../../lib/toastSuccess";
-import toastError from "../../lib/toastError";
+import toastSuccess from "../../../lib/toastSuccess";
+import toastError from "../../../lib/toastError";
 import { useState, useEffect } from "react";
-import transferEth from "../../lib/transferEth";
-import Loading from "../components/Loading";
+import transferEth from "../../../lib/transferEth";
+import Loading from "../../components/Loading";
 import Identicon from 'react-identicons';
-import Page from "../components/Page";
+import Page from "../../components/Page";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 
