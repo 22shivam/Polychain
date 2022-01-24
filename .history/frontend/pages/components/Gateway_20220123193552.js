@@ -34,9 +34,11 @@ const handleSubmitDESO = async (addr) => {
     }
 }
 
-export default function Gateway({ username }) {
+export default function Gateway({ }) {
 
+    const router = useRouter()
     const [selectedCurrency, setSelectedCurrency] = useState(defaultCurrencies[0]);
+    const { username } = router.query
     const [qrCode, setQrCode] = useState("")
     const [payValue, setPayValue] = useState("")
     const [USDPerCurrency, setUSDPerCurrency] = useState(0)
@@ -48,6 +50,7 @@ export default function Gateway({ username }) {
     const [profilePic, setProfilePic] = useState("")
     const [currencies, setCurrencies] = useState([])
     const [loading, setLoading] = useState(true)
+    const [accountExists, setAccountExists] = useState(false)
     const [displayedAddress, setDisplayedAddress] = useState("")
     const [fullName, setFullName] = useState("");
 
@@ -157,6 +160,7 @@ export default function Gateway({ username }) {
                     setCurrencies(currencyArray)
                     setBio(response.user.bio)
                     setProfilePic(response.user.profilePic)
+                    setAccountExists(true)
                 }
                 setLoading(false)
             } catch (e) {

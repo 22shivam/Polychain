@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import generateQR from "../../lib/generateQR";
 import transferSOL from "../../lib/transferSol";
 import transferEth from "../../lib/transferEth";
@@ -6,8 +6,14 @@ import { useRouter } from 'next/router'
 import CustomLabel from "../components/customLabel";
 import CustomInput from "../components/customInput";
 import CurrencySelector from "../components/currencySelector";
+import toastError from "../../lib/toastError";
+import toastInfo from "../../lib/toastInfo";
+import toastSuccess from "../../lib/toastSuccess";
+import { ToastContainer } from "react-toastify";
+import Link from "next/link";
 import CustomBrandedButton from "../components/customBrandedButton";
 import Image from "next/image";
+import Head from "next/head";
 import Loading from "../components/Loading";
 import Identicon from 'react-identicons';
 
@@ -17,6 +23,7 @@ const COINBASE_URL_BTC = "https://api.coinbase.com/v2/exchange-rates?currency=BT
 const COINBASE_URL_DESO = "https://api.coinbase.com/v2/exchange-rates?currency=DESO"
 
 
+const TOKEN_ADDRESS = "0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa";
 
 let defaultCurrencies = [
     {
@@ -30,13 +37,15 @@ const handleSubmitDESO = async (addr) => {
     try {
         window.open(`https://diamondapp.com/send-deso?public_key=${addr}`, "_blank");
     } catch (error) {
-
+        toastError("Something went wrong. Please try again")
     }
 }
 
-export default function Gateway({ username }) {
+export default function Gateway() {
 
+    const router = useRouter()
     const [selectedCurrency, setSelectedCurrency] = useState(defaultCurrencies[0]);
+    const { username } = router.query
     const [qrCode, setQrCode] = useState("")
     const [payValue, setPayValue] = useState("")
     const [USDPerCurrency, setUSDPerCurrency] = useState(0)
@@ -48,9 +57,20 @@ export default function Gateway({ username }) {
     const [profilePic, setProfilePic] = useState("")
     const [currencies, setCurrencies] = useState([])
     const [loading, setLoading] = useState(true)
+    const [accountExists, setAccountExists] = useState(false)
     const [displayedAddress, setDisplayedAddress] = useState("")
+    const [twitterUrl, setTwitterUrl] = useState("");
+    const [githubUrl, setGithubUrl] = useState("");
+    const [facebookUrl, setFacebookUrl] = useState("");
+    const [instagramUrl, setInstagramUrl] = useState("");
+    const [tiktokUrl, setTiktokUrl] = useState("");
+    const [youtubeUrl, setYoutubeUrl] = useState("");
+    const [linkedinUrl, setLinkedinUrl] = useState("");
+    const [pinterestUrl, setPinterestUrl] = useState("");
+    const [redditUrl, setRedditUrl] = useState("");
+    const [snapchatUrl, setSnapchatUrl] = useState("");
     const [fullName, setFullName] = useState("");
-
+    const [anySocialUrl, setAnySocialUrl] = useState(false);
 
 
     useEffect(() => {
@@ -59,7 +79,7 @@ export default function Gateway({ username }) {
                 const qrCode = await generateQR(`bitcoin:${BTCAddress}`)
                 setQrCode(qrCode)
             } catch (e) {
-                // toastError("Something went wrong. Please try again")
+                toastError("Something went wrong. Please try again")
             }
         })()
     }, [BTCAddress])
@@ -95,7 +115,7 @@ export default function Gateway({ username }) {
                     setDisplayedAddress(DESOAddress)
                 }
             } catch (e) {
-                // toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
+                toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
             }
         })();
 
@@ -151,17 +171,57 @@ export default function Gateway({ username }) {
                     if (response.user.fullName && response.user.fullName != "") {
                         setFullName(response.user.fullName)
                     }
-
+                    if (response.user.twitterUsername && response.user.twitterUsername != "") {
+                        setTwitterUrl("https://twitter.com/" + response.user.twitterUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.instagramUsername && response.user.instagramUsername != "") {
+                        setInstagramUrl("https://instagram.com/" + response.user.instagramUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.githubUsername && response.user.githubUsername != "") {
+                        setGithubUrl("https://github.com/" + response.user.githubUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.facebookUsername && response.user.facebookUsername != "") {
+                        setFacebookUrl("https://facebook.com/" + response.user.facebookUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.youtubeUsername && response.user.youtubeUsername != "") {
+                        setYoutubeUrl("https://youtube.com/" + response.user.youtubeUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.linkedinUsername && response.user.linkedinUsername != "") {
+                        setLinkedinUrl("https://linkedin.com/in/" + response.user.linkedinUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.pinterestUsername && response.user.pinterestUsername != "") {
+                        setPinterestUrl("https://pinterest.com/" + response.user.pinterestUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.redditUsername && response.user.redditUsername != "") {
+                        setRedditUrl("https://reddit.com/u/" + response.user.redditUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.snapchatUsername && response.user.snapchatUsername != "") {
+                        setSnapchatUrl("https://snapchat.com/add/" + response.user.snapchatUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.tiktokUsername && response.user.tiktokUsername != "") {
+                        setTiktokUrl("https://tiktok.com/@" + response.user.tiktokUsername)
+                        setAnySocialUrl(true)
+                    }
 
                     setSelectedCurrency(currencyArray[0])
                     setCurrencies(currencyArray)
                     setBio(response.user.bio)
                     setProfilePic(response.user.profilePic)
+                    setAccountExists(true)
                 }
                 setLoading(false)
             } catch (e) {
                 setLoading(false)
-                // toastError("Something went wrong. Please try again")
+                toastError("Something went wrong. Please try again")
             }
         })()
     }, [username])
@@ -177,10 +237,10 @@ export default function Gateway({ username }) {
             } else if (selectedCurrency.name == "BTC") {
                 // nothing
                 window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
-                // toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
+                toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
             }
         } catch (e) {
-            // toastError("Something went wrong. Please try again")
+            toastError("Something went wrong. Please try again")
         }
     }
 
@@ -188,7 +248,28 @@ export default function Gateway({ username }) {
     return (
 
         <div className="flex flex-col items-center justify-center mx-4">
-            {loading ? <Loading /> : <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 bg-white">
+            <Head>
+                <title>{username}</title>
+                <meta name="twitter:title" content={`${fullName}'s Polychain Page`} />
+                <meta name="twitter:description" content="Polychain - Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
+                <meta name="description" property="og:description" content="Polychain - Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
+                <meta name="title" property="og:title" content={`${fullName}'s Polychain Page`} />
+            </Head>
+            <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
+            />
+            <div onClick={() => { router.push("/") }} className="my-10 cursor-pointer">
+                <img src="croppedPolychainLogo.png" width="200"></img>
+            </div>
+            {loading ? <Loading /> : accountExists ? <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 bg-white">
                 <div id="profile_header mt-6" className="flex flex-row items-start">
                     {profilePic ?
                         <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : <Identicon className="rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
@@ -198,8 +279,20 @@ export default function Gateway({ username }) {
                     </div>
                 </div>
 
+                {anySocialUrl ? <div className="flex flex-row justify-center mt-4 items-center">
+                    {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="images/Facebook.svg" width="30"></img></a> : ""}
+                    {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="images/Instagram.svg" width="30"></img></a> : ""}
+                    {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="images/Github.svg" width="30"></img></a> : ""}
+                    {linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><img src="Linkedin.svg" width="30"></img></a> : ""}
+                    {redditUrl ? <a href={redditUrl} target="_blank" rel="noopener noreferrer"><img src="images/Reddit.svg" width="30"></img></a> : ""}
+                    {snapchatUrl ? <a href={snapchatUrl} target="_blank" rel="noopener noreferrer"><img src="images/Snapchat.svg" width="30"></img></a> : ""}
+                    {tiktokUrl ? <a href={tiktokUrl} target="_blank" rel="noopener noreferrer"><img src="images/Tiktok.svg" width="30"></img></a> : ""}
+                    {pinterestUrl ? <a href={pinterestUrl} target="_blank" rel="noopener noreferrer"><img src="images/Pinterest.svg" width="30"></img></a> : ""}
+                    {twitterUrl ? <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><img src="images/Twitter.svg" width="30"></img></a> : ""}
+                    {youtubeUrl ? <a href={youtubeUrl} target="_blank" rel="noopener noreferrer"><img src="images/Youtube.svg" width="30"></img></a> : ""}
+                </div> : ""}
 
-                <div onClick={() => { navigator.clipboard.writeText(displayedAddress) }} className=" flex flex-row justify-between mt-6 mb-1 items-center">
+                <div onClick={() => { toastSuccess("Address copied!"); navigator.clipboard.writeText(displayedAddress) }} className=" flex flex-row justify-between mt-6 mb-1 items-center">
                     <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold cursor-pointer text-sm text-gray-400">{displayedAddress}</CustomLabel>
                     <img style={{ height: "16px", width: "16px", cursor: "pointer" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
                 </div>
@@ -220,7 +313,9 @@ export default function Gateway({ username }) {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div>}
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="/">Buy</Link> this username</CustomLabel>}
+            <CustomBrandedButton onClick={() => { router.push("/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
+            <div id="spacer" className="grow"></div>
         </div>
 
     )

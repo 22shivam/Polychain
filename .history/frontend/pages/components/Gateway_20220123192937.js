@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import CustomLabel from "../components/customLabel";
 import CustomInput from "../components/customInput";
 import CurrencySelector from "../components/currencySelector";
+import Link from "next/link";
 import CustomBrandedButton from "../components/customBrandedButton";
 import Image from "next/image";
 import Loading from "../components/Loading";
@@ -34,9 +35,11 @@ const handleSubmitDESO = async (addr) => {
     }
 }
 
-export default function Gateway({ username }) {
+export default function Gateway() {
 
+    const router = useRouter()
     const [selectedCurrency, setSelectedCurrency] = useState(defaultCurrencies[0]);
+    const { username } = router.query
     const [qrCode, setQrCode] = useState("")
     const [payValue, setPayValue] = useState("")
     const [USDPerCurrency, setUSDPerCurrency] = useState(0)
@@ -48,9 +51,20 @@ export default function Gateway({ username }) {
     const [profilePic, setProfilePic] = useState("")
     const [currencies, setCurrencies] = useState([])
     const [loading, setLoading] = useState(true)
+    const [accountExists, setAccountExists] = useState(false)
     const [displayedAddress, setDisplayedAddress] = useState("")
+    const [twitterUrl, setTwitterUrl] = useState("");
+    const [githubUrl, setGithubUrl] = useState("");
+    const [facebookUrl, setFacebookUrl] = useState("");
+    const [instagramUrl, setInstagramUrl] = useState("");
+    const [tiktokUrl, setTiktokUrl] = useState("");
+    const [youtubeUrl, setYoutubeUrl] = useState("");
+    const [linkedinUrl, setLinkedinUrl] = useState("");
+    const [pinterestUrl, setPinterestUrl] = useState("");
+    const [redditUrl, setRedditUrl] = useState("");
+    const [snapchatUrl, setSnapchatUrl] = useState("");
     const [fullName, setFullName] = useState("");
-
+    const [anySocialUrl, setAnySocialUrl] = useState(false);
 
 
     useEffect(() => {
@@ -151,12 +165,52 @@ export default function Gateway({ username }) {
                     if (response.user.fullName && response.user.fullName != "") {
                         setFullName(response.user.fullName)
                     }
-
+                    if (response.user.twitterUsername && response.user.twitterUsername != "") {
+                        setTwitterUrl("https://twitter.com/" + response.user.twitterUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.instagramUsername && response.user.instagramUsername != "") {
+                        setInstagramUrl("https://instagram.com/" + response.user.instagramUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.githubUsername && response.user.githubUsername != "") {
+                        setGithubUrl("https://github.com/" + response.user.githubUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.facebookUsername && response.user.facebookUsername != "") {
+                        setFacebookUrl("https://facebook.com/" + response.user.facebookUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.youtubeUsername && response.user.youtubeUsername != "") {
+                        setYoutubeUrl("https://youtube.com/" + response.user.youtubeUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.linkedinUsername && response.user.linkedinUsername != "") {
+                        setLinkedinUrl("https://linkedin.com/in/" + response.user.linkedinUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.pinterestUsername && response.user.pinterestUsername != "") {
+                        setPinterestUrl("https://pinterest.com/" + response.user.pinterestUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.redditUsername && response.user.redditUsername != "") {
+                        setRedditUrl("https://reddit.com/u/" + response.user.redditUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.snapchatUsername && response.user.snapchatUsername != "") {
+                        setSnapchatUrl("https://snapchat.com/add/" + response.user.snapchatUsername)
+                        setAnySocialUrl(true)
+                    }
+                    if (response.user.tiktokUsername && response.user.tiktokUsername != "") {
+                        setTiktokUrl("https://tiktok.com/@" + response.user.tiktokUsername)
+                        setAnySocialUrl(true)
+                    }
 
                     setSelectedCurrency(currencyArray[0])
                     setCurrencies(currencyArray)
                     setBio(response.user.bio)
                     setProfilePic(response.user.profilePic)
+                    setAccountExists(true)
                 }
                 setLoading(false)
             } catch (e) {
@@ -198,6 +252,18 @@ export default function Gateway({ username }) {
                     </div>
                 </div>
 
+                {anySocialUrl ? <div className="flex flex-row justify-center mt-4 items-center">
+                    {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="images/Facebook.svg" width="30"></img></a> : ""}
+                    {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="images/Instagram.svg" width="30"></img></a> : ""}
+                    {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="images/Github.svg" width="30"></img></a> : ""}
+                    {linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><img src="Linkedin.svg" width="30"></img></a> : ""}
+                    {redditUrl ? <a href={redditUrl} target="_blank" rel="noopener noreferrer"><img src="images/Reddit.svg" width="30"></img></a> : ""}
+                    {snapchatUrl ? <a href={snapchatUrl} target="_blank" rel="noopener noreferrer"><img src="images/Snapchat.svg" width="30"></img></a> : ""}
+                    {tiktokUrl ? <a href={tiktokUrl} target="_blank" rel="noopener noreferrer"><img src="images/Tiktok.svg" width="30"></img></a> : ""}
+                    {pinterestUrl ? <a href={pinterestUrl} target="_blank" rel="noopener noreferrer"><img src="images/Pinterest.svg" width="30"></img></a> : ""}
+                    {twitterUrl ? <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><img src="images/Twitter.svg" width="30"></img></a> : ""}
+                    {youtubeUrl ? <a href={youtubeUrl} target="_blank" rel="noopener noreferrer"><img src="images/Youtube.svg" width="30"></img></a> : ""}
+                </div> : ""}
 
                 <div onClick={() => { navigator.clipboard.writeText(displayedAddress) }} className=" flex flex-row justify-between mt-6 mb-1 items-center">
                     <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold cursor-pointer text-sm text-gray-400">{displayedAddress}</CustomLabel>
@@ -220,7 +286,7 @@ export default function Gateway({ username }) {
                 {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
                 <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
 
-            </div>}
+            </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="/">Buy</Link> this username</CustomLabel>}
         </div>
 
     )
