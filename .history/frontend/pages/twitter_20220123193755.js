@@ -51,6 +51,7 @@ export default function Twitter() {
                             : ""
                     }
                 </div>
+                <Gateway username="shivam"></Gateway>
             </div>
         </Page>
     )

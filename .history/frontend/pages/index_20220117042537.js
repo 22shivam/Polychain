@@ -346,7 +346,7 @@ export default function App() {
                 </div>
                 <div id="username" className="flex flex-col justify-center items-center">
                     <div className="flex justify-center my-3">
-                        <span className="border text-sm sm:text-base border-gray-300 shadow-sm border-r-0 rounded-l-md px-2 sm:px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-medium sm:font-semibold ">polychain.tech/</span>
+                        <span className="border text-sm sm:text-base border-gray-300 shadow-sm border-r-0 rounded-l-md px-2 sm:px-4 py-2 bg-gray-100 muted whitespace-no-wrap font-medium sm:font-semibold ">polychian.tech/</span>
                         <CustomInput value={username} onChange={(e) => { setUsername((e.target.value).replace(/[^a-zA-Z0-9]/g, "")) }} name="field_name" className="homepageInput rounded-l-none ml-0 mr-2 sm:mr-4 input-placeholder" type="text" placeholder="Enter Username" />
                         <div className="buyHomePage"><DropDownComponent primaryLabel="Buy" label1="Ethereum" label2="Solana" label1onClick={registerUsingEthereum} label2onClick={registerUsingSolana} /></div>
                     </div>
