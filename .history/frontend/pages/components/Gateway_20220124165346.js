@@ -147,9 +147,9 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
                         (async () => {
                             let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/eth/${address}`);
                             response = await response.json();
-                            if (response.user) {
+                            if (data.user) {
 
-                                setUsername(response.user.username)
+                                setUsername(data.user.username)
                                 let currencyArray = []
 
                                 if (response.user.ETHAddress && response.user.ETHAddress != "") {
@@ -198,8 +198,6 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
                                 setCurrencies(currencyArray)
                                 setBio(response.user.bio)
                                 setProfilePic(response.user.profilePic)
-                                setLoading(false)
-                                return
                             }
                         })();
 
@@ -219,9 +217,9 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
                         (async () => {
                             let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/sol/${address}`);
                             response = await response.json();
-                            if (response.user) {
+                            if (data.user) {
 
-                                setUsername(response.user.username)
+                                setUsername(data.user.username)
                                 let currencyArray = []
 
                                 if (response.user.ETHAddress && response.user.ETHAddress != "") {

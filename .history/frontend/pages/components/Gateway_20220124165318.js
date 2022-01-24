@@ -145,61 +145,12 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
                     if (blockchain == "ETH") {
 
                         (async () => {
-                            let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/eth/${address}`);
-                            response = await response.json();
-                            if (response.user) {
+                            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/eth/${address}`);
+                            let data = await response.json();
+                            if (data.user) {
 
-                                setUsername(response.user.username)
-                                let currencyArray = []
-
-                                if (response.user.ETHAddress && response.user.ETHAddress != "") {
-                                    setETHAddress(response.user.ETHAddress)
-                                    currencyArray.push({
-                                        id: 2,
-                                        name: 'ETH',
-                                        avatar: '/ethereumLogo.png',
-                                    })
-
-                                }
-                                if (response.user.SOLAddress && response.user.SOLAddress != "") {
-                                    setSOLAddress(response.user.SOLAddress)
-                                    currencyArray.push(
-                                        {
-                                            id: 3,
-                                            name: 'SOL',
-                                            avatar: '/solanaLogo.png',
-                                        })
-                                }
-
-                                if (response.user.DESOAddress && response.user.DESOAddress != "") {
-                                    setDESOAddress(response.user.DESOAddress)
-                                    currencyArray.push(
-                                        {
-                                            id: 4,
-                                            name: 'DESO',
-                                            avatar: '/DeSoLogo.png',
-                                        })
-                                }
-                                if (response.user.BTCAddress && response.user.BTCAddress != "") {
-                                    setBTCAddress(response.user.BTCAddress)
-                                    currencyArray.push(
-                                        {
-                                            id: 1,
-                                            name: 'BTC',
-                                            avatar: '/bitcoinLogo.png',
-                                        })
-                                }
-                                if (response.user.fullName && response.user.fullName != "") {
-                                    setFullName(response.user.fullName)
-                                }
-
-
-                                setSelectedCurrency(currencyArray[0])
-                                setCurrencies(currencyArray)
-                                setBio(response.user.bio)
-                                setProfilePic(response.user.profilePic)
-                                setLoading(false)
-                                return
+                                setUsername(data.user.username)
+                                setReload(true)
                             }
                         })();
 
@@ -219,9 +170,9 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
                         (async () => {
                             let response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/address/sol/${address}`);
                             response = await response.json();
-                            if (response.user) {
+                            if (data.user) {
 
-                                setUsername(response.user.username)
+                                setUsername(data.user.username)
                                 let currencyArray = []
 
                                 if (response.user.ETHAddress && response.user.ETHAddress != "") {
@@ -272,6 +223,7 @@ export default function Gateway({ propUsername, address, blockchain, advertiseme
                                 setProfilePic(response.user.profilePic)
                                 setLoading(false)
                                 return
+
                             }
                         })();
 
