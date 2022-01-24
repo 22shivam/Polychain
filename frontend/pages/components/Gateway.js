@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import generateQR from "../../lib/generateQR";
 import transferSOL from "../../lib/transferSol";
 import transferEth from "../../lib/transferEth";
@@ -7,9 +7,14 @@ import CustomLabel from "../components/customLabel";
 import CustomInput from "../components/customInput";
 import CurrencySelector from "../components/currencySelector";
 import CustomBrandedButton from "../components/customBrandedButton";
+import CustomButton from '../components/customButton';
 import Image from "next/image";
 import Loading from "../components/Loading";
 import Identicon from 'react-identicons';
+import { Dialog, Transition } from '@headlessui/react'
+import { CheckIcon } from '@heroicons/react/outline'
+import toastError from "../../lib/toastError";
+import toastInfo from "../../lib/toastInfo";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -30,7 +35,7 @@ const handleSubmitDESO = async (addr) => {
     try {
         window.open(`https://diamondapp.com/send-deso?public_key=${addr}`, "_blank");
     } catch (error) {
-
+        toastError(error.message)
     }
 }
 
@@ -50,6 +55,7 @@ export default function Gateway({ username }) {
     const [loading, setLoading] = useState(true)
     const [displayedAddress, setDisplayedAddress] = useState("")
     const [fullName, setFullName] = useState("");
+    const [qrVisible, setQrVisible] = useState(false);
 
 
 
@@ -59,7 +65,7 @@ export default function Gateway({ username }) {
                 const qrCode = await generateQR(`bitcoin:${BTCAddress}`)
                 setQrCode(qrCode)
             } catch (e) {
-                // toastError("Something went wrong. Please try again")
+                toastError("Something went wrong. Please try again")
             }
         })()
     }, [BTCAddress])
@@ -95,7 +101,7 @@ export default function Gateway({ username }) {
                     setDisplayedAddress(DESOAddress)
                 }
             } catch (e) {
-                // toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
+                toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
             }
         })();
 
@@ -161,7 +167,7 @@ export default function Gateway({ username }) {
                 setLoading(false)
             } catch (e) {
                 setLoading(false)
-                // toastError("Something went wrong. Please try again")
+                toastError("Something went wrong. Please try again")
             }
         })()
     }, [username])
@@ -177,18 +183,25 @@ export default function Gateway({ username }) {
             } else if (selectedCurrency.name == "BTC") {
                 // nothing
                 window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
-                // toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
+                toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
             }
         } catch (e) {
-            // toastError("Something went wrong. Please try again")
+            toastError("Something went wrong. Please try again")
         }
     }
 
+    const showQR = () => {
+        setQrVisible(true);
+    }
+
+    const hideQR = () => {
+        setQrVisible(false);
+    } 
+
 
     return (
-
-        <div className="flex flex-col items-center justify-center mx-4">
-            {loading ? <Loading /> : <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 bg-white">
+        <>
+            {loading ? <Loading /> : <div id="card" className="w-screen flex flex-col  rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 bg-white">
                 <div id="profile_header mt-6" className="flex flex-row items-start">
                     {profilePic ?
                         <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : <Identicon className="rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
@@ -199,7 +212,7 @@ export default function Gateway({ username }) {
                 </div>
 
 
-                <div onClick={() => { navigator.clipboard.writeText(displayedAddress) }} className=" flex flex-row justify-between mt-6 mb-1 items-center">
+                <div onClick={() => { toastInfo("Address Copied!"); navigator.clipboard.writeText(displayedAddress) }} className=" flex flex-row justify-between mt-6 mb-1 items-center">
                     <CustomLabel style={{ fontSize: "0.875rem" }} className="address-overflow p-0 font-semibold cursor-pointer text-sm text-gray-400">{displayedAddress}</CustomLabel>
                     <img style={{ height: "16px", width: "16px", cursor: "pointer" }} className="mr-2 sm:mr-4" src="/images/clipboard.png"></img>
                 </div>
@@ -217,11 +230,47 @@ export default function Gateway({ username }) {
 
                 </div>
 
-                {selectedCurrency.name == "BTC" ? <img className="-mt-6" src={qrCode}></img> : ""}
-                <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>
+                <Transition.Root show={qrVisible} as={Fragment}>
+                    <Dialog as="div" static className="fixed z-10 inset-0 overflow-y-auto" open={qrVisible} onClose={hideQR}>
+                        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            enterTo="opacity-100 translate-y-0 sm:scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                            <div className="inline-block align-bottom transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                                {selectedCurrency.name == "BTC" ? <img className="mx-0" src={qrCode}></img> : ""}
+                            </div>
+                        </Transition.Child>
+                        </div>
+                    </Dialog>
+                </Transition.Root>
+                {selectedCurrency.name == "BTC" ? <div className="flex justify-items-between">
+                        <CustomBrandedButton onClick={transferAmount} className="mb-6 flex-1">Pay</CustomBrandedButton>
+                        <CustomButton onClick={showQR} className="mb-6 flex-1">Show QR</CustomButton>
+                    </div> : <CustomBrandedButton onClick={transferAmount} className="mb-6 ">Pay</CustomBrandedButton>}
 
             </div>}
-        </div>
-
+        </>
     )
 }
