@@ -18,7 +18,7 @@ import Loading from "../components/Loading";
 import Identicon from 'react-identicons';
 import { WalletConnectorContext } from "../_app";
 import { UserContext } from "../_app";
-import Page from "./../components/Page";
+import Page from "./../components/page";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
