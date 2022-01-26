@@ -26,6 +26,7 @@ let checkifUsernameAvailable = async (username) => {
         }
         return true
     } catch (error) {
+        console.log(error)
         toastError("Invalid Username")
         return false
     }
@@ -131,7 +132,9 @@ export default function App() {
                 ether: ETHpayValue.toFixed(18).toString(),
                 addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
             }, setUserAccount, true, WalletConnectConnector, userAccount)
+            console.log(tx)
             if (!tx) { return }
+            console.log(tx)
 
             const requestObject = {
                 tx,
@@ -154,7 +157,7 @@ export default function App() {
 
 
         <Page>
-            <div id="home" className="pt-12 flex flex-col justify-center items-center mb-40 sm:mb-48 md:mb-52">
+            <div id="home" className="pt-20 flex flex-col justify-center items-center mb-40 sm:mb-48 md:mb-52">
                 <div id="main_content" className="my-7">
                     <h1 style={{ maxWidth: "650px" }} className="font-extrabold tracking-tight text-gray-900 sm:text-center text-5xl text-center mx-4 leading-10 sm:leading-4rem"><span className="block"><span className="relative mt-2 text-transparent bg-clip-text bg-gradient-to-br from-brand-primary-dark to-brand-primary-light block">receive <Typewriter
                         options={{

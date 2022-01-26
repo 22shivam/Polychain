@@ -24,9 +24,8 @@ let checkIfSOLAddressAvailable = async (address) => {
 export default async function transferSOL(solAmount, toAddr, setUserAccount, checkSolAddressAvailability = false, userAccount) {
     // Detecing and storing the phantom wallet of the user (creator in this case)
     try {
-        console.log(userAccount)
 
-        if (userAccount && userAccount.blockchain !== "sol") {
+        if (userAccount && !userAccount.blockchain == "sol") {
             toastError("Please login with a Solana Wallet to send SOL")
             return
         }

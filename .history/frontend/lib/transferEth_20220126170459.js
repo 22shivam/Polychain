@@ -67,7 +67,6 @@ const transferEth = async ({ ether, addr }, setUserAccount, boolCheckIfEthAddres
                 })
                 .catch((error) => {
                     // Error returned when rejected
-                    console.log(error)
                     toastError("Transaction Failed. Please try again.")
                 });
 

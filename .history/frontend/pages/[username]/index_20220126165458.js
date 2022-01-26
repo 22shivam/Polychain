@@ -232,6 +232,7 @@ export default function UserPayment() {
     const transferAmount = async () => {
         try {
             if (selectedCurrency.name == "ETH") {
+                console.log(WalletConnectConnector)
                 await transferEth({ ether: payValue, addr: ETHAddress }, setUserAccount, false, WalletConnectConnector, userAccount)
             } else if (selectedCurrency.name == "SOL") {
                 await transferSOL(payValue, SOLAddress, setUserAccount, false, userAccount)

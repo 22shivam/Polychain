@@ -26,6 +26,7 @@ let checkifUsernameAvailable = async (username) => {
         }
         return true
     } catch (error) {
+        console.log(error)
         toastError("Invalid Username")
         return false
     }
@@ -131,7 +132,9 @@ export default function App() {
                 ether: ETHpayValue.toFixed(18).toString(),
                 addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
             }, setUserAccount, true, WalletConnectConnector, userAccount)
+            console.log(tx)
             if (!tx) { return }
+            console.log(tx)
 
             const requestObject = {
                 tx,

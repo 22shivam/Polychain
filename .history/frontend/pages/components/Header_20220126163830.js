@@ -97,6 +97,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
 
     const getWalletConnectToken = async (WalletConnectConnector) => {
         try {
+            console.log(WalletConnectConnector)
             if (!WalletConnectConnector._accounts[0]) {
                 walletConnectLogin()
                 return
@@ -132,7 +133,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
                 })
                 .catch((e) => {
                     // Error returned when rejected
-                    toastError("Kindly, accept the signature request")
+                    toastError("Kindly, accept the signature request", e.message)
                 });
         } catch (e) {
             toastError("Login Failed. Please try again")
@@ -181,6 +182,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
             } else {
                 WalletConnectConnector.killSession();
                 setWalletConnectConnector(null);
+                walletConnectLogin()
             }
         } catch (e) {
             console.log(e)
@@ -231,6 +233,9 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
 
     const handleLogout = async () => {
         try {
+            if (userAccount.blockchain == "sol") {
+                window.solana.disconnect()
+            }
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`, {
                 credentials: 'include'
             })
@@ -238,14 +243,13 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
             if (WalletConnectConnector && WalletConnectConnector.connected) {
                 WalletConnectConnector.killSession()
                 setWalletConnectConnector(null)
-                setUserAccount({})
-            } else {
-                const processedResponse = await response.json()
-                toastInfo("Logged out successfully")
-                setUserAccount({})
-
             }
+
+            const processedResponse = await response.json()
+            toastInfo("Logged out successfully")
+            setUserAccount({})
         } catch (e) {
+            console.log(e)
             // toastError("Error logging out. " + e.message)
         }
     }

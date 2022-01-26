@@ -132,6 +132,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
                 })
                 .catch((e) => {
                     // Error returned when rejected
+                    console.log(e)
                     toastError("Kindly, accept the signature request")
                 });
         } catch (e) {
@@ -181,6 +182,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
             } else {
                 WalletConnectConnector.killSession();
                 setWalletConnectConnector(null);
+                walletConnectLogin()
             }
         } catch (e) {
             console.log(e)
@@ -246,6 +248,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
 
             }
         } catch (e) {
+            console.log(e)
             // toastError("Error logging out. " + e.message)
         }
     }

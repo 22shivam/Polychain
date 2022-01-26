@@ -97,10 +97,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
 
     const getWalletConnectToken = async (WalletConnectConnector) => {
         try {
-            if (!WalletConnectConnector._accounts[0]) {
-                walletConnectLogin()
-                return
-            }
+
             const message = `Logging in.... \n \n Random ID: ${Math.random().toString(36).slice(2)}`
             const msgParams = [
                 convertUtf8ToHex(message), // Required
@@ -132,6 +129,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
                 })
                 .catch((e) => {
                     // Error returned when rejected
+                    console.log(e)
                     toastError("Kindly, accept the signature request")
                 });
         } catch (e) {
@@ -181,6 +179,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
             } else {
                 WalletConnectConnector.killSession();
                 setWalletConnectConnector(null);
+                walletConnectLogin()
             }
         } catch (e) {
             console.log(e)
@@ -246,6 +245,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
 
             }
         } catch (e) {
+            console.log(e)
             // toastError("Error logging out. " + e.message)
         }
     }

@@ -9,6 +9,7 @@ import CurrencySelector from "../components/currencySelector";
 import toastError from "../../lib/toastError";
 import toastInfo from "../../lib/toastInfo";
 import toastSuccess from "../../lib/toastSuccess";
+import { ToastContainer } from "react-toastify";
 import Link from "next/link";
 import CustomBrandedButton from "../components/customBrandedButton";
 import Image from "next/image";
@@ -232,6 +233,7 @@ export default function UserPayment() {
     const transferAmount = async () => {
         try {
             if (selectedCurrency.name == "ETH") {
+                console.log(WalletConnectConnector)
                 await transferEth({ ether: payValue, addr: ETHAddress }, setUserAccount, false, WalletConnectConnector, userAccount)
             } else if (selectedCurrency.name == "SOL") {
                 await transferSOL(payValue, SOLAddress, setUserAccount, false, userAccount)

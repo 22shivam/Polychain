@@ -26,7 +26,7 @@ export default async function transferSOL(solAmount, toAddr, setUserAccount, che
     try {
         console.log(userAccount)
 
-        if (userAccount && userAccount.blockchain !== "sol") {
+        if (userAccount && !userAccount.blockchain == "sol") {
             toastError("Please login with a Solana Wallet to send SOL")
             return
         }
