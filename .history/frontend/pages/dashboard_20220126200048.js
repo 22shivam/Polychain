@@ -311,19 +311,9 @@ export default function UserDashboard() {
                     </nav>
                     {/* content */}
                     {selectedNav == 1 ? <main id="dashboard" className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                        <div className='flex items-center align-items-center align-baseline'>
-                            <CustomLabel className="text-xl smtext-2xl">Your Username: </CustomLabel>
-                            <Link className="cursor-pointer" href={`/${username}`}>
-                                <CustomLabel className="-ml-2 underline cursor-pointer smtext-2xl text-xl mx-0 px-0 font-normal hover:text-brand-primary-medium hover:underline">{username}</CustomLabel>
-                            </Link>
-                            <Link className="cursor-pointer" href={`/${username}`}>
-                                <div className='cursor-pointer'>
-                                    <svg className='cursor-pointer' xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                </div>
-                            </Link>
-                        </div>
+                        <CustomLabel className="text-xl smtext-2xl mb-3">Your Username:<Link className="cursor-pointer" href={`/${username}`}><CustomLabel className="cursor-pointer smtext-2xl text-xl mx-0 px-0 font-normal flex">{username}<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg></CustomLabel></Link></CustomLabel>
                         <CustomLabel className="text-xl mt-5 smtext-2xl mb-3">Profile Information</CustomLabel>
                         <div className='flex flex-col' id="form">
 

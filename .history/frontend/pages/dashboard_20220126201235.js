@@ -311,7 +311,7 @@ export default function UserDashboard() {
                     </nav>
                     {/* content */}
                     {selectedNav == 1 ? <main id="dashboard" className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                        <div className='flex items-center align-items-center align-baseline'>
+                        <div className='flex items-center align-items-center align-middle'>
                             <CustomLabel className="text-xl smtext-2xl">Your Username: </CustomLabel>
                             <Link className="cursor-pointer" href={`/${username}`}>
                                 <CustomLabel className="-ml-2 underline cursor-pointer smtext-2xl text-xl mx-0 px-0 font-normal hover:text-brand-primary-medium hover:underline">{username}</CustomLabel>
