@@ -404,7 +404,7 @@ export default function UserDashboard() {
                                             <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                         </div>
                                     </div>
-                                    <CustomLabel className="ml-2 mt-5 pb-3 font-semibold sm:text-lg text-gray-900">
+                                    <CustomLabel className="ml-2 pt-8 pb-3 mt-6 font-semibold sm:text-lg text-gray-900">
                                         Profile Picture Preview
                                     </CustomLabel>
                                     {profilePic ? <img src={profilePic} className="mx-6 my-4"></img> : <Identicon className="mx-6 my-4 rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
