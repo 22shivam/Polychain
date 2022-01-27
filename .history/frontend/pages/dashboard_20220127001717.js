@@ -348,8 +348,8 @@ export default function UserDashboard() {
                             </a>
                             <a className="cursor-pointer" href={`/${username}`} target="_blank" rel="noreferrer">
                                 <div className='cursor-pointer'>
-                                    <svg className='cursor-pointer h-6 w-6' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    <svg className='cursor-pointer' xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
                                 </div>
                             </a>
@@ -404,7 +404,7 @@ export default function UserDashboard() {
                                             <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                         </div>
                                     </div>
-                                    <CustomLabel className="ml-2 pt-8 pb-3 mt-6 font-semibold sm:text-lg text-gray-900">
+                                    <CustomLabel class="ml-2 pt-8 pb-3 mt-6 font-semibold sm:text-lg text-gray-900">
                                         Profile Picture Preview
                                     </CustomLabel>
                                     {profilePic ? <img src={profilePic} className="mx-6 my-4"></img> : <Identicon className="mx-6 my-4 rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
@@ -578,8 +578,8 @@ export default function UserDashboard() {
                     {
                         selectedNav == "4" ?
                             <div className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                                <CustomLabel className="text-xl smtext-2xl mb-1 flex items-center">QR Code for your Page <a download="polychainQR" className='ml-4 h-6 w-6' href={qrCode}><svg style={{ display: "inline" }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path className="text-gray-400" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                <CustomLabel className="text-xl smtext-2xl mb-1 flex items-center">QR Code for your Page <a download="polychainQR" className='ml-4' href={qrCode}><svg style={{ display: "inline" }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path className="text-gray-400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg></a></CustomLabel>
                                 <img className="w-60 ml-4" src={qrCode}></img>
                                 <CustomLabel className="text-xl smtext-2xl mb-4 flex items-center mt-10">Share your Page</CustomLabel>
