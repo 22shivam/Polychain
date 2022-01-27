@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link';
 import Header from './components/Header';
 import Loading from './components/Loading';
-import Identicon from 'react-identicons';
+
 const navigationItems = [
     {
         id: 1,
@@ -311,12 +311,10 @@ export default function UserDashboard() {
                     </nav>
                     {/* content */}
                     {selectedNav == 1 ? <main id="dashboard" className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-
-                        <CustomLabel className="text-xl  smtext-2xl mb-3">Profile Information</CustomLabel>
-                        <div className='ml-2 flex items-center align-items-center align-baseline'>
-                            <CustomLabel className="text-xl">Your Username: </CustomLabel>
+                        <div className='flex items-center align-items-center align-baseline'>
+                            <CustomLabel className="text-xl smtext-2xl">Your Username: </CustomLabel>
                             <Link className="cursor-pointer" href={`/${username}`}>
-                                <CustomLabel className="-ml-2 underline cursor-pointer text-xl mx-0 px-0 font-normal hover:text-brand-primary-medium hover:underline">{username}</CustomLabel>
+                                <CustomLabel className="-ml-2 underline cursor-pointer smtext-2xl text-xl mx-0 px-0 font-normal hover:text-brand-primary-medium hover:underline">{username}</CustomLabel>
                             </Link>
                             <Link className="cursor-pointer" href={`/${username}`}>
                                 <div className='cursor-pointer'>
@@ -326,6 +324,7 @@ export default function UserDashboard() {
                                 </div>
                             </Link>
                         </div>
+                        <CustomLabel className="text-xl mt-5 smtext-2xl mb-3">Profile Information</CustomLabel>
                         <div className='flex flex-col' id="form">
 
                             <div className='flex flex-col mt-4 items-start'>
@@ -345,7 +344,7 @@ export default function UserDashboard() {
 
                                 <div className='flex flex-col items-start mb-4'>
                                     <CustomLabel className="ml-2">Profile Picture:</CustomLabel>
-                                    <div className="mx-4 mb-6 w-72 sm:w-96 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                    <div className="mx-4 w-72 sm:w-96 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                         <div className="space-y-1 text-center">
                                             <svg
                                                 className="mx-auto h-12 w-12 text-gray-400"
@@ -376,122 +375,130 @@ export default function UserDashboard() {
                                             <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                         </div>
                                     </div>
-                                    <CustomLabel class="ml-2 pt-8 pb-3 mt-6 font-semibold sm:text-lg text-gray-900">
-                                        Profile Picture Preview
+                                    <div className='flex flex-col mt-4 items-start'></div>
+                                    <CustomLabel class="pt-8 pb-3 mt-6 font-semibold sm:text-lg text-gray-900">
+                                        To Upload
                                     </CustomLabel>
-                                    {profilePic ? <img src={profilePic} className="mx-6 my-4"></img> : <Identicon className="mx-6 my-4 rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
+
+                                    <ul id="gallery" class="flex flex-1 flex-wrap -m-1">
+                                        <li id="empty" class="h-full w-full text-center flex flex-col items-center justify-center items-center">
+                                            <img class="mx-auto w-32" src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png" alt="no data" />
+                                            <span class="text-small text-gray-500">No files selected</span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div className='mx-4 mt-2'>
-                                <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
-                            </div>
-                            <CustomLabel className="text-xl smtext-2xl mt-20 mb-5">Wallet Addresses</CustomLabel>
-                            <div className='flex flex-col md:flex-row flex-wrap'>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">DESO Address:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={DESOAddress} onChange={(e) => setDESOAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
-                                        placeholder="enter deso address" />
-                                    {DESOAddress ? "" :
-                                        <CustomLabel className="text-gray-500 text-xs font-normal sm:text-sm w-72 sm:w-96">don&apos;t have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank" rel="noreferrer">sign up</a> now and get up to $5!</CustomLabel>}</div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Bitcoin Address:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={BTCAddress} onChange={(e) => setBTCAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
-                                        placeholder="enter btc address" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Ethereum Address:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={ETHAddress} onChange={(e) => setETHAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
-                                        placeholder="enter eth address" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Solana Address:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={SOLAddress} onChange={(e) => setSOLAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
-                                        placeholder="enter sol address" /></div>
-                            </div>
-                            <div className='mx-4 mt-5'>
-                                <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
-                            </div>
-                            <CustomLabel className="text-xl smtext-2xl mt-20 mb-5">Social Links</CustomLabel>
-                            <div className='flex flex-row md:flex-row flex-wrap'>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Twitter Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={twitterUsername} onChange={(e) => setTwitterUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Facebook Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={facebookUsername} onChange={(e) => setFacebookUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Instagram Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={instagramUsername} onChange={(e) => setInstagramUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Pinterest Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={pinterestUsername} onChange={(e) => setPinterestUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Reddit Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={redditUsername} onChange={(e) => setRedditUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Youtube Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={youtubeUsername} onChange={(e) => setYoutubeUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Linkedin Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={linkedinUsername} onChange={(e) => setLinkedinUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Tiktok Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={tiktokUsername} onChange={(e) => setTiktokUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Github Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={githubUsername} onChange={(e) => setGithubUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="ml-2">Snapchat Username:</CustomLabel>
-                                    <CustomInput className="my-1 w-68" type="text" value={snapchatUsername} onChange={(e) => setSnapchatUsername((e.target.value))}
-                                        placeholder="enter username" /></div>
-                            </div>
-
-
-                            <div className='mx-4 mt-5'>
-                                <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
-                            </div>
-
                         </div>
+                        <div className='mx-4 mt-5'>
+                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                        </div>
+                        <CustomLabel className="text-xl smtext-2xl mt-20 mb-5">Wallet Addresses</CustomLabel>
+                        <div className='flex flex-col md:flex-row flex-wrap'>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">DESO Address:</CustomLabel>
+                                <CustomInput className="my-1 w-72 sm:w-96" type="text" value={DESOAddress} onChange={(e) => setDESOAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
+                                    placeholder="enter deso address" />
+                                {DESOAddress ? "" :
+                                    <CustomLabel className="text-gray-500 text-xs font-normal sm:text-sm w-72 sm:w-96">don&apos;t have an account yet? <a href="https://diamondapp.com?r=6xzkzfZt" className='underline' target="_blank" rel="noreferrer">sign up</a> now and get up to $5!</CustomLabel>}</div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Bitcoin Address:</CustomLabel>
+                                <CustomInput className="my-1 w-72 sm:w-96" type="text" value={BTCAddress} onChange={(e) => setBTCAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
+                                    placeholder="enter btc address" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Ethereum Address:</CustomLabel>
+                                <CustomInput className="my-1 w-72 sm:w-96" type="text" value={ETHAddress} onChange={(e) => setETHAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
+                                    placeholder="enter eth address" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Solana Address:</CustomLabel>
+                                <CustomInput className="my-1 w-72 sm:w-96" type="text" value={SOLAddress} onChange={(e) => setSOLAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
+                                    placeholder="enter sol address" /></div>
+                        </div>
+                        <div className='mx-4 mt-5'>
+                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                        </div>
+                        <CustomLabel className="text-xl smtext-2xl mt-20 mb-5">Social Links</CustomLabel>
+                        <div className='flex flex-row md:flex-row flex-wrap'>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Twitter Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={twitterUsername} onChange={(e) => setTwitterUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Facebook Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={facebookUsername} onChange={(e) => setFacebookUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Instagram Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={instagramUsername} onChange={(e) => setInstagramUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Pinterest Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={pinterestUsername} onChange={(e) => setPinterestUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Reddit Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={redditUsername} onChange={(e) => setRedditUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Youtube Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={youtubeUsername} onChange={(e) => setYoutubeUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Linkedin Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={linkedinUsername} onChange={(e) => setLinkedinUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Tiktok Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={tiktokUsername} onChange={(e) => setTiktokUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Github Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={githubUsername} onChange={(e) => setGithubUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                            <div className='flex flex-col mt-4 items-start'>
+                                <CustomLabel className="ml-2">Snapchat Username:</CustomLabel>
+                                <CustomInput className="my-1 w-68" type="text" value={snapchatUsername} onChange={(e) => setSnapchatUsername((e.target.value))}
+                                    placeholder="enter username" /></div>
+                        </div>
+
+
+                        <div className='mx-4 mt-5'>
+                            <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
+                        </div>
+
+                    </div>
                     </main> : ""}
-                    {
-                        selectedNav == "2" ?
-                            <div>
-                                <div className="px-4 py-5 m-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-                                    <dt className="text-sm font-medium text-gray-500 truncate">Total Visits</dt>
-                                    <dd className="mt-1 text-3xl font-semibold text-gray-900">{totalVisits}</dd>
-                                </div>
-                            </div>
-                            : ""
-                    }
-                    {
-                        selectedNav == "3" ?
-                            <div className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                                <CustomLabel className="text-xl smtext-2xl mb-1">Twitter Airdrop</CustomLabel>
-                                <CustomLabel className="block">Use this tool to extract ethereum addresses (including ens addresses) from replies to Tweets on Twitter</CustomLabel>
-                                <div className='flex flex-col mt-4 items-start'>
-                                    <CustomLabel className="mt-4">Enter Tweet URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tweetUrl} onChange={(e) => setTweetUrl((e.target.value))} placeholder="enter tweet URL" />
-                                </div>
-                                <div className='flex mt-6 space-x-2 items-center'>
-                                    <CustomBrandedButton className="px-6 self-start ml-4" onClick={extractAddresses}>Extract</CustomBrandedButton>
-                                    {
-                                        addressCsv ? <a download href={addressCsv}>Download</a>
-                                            : ""
-                                    }
-                                </div>
-                            </div>
-                            : ""
-                    }
-                </div>
-                : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>
+            {
+                selectedNav == "2" ?
+                    <div>
+                        <div className="px-4 py-5 m-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+                            <dt className="text-sm font-medium text-gray-500 truncate">Total Visits</dt>
+                            <dd className="mt-1 text-3xl font-semibold text-gray-900">{totalVisits}</dd>
+                        </div>
+                    </div>
+                    : ""
             }
+            {
+                selectedNav == "3" ?
+                    <div className='flex flex-col mb-20 pt-10 px-6 flex-1'>
+                        <CustomLabel className="text-xl smtext-2xl mb-1">Twitter Airdrop</CustomLabel>
+                        <CustomLabel className="block">Use this tool to extract ethereum addresses (including ens addresses) from replies to Tweets on Twitter</CustomLabel>
+                        <div className='flex flex-col mt-4 items-start'>
+                            <CustomLabel className="mt-4">Enter Tweet URL:</CustomLabel>
+                            <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tweetUrl} onChange={(e) => setTweetUrl((e.target.value))} placeholder="enter tweet URL" />
+                        </div>
+                        <div className='flex mt-6 space-x-2 items-center'>
+                            <CustomBrandedButton className="px-6 self-start ml-4" onClick={extractAddresses}>Extract</CustomBrandedButton>
+                            {
+                                addressCsv ? <a download href={addressCsv}>Download</a>
+                                    : ""
+                            }
+                        </div>
+                    </div>
+                    : ""
+            }
+        </div>
+                : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>
+}
 
         </div >
     )

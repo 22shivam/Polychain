@@ -312,7 +312,7 @@ export default function UserDashboard() {
                     {/* content */}
                     {selectedNav == 1 ? <main id="dashboard" className='flex flex-col mb-20 pt-10 px-6 flex-1'>
 
-                        <CustomLabel className="text-xl  smtext-2xl mb-3">Profile Information</CustomLabel>
+                        <CustomLabel className="text-xl mt-5 smtext-2xl mb-3">Profile Information</CustomLabel>
                         <div className='ml-2 flex items-center align-items-center align-baseline'>
                             <CustomLabel className="text-xl">Your Username: </CustomLabel>
                             <Link className="cursor-pointer" href={`/${username}`}>

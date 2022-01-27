@@ -311,12 +311,10 @@ export default function UserDashboard() {
                     </nav>
                     {/* content */}
                     {selectedNav == 1 ? <main id="dashboard" className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-
-                        <CustomLabel className="text-xl  smtext-2xl mb-3">Profile Information</CustomLabel>
-                        <div className='ml-2 flex items-center align-items-center align-baseline'>
-                            <CustomLabel className="text-xl">Your Username: </CustomLabel>
+                        <div className='flex items-center align-items-center align-baseline'>
+                            <CustomLabel className="text-xl smtext-2xl">Your Username: </CustomLabel>
                             <Link className="cursor-pointer" href={`/${username}`}>
-                                <CustomLabel className="-ml-2 underline cursor-pointer text-xl mx-0 px-0 font-normal hover:text-brand-primary-medium hover:underline">{username}</CustomLabel>
+                                <CustomLabel className="-ml-2 underline cursor-pointer smtext-2xl text-xl mx-0 px-0 font-normal hover:text-brand-primary-medium hover:underline">{username}</CustomLabel>
                             </Link>
                             <Link className="cursor-pointer" href={`/${username}`}>
                                 <div className='cursor-pointer'>
@@ -326,6 +324,7 @@ export default function UserDashboard() {
                                 </div>
                             </Link>
                         </div>
+                        <CustomLabel className="text-xl mt-5 smtext-2xl mb-3">Profile Information</CustomLabel>
                         <div className='flex flex-col' id="form">
 
                             <div className='flex flex-col mt-4 items-start'>
@@ -379,10 +378,10 @@ export default function UserDashboard() {
                                     <CustomLabel class="ml-2 pt-8 pb-3 mt-6 font-semibold sm:text-lg text-gray-900">
                                         Profile Picture Preview
                                     </CustomLabel>
-                                    {profilePic ? <img src={profilePic} className="mx-6 my-4"></img> : <Identicon className="mx-6 my-4 rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
+                                    {profilePic ? <img src={profilePic} className="mx-6 my-4"></img> : <Identicon className="rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
                                 </div>
                             </div>
-                            <div className='mx-4 mt-2'>
+                            <div className='mx-4 mt-5'>
                                 <CustomBrandedButton className="px-6" onClick={updateInfo}>Save</CustomBrandedButton>
                             </div>
                             <CustomLabel className="text-xl smtext-2xl mt-20 mb-5">Wallet Addresses</CustomLabel>
