@@ -239,9 +239,7 @@ export default function UserPayment() {
     const transferAmount = async () => {
         try {
             if (selectedCurrency.name == "ETH") {
-                if (!await ensureEthereumMainnet(userAccount, ethereum, WalletConnectConnector)) {
-                    return
-                }
+                ensureEthereumMainnet(userAccount, ethereum, WalletConnectConnector)
                 await transferEth({ ether: payValue, addr: ETHAddress }, setUserAccount, false, WalletConnectConnector, userAccount)
             } else if (selectedCurrency.name == "SOL") {
                 await transferSOL(payValue, SOLAddress, setUserAccount, false, userAccount)
@@ -252,9 +250,7 @@ export default function UserPayment() {
                 window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
                 toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
             } else if (selectedCurrency.name = "MATIC") {
-                if (!await ensureMaticMainnet(userAccount, ethereum, WalletConnectConnector)) {
-                    return
-                }
+                ensureMaticMainnet(userAccount, ethereum, WalletConnectConnector)
                 await transferEth({ ether: payValue, addr: ETHAddress }, setUserAccount, false, WalletConnectConnector, userAccount)
             }
         } catch (e) {

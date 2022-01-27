@@ -252,7 +252,8 @@ export default function UserPayment() {
                 window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
                 toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
             } else if (selectedCurrency.name = "MATIC") {
-                if (!await ensureMaticMainnet(userAccount, ethereum, WalletConnectConnector)) {
+                const proceed = await ensureMaticMainnet(userAccount, ethereum, WalletConnectConnector)
+                if (!proceed) {
                     return
                 }
                 await transferEth({ ether: payValue, addr: ETHAddress }, setUserAccount, false, WalletConnectConnector, userAccount)

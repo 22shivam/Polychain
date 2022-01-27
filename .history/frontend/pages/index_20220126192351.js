@@ -16,7 +16,6 @@ import { WalletConnectorContext } from "./_app";
 import WalletConnect from "@walletconnect/client";
 import { ethers } from 'ethers'
 import ensureEthereumMainnet from "../lib/ensureEthereumMainnet";
-import ensureMaticMainnet from "../lib/ensureMaticMainnet";
 
 
 
@@ -136,8 +135,44 @@ export default function App() {
                 return
             }
 
-            if (!await ensureMaticMainnet(userAccount, ethereum, WalletConnectConnector)) {
-                return
+            if (userAccount.wallet == "metamask") {
+                const chainId = await ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== "0x137") {
+                    try {
+                        // const response = await ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: 137 }] });
+                        await ethereum.request({
+                            id: 1,
+                            jsonrpc: "2.0",
+                            method: "wallet_addEthereumChain",
+                            params: [
+                                {
+                                    chainId: "0x89",
+                                    rpcUrls: ["https://polygon-rpc.com/"],
+
+                                    chainName: "Polygon Mainnet",
+                                    nativeCurrency: {
+                                        name: "MATIC",
+                                        symbol: "MATIC", // 2-6 characters long
+                                        decimals: 18,
+                                    },
+                                    blockExplorerUrls: ["https://polygonscan.com/"],
+                                },
+                            ],
+                        });
+                    } catch (error) {
+                        console.log(error)
+                        toastError("Please change to Polygon Network before proceeding")
+                        return
+                    }
+
+                }
+            }
+
+            if (userAccount.wallet == "walletconnect") {
+                if (WalletConnectConnector.chainId != 137) {
+                    toastError("Please change to Polygon Network before proceeding")
+                    return
+                }
             }
 
 
@@ -184,9 +219,7 @@ export default function App() {
                 return
             }
 
-            if (!await ensureEthereumMainnet(userAccount, ethereum, WalletConnectConnector)) {
-                return
-            }
+            ensureEthereumMainnet()
 
             const tx = await transferEth({
                 ether: ETHpayValue.toFixed(18).toString(),

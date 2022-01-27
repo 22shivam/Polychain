@@ -184,9 +184,7 @@ export default function App() {
                 return
             }
 
-            if (!await ensureEthereumMainnet(userAccount, ethereum, WalletConnectConnector)) {
-                return
-            }
+            await ensureEthereumMainnet(userAccount, ethereum, WalletConnectConnector)
 
             const tx = await transferEth({
                 ether: ETHpayValue.toFixed(18).toString(),

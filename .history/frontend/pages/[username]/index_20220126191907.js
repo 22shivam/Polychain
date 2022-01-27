@@ -18,8 +18,6 @@ import Identicon from 'react-identicons';
 import { WalletConnectorContext } from "../_app";
 import { UserContext } from "../_app";
 import Page from "./../components/Page";
-import ensureEthereumMainnet from "../../lib/ensureEthereumMainnet";
-import ensureMaticMainnet from "../../lib/ensureMaticMainnet";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -239,9 +237,6 @@ export default function UserPayment() {
     const transferAmount = async () => {
         try {
             if (selectedCurrency.name == "ETH") {
-                if (!await ensureEthereumMainnet(userAccount, ethereum, WalletConnectConnector)) {
-                    return
-                }
                 await transferEth({ ether: payValue, addr: ETHAddress }, setUserAccount, false, WalletConnectConnector, userAccount)
             } else if (selectedCurrency.name == "SOL") {
                 await transferSOL(payValue, SOLAddress, setUserAccount, false, userAccount)
@@ -252,9 +247,6 @@ export default function UserPayment() {
                 window.open(`bitcoin:${BTCAddress}?amount=${payValue}`, "_blank");
                 toastInfo("You need to have a bitcoin wallet installed in order to transfer bitcoin. Alternatively, you can scan the QR code to send BTC")
             } else if (selectedCurrency.name = "MATIC") {
-                if (!await ensureMaticMainnet(userAccount, ethereum, WalletConnectConnector)) {
-                    return
-                }
                 await transferEth({ ether: payValue, addr: ETHAddress }, setUserAccount, false, WalletConnectConnector, userAccount)
             }
         } catch (e) {
