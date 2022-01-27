@@ -311,7 +311,8 @@ export default function UserDashboard() {
                     </nav>
                     {/* content */}
                     {selectedNav == 1 ? <main id="dashboard" className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                        <CustomLabel className="text-xl smtext-2xl mb-3">Your Username:<CustomLabel className="smtext-2xl text-xl mx-0 px-0 font-normal">{username}</CustomLabel></CustomLabel>
+                        <CustomLabel className="text-xl smtext-2xl mb-3">Username</CustomLabel>
+                        <CustomLabel className="ml-2">Username</CustomLabel>
                         <CustomLabel className="text-xl mt-5 smtext-2xl mb-3">Profile Information</CustomLabel>
                         <div className='flex flex-col' id="form">
 
