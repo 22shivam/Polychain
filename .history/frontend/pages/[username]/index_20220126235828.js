@@ -345,7 +345,7 @@ export default function UserPayment() {
                             <div className="flex flex-col space-y-3 px-6 pt-8 pb-8">
                                 {links.map(link => {
                                     return (
-                                        link.title !== "" || link.url !== "" ? <CustomButton onClick={() => { window.open(link.url, "_blank") }} className="w-80">{link.title}</CustomButton> : ""
+                                        <CustomButton onClick={() => { window.open(link.url, "_blank") }} className="w-80">{link.title}</CustomButton>
                                     )
                                 })}
 

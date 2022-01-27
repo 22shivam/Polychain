@@ -20,7 +20,6 @@ import { UserContext } from "../_app";
 import Page from "./../components/Page";
 import ensureEthereumMainnet from "../../lib/ensureEthereumMainnet";
 import ensureMaticMainnet from "../../lib/ensureMaticMainnet";
-import CustomButton from "../components/customButton";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -270,8 +269,6 @@ export default function UserPayment() {
         }
     }
 
-    console.log(links)
-
 
     return (
 
@@ -297,7 +294,7 @@ export default function UserPayment() {
                                 </> : ""}
                         </nav>
                         {active == 1 ? <div className="flex flex-col">
-                            <div id="profile_header" className={(links.length > 0 ? "flex flex-row items-start mt-8" : "flex flex-row items-start")}>
+                            <div id="profile_header" className={"flex flex-row items-start" + links.length > 0 ? "mt-8" : ""}>
                                 {profilePic ?
                                     <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : <Identicon className="rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
                                 <div className="flex flex-col ml-2">
@@ -307,7 +304,7 @@ export default function UserPayment() {
                             </div>
 
                             {anySocialUrl ?
-                                <div className="flex flex-row justify-center items-center">
+                                <div className="flex flex-row justify-center mt-4 items-center">
                                     {facebookUrl ? <a href={facebookUrl} target="_blank" rel="noopener noreferrer"><img src="images/Facebook.svg" width="30"></img></a> : ""}
                                     {instagramUrl ? <a href={instagramUrl} target="_blank" rel="noopener noreferrer"><img src="images/Instagram.svg" width="30"></img></a> : ""}
                                     {githubUrl ? <a href={githubUrl} target="_blank" rel="noopener noreferrer"><img src="images/Github.svg" width="30"></img></a> : ""}
@@ -342,12 +339,8 @@ export default function UserPayment() {
                             <CustomBrandedButton onClick={transferAmount} className="mb-6">Pay</CustomBrandedButton>
                         </div> : ""}
                         {active == 2 ?
-                            <div className="flex flex-col space-y-3 px-6 pt-8 pb-8">
-                                {links.map(link => {
-                                    return (
-                                        link.title !== "" || link.url !== "" ? <CustomButton onClick={() => { window.open(link.url, "_blank") }} className="w-80">{link.title}</CustomButton> : ""
-                                    )
-                                })}
+                            <div className="flex flex-col space-y-3">
+                                {/* map links */}
 
 
                             </div> : ""}

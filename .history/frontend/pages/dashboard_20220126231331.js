@@ -155,12 +155,6 @@ export default function UserDashboard() {
                     setRedditUsername(response.user.redditUsername || "")
                     setSnapchatUsername(response.user.snapchatUsername || "")
                     setTotalVisits(response.user.totalVisits || 0)
-                    setLink1(response.user.links[0] || { title: "", url: "" })
-                    setLink2(response.user.links[1] || { title: "", url: "" })
-                    setLink3(response.user.links[2] || { title: "", url: "" })
-                    setLink4(response.user.links[3] || { title: "", url: "" })
-                    setLink5(response.user.links[4] || { title: "", url: "" })
-                    setLink6(response.user.links[5] || { title: "", url: "" })
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)
@@ -206,10 +200,6 @@ export default function UserDashboard() {
                 return toastError("Bio must be less than 160 characters")
             }
 
-            if (link1.title > 100 || link2.title > 100 || link3.title > 100 || link4.title > 100 || link5.title > 100 || link6.title > 100) {
-                return toastError("Link Titles must be less than 100 characters")
-            }
-
             // TODO: Check if input bio is not malicious. LOW PRIORITY
 
             // submit to server
@@ -230,8 +220,7 @@ export default function UserDashboard() {
                 pinterestUsername,
                 redditUsername,
                 snapchatUsername,
-                fullName,
-                links: [link1, link2, link3, link4, link5, link6]
+                fullName
             })
             if (!response.success) {
                 if (response.isNotLoggedIn) {
@@ -446,7 +435,7 @@ export default function UserDashboard() {
                                 </div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 1 URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link1.url} onChange={(e) => setLink1({ title: link1.title, url: e.target.value })}
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link1.url} onChange={(e) => setBTCAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
                                         placeholder="enter url" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 2 Title:</CustomLabel>
@@ -454,7 +443,7 @@ export default function UserDashboard() {
                                         placeholder="enter title for your link" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 2 URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link2.url} onChange={(e) => setLink2({ title: link2.title, url: e.target.value })}
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link2.url} onChange={(e) => setSOLAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
                                         placeholder="enter url" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 3 Title:</CustomLabel>
@@ -463,7 +452,7 @@ export default function UserDashboard() {
                                 </div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 3 URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link3.url} onChange={(e) => setLink3({ title: link3.title, url: e.target.value })}
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link3.url} onChange={(e) => setBTCAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
                                         placeholder="enter url" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 4 Title:</CustomLabel>
@@ -471,7 +460,7 @@ export default function UserDashboard() {
                                         placeholder="enter title for your link" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 4 URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link4.url} onChange={(e) => setLink4({ title: link4.title, url: e.target.value })}
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link4.url} onChange={(e) => setSOLAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
                                         placeholder="enter url" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 5 Title:</CustomLabel>
@@ -480,7 +469,7 @@ export default function UserDashboard() {
                                 </div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 5 URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link5.url} onChange={(e) => setLink5({ title: link5.title, url: e.target.value })}
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link5.url} onChange={(e) => setBTCAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
                                         placeholder="enter url" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 6 Title:</CustomLabel>
@@ -488,7 +477,7 @@ export default function UserDashboard() {
                                         placeholder="enter title for your link" /></div>
                                 <div className='flex flex-col mt-4 items-start'>
                                     <CustomLabel className="ml-2">Link 6 URL:</CustomLabel>
-                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link6.url} onChange={(e) => setLink6({ title: link6.title, url: e.target.value })}
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={link6.url} onChange={(e) => setSOLAddress((e.target.value).replace(/[^a-zA-Z0-9]/g, ""))}
                                         placeholder="enter url" /></div>
                             </div>
 

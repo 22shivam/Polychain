@@ -342,10 +342,10 @@ export default function UserPayment() {
                             <CustomBrandedButton onClick={transferAmount} className="mb-6">Pay</CustomBrandedButton>
                         </div> : ""}
                         {active == 2 ?
-                            <div className="flex flex-col space-y-3 px-6 pt-8 pb-8">
+                            <div className="flex flex-col space-y-3">
                                 {links.map(link => {
                                     return (
-                                        link.title !== "" || link.url !== "" ? <CustomButton onClick={() => { window.open(link.url, "_blank") }} className="w-80">{link.title}</CustomButton> : ""
+                                        <CustomButton onClick={() => { window.open(link.url) }} className="w-100">{link.title}</CustomButton>
                                     )
                                 })}
 

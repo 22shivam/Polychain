@@ -155,12 +155,6 @@ export default function UserDashboard() {
                     setRedditUsername(response.user.redditUsername || "")
                     setSnapchatUsername(response.user.snapchatUsername || "")
                     setTotalVisits(response.user.totalVisits || 0)
-                    setLink1(response.user.links[0] || { title: "", url: "" })
-                    setLink2(response.user.links[1] || { title: "", url: "" })
-                    setLink3(response.user.links[2] || { title: "", url: "" })
-                    setLink4(response.user.links[3] || { title: "", url: "" })
-                    setLink5(response.user.links[4] || { title: "", url: "" })
-                    setLink6(response.user.links[5] || { title: "", url: "" })
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)
@@ -206,6 +200,14 @@ export default function UserDashboard() {
                 return toastError("Bio must be less than 160 characters")
             }
 
+            console.log(link1)
+            console.log(link2)
+            console.log(link3)
+            console.log(link4)
+            console.log(link5)
+            console.log(link6)
+
+
             if (link1.title > 100 || link2.title > 100 || link3.title > 100 || link4.title > 100 || link5.title > 100 || link6.title > 100) {
                 return toastError("Link Titles must be less than 100 characters")
             }
@@ -231,7 +233,12 @@ export default function UserDashboard() {
                 redditUsername,
                 snapchatUsername,
                 fullName,
-                links: [link1, link2, link3, link4, link5, link6]
+                link1,
+                link2,
+                link3,
+                link4,
+                link5,
+                link6,
             })
             if (!response.success) {
                 if (response.isNotLoggedIn) {

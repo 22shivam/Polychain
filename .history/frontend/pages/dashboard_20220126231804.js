@@ -155,12 +155,6 @@ export default function UserDashboard() {
                     setRedditUsername(response.user.redditUsername || "")
                     setSnapchatUsername(response.user.snapchatUsername || "")
                     setTotalVisits(response.user.totalVisits || 0)
-                    setLink1(response.user.links[0] || { title: "", url: "" })
-                    setLink2(response.user.links[1] || { title: "", url: "" })
-                    setLink3(response.user.links[2] || { title: "", url: "" })
-                    setLink4(response.user.links[3] || { title: "", url: "" })
-                    setLink5(response.user.links[4] || { title: "", url: "" })
-                    setLink6(response.user.links[5] || { title: "", url: "" })
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)
@@ -231,7 +225,12 @@ export default function UserDashboard() {
                 redditUsername,
                 snapchatUsername,
                 fullName,
-                links: [link1, link2, link3, link4, link5, link6]
+                link1,
+                link2,
+                link3,
+                link4,
+                link5,
+                link6,
             })
             if (!response.success) {
                 if (response.isNotLoggedIn) {
