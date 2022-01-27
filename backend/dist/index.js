@@ -159,7 +159,7 @@ app.post("/userDetails/update", (req, res) => {
             else { // logged in
                 let { address, blockchain } = decoded.data;
                 address = address;
-                let { ETHAddress, BTCAddress, DESOAddress, SOLAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName } = req.body;
+                let { ETHAddress, BTCAddress, DESOAddress, SOLAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName, links } = req.body;
                 ETHAddress = ETHAddress && ETHAddress;
                 BTCAddress = BTCAddress && BTCAddress;
                 DESOAddress = DESOAddress && DESOAddress;
@@ -223,7 +223,7 @@ app.post("/userDetails/update", (req, res) => {
                                 else { // sol address is available
                                     // sol addr is available + eth addr is available -- therefore make changes!
                                     res.clearCookie("token"); // NO RETURN here as need to make updates
-                                    user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
+                                    user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { links, ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                     return res.json({
                                         success: true,
                                         message: "Changes saved",
@@ -244,7 +244,7 @@ app.post("/userDetails/update", (req, res) => {
                             }
                             else { // sol address is available
                                 // sol addr is available + eth addr is available -- therefore make changes!
-                                user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
+                                user = yield User_1.default.findOneAndUpdate({ ETHAddress: address }, { links, ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                 return res.json({
                                     success: true,
                                     message: "Changes saved",
@@ -283,7 +283,7 @@ app.post("/userDetails/update", (req, res) => {
                                 else { // eth address is available
                                     // eth addr is available + sol addr is available -- therefore make changes!
                                     res.clearCookie("token"); // NO RETURN here as need to make updates
-                                    user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
+                                    user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { links, SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                     return res.json({
                                         success: true,
                                         message: "Changes saved",
@@ -304,7 +304,7 @@ app.post("/userDetails/update", (req, res) => {
                             }
                             else { // eth address is available
                                 // eth addr is available + sol addr is available -- therefore make changes!
-                                user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
+                                user = yield User_1.default.findOneAndUpdate({ SOLAddress: address }, { links, SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName });
                                 return res.json({
                                     success: true,
                                     message: "Changes saved",
@@ -345,8 +345,8 @@ app.post("/userDetails", (req, res) => __awaiter(void 0, void 0, void 0, functio
                 if (!user) {
                     return res.json({ success: false, message: "No User Found", isLoggedIn: true });
                 }
-                const resp = yield axios_1.default.get(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${process.env.ETHERSCAN_API_KEY}`);
-                res.json({ success: true, user, isLoggedIn: true, ethereumTransactions: resp.data.result });
+                // const resp = await axios.get(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${process.env.ETHERSCAN_API_KEY}`);
+                res.json({ success: true, user, isLoggedIn: true }); //  ethereumTransactions: resp.data.result
             }
             else if (blockchain === "sol") {
                 const user = yield User_1.default.findOne({ SOLAddress: address }).exec();

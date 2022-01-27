@@ -87,6 +87,11 @@ const UserSchema = new mongoose_1.default.Schema({
         type: Number,
         required: false,
         default: 0
+    },
+    links: {
+        type: Array,
+        required: false,
+        default: []
     }
     // twitterLink: {
     //     type: String,

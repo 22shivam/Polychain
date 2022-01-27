@@ -28,8 +28,7 @@ app.use(cors({
         'http://localhost:3000',
         'https://polychain.vercel.app',
         'https://polychain.tech',
-        'https://www.polychain.tech',
-        "https://polychain-kvfw3tc09-22shivam.vercel.app"
+        'https://www.polychain.tech'
     ],
     credentials: true
 }))
@@ -128,7 +127,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
             } else { // logged in
                 let { address, blockchain } = decoded.data
                 address = address
-                let { ETHAddress, BTCAddress, DESOAddress, SOLAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName } = req.body
+                let { ETHAddress, BTCAddress, DESOAddress, SOLAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName, links } = req.body
                 ETHAddress = ETHAddress && ETHAddress
                 BTCAddress = BTCAddress && BTCAddress
                 DESOAddress = DESOAddress && DESOAddress
@@ -195,7 +194,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                                 } else { // sol address is available
                                     // sol addr is available + eth addr is available -- therefore make changes!
                                     res.clearCookie("token") // NO RETURN here as need to make updates
-                                    user = await User.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
+                                    user = await User.findOneAndUpdate({ ETHAddress: address }, { links, ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
                                     return res.json({
                                         success: true,
                                         message: "Changes saved",
@@ -218,7 +217,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                             } else { // sol address is available
                                 // sol addr is available + eth addr is available -- therefore make changes!
 
-                                user = await User.findOneAndUpdate({ ETHAddress: address }, { ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
+                                user = await User.findOneAndUpdate({ ETHAddress: address }, { links, ETHAddress, SOLAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
                                 return res.json({
                                     success: true,
                                     message: "Changes saved",
@@ -255,7 +254,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                                     // eth addr is available + sol addr is available -- therefore make changes!
                                     res.clearCookie("token") // NO RETURN here as need to make updates
 
-                                    user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
+                                    user = await User.findOneAndUpdate({ SOLAddress: address }, { links, SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
                                     return res.json({
                                         success: true,
                                         message: "Changes saved",
@@ -275,7 +274,7 @@ app.post("/userDetails/update", (req: any, res: any) => {
                             } else { // eth address is available
                                 // eth addr is available + sol addr is available -- therefore make changes!
 
-                                user = await User.findOneAndUpdate({ SOLAddress: address }, { SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
+                                user = await User.findOneAndUpdate({ SOLAddress: address }, { links, SOLAddress, ETHAddress, BTCAddress, DESOAddress, bio, profilePic, twitterUsername, githubUsername, facebookUsername, instagramUsername, tiktokUsername, youtubeUsername, linkedinUsername, pinterestUsername, redditUsername, snapchatUsername, fullName })
                                 return res.json({
                                     success: true,
                                     message: "Changes saved",
@@ -317,9 +316,9 @@ app.post("/userDetails", async (req: any, res: any) => {
                 if (!user) {
                     return res.json({ success: false, message: "No User Found", isLoggedIn: true })
                 }
-                const resp = await axios.get(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${process.env.ETHERSCAN_API_KEY}`);
+                // const resp = await axios.get(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${process.env.ETHERSCAN_API_KEY}`);
 
-                res.json({ success: true, user, isLoggedIn: true, ethereumTransactions: resp.data.result })
+                res.json({ success: true, user, isLoggedIn: true }) //  ethereumTransactions: resp.data.result
             } else if (blockchain === "sol") {
                 const user = await User.findOne({ SOLAddress: address }).exec()
                 if (!user) {
