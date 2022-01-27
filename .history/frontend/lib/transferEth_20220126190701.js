@@ -99,7 +99,6 @@ const transferEth = async ({ ether, addr }, setUserAccount, boolCheckIfEthAddres
             return
         } else {
             console.log(err)
-            toastError("Transfer failed. Please try again.")
         }
     }
 };

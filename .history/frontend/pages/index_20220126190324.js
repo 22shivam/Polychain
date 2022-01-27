@@ -194,6 +194,7 @@ export default function App() {
             }
 
         } catch (err) {
+            console.log(err)
             toastError("Something went wrong while registering. Please try again.")
         }
     }

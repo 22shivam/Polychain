@@ -174,7 +174,6 @@ export default function App() {
                 }
             }
 
-
             const tx = await transferEth({
                 ether: MATICpayValue.toFixed(18).toString(),
                 addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
@@ -194,7 +193,8 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.")
+            console.log(err)
+            toastError("Something went wrong while registering. Please try again.", err.message)
         }
     }
 

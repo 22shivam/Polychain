@@ -14,7 +14,6 @@ import Link from "next/link";
 import Page from "./components/Page";
 import { WalletConnectorContext } from "./_app";
 import WalletConnect from "@walletconnect/client";
-import { ethers } from 'ethers'
 
 
 
@@ -145,7 +144,7 @@ export default function App() {
                             method: "wallet_addEthereumChain",
                             params: [
                                 {
-                                    chainId: "0x89",
+                                    chainId: ethers.utils.hexlify(137),
                                     rpcUrls: ["https://polygon-rpc.com/"],
 
                                     chainName: "Polygon Mainnet",
@@ -159,7 +158,6 @@ export default function App() {
                             ],
                         });
                     } catch (error) {
-                        console.log(error)
                         toastError("Please change to Polygon Network before proceeding")
                         return
                     }
@@ -173,7 +171,6 @@ export default function App() {
                     return
                 }
             }
-
 
             const tx = await transferEth({
                 ether: MATICpayValue.toFixed(18).toString(),
@@ -194,7 +191,8 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.")
+            console.log(err)
+            toastError("Something went wrong while registering. Please try again.", err.message)
         }
     }
 

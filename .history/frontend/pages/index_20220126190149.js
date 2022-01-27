@@ -127,6 +127,7 @@ export default function App() {
             const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
             const data = await coinbaseResponse.json()
             const maticPerUSD = data.data.rates.MATIC
+            console.log(maticPerUSD)
             const MATICpayValue = maticPerUSD * 5
 
             if (!userAccount || !userAccount.address || userAccount.blockchain !== "eth") {
@@ -174,6 +175,9 @@ export default function App() {
                 }
             }
 
+            console.log("trying to transfer")
+            console.log(MATICpayValue)
+
 
             const tx = await transferEth({
                 ether: MATICpayValue.toFixed(18).toString(),
@@ -194,6 +198,7 @@ export default function App() {
             }
 
         } catch (err) {
+            console.log(err)
             toastError("Something went wrong while registering. Please try again.")
         }
     }

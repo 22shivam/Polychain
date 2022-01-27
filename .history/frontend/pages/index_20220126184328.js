@@ -14,7 +14,6 @@ import Link from "next/link";
 import Page from "./components/Page";
 import { WalletConnectorContext } from "./_app";
 import WalletConnect from "@walletconnect/client";
-import { ethers } from 'ethers'
 
 
 
@@ -127,10 +126,10 @@ export default function App() {
             const coinbaseResponse = await fetch("https://api.coinbase.com/v2/exchange-rates")
             const data = await coinbaseResponse.json()
             const maticPerUSD = data.data.rates.MATIC
-            const MATICpayValue = maticPerUSD * 5
+            const ETHpayValue = maticPerUSD * 5
 
             if (!userAccount || !userAccount.address || userAccount.blockchain !== "eth") {
-                toastError("Please login with an Ethereum Wallet to register using Polygon")
+                toastError("Please login with an Ethereum Wallet to register using Ethereum")
                 return
             }
 
@@ -138,29 +137,9 @@ export default function App() {
                 const chainId = await ethereum.request({ method: 'eth_chainId' });
                 if (chainId !== "0x137") {
                     try {
-                        // const response = await ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: 137 }] });
-                        await ethereum.request({
-                            id: 1,
-                            jsonrpc: "2.0",
-                            method: "wallet_addEthereumChain",
-                            params: [
-                                {
-                                    chainId: "0x89",
-                                    rpcUrls: ["https://polygon-rpc.com/"],
-
-                                    chainName: "Polygon Mainnet",
-                                    nativeCurrency: {
-                                        name: "MATIC",
-                                        symbol: "MATIC", // 2-6 characters long
-                                        decimals: 18,
-                                    },
-                                    blockExplorerUrls: ["https://polygonscan.com/"],
-                                },
-                            ],
-                        });
+                        const response = await ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x137' }] });
                     } catch (error) {
-                        console.log(error)
-                        toastError("Please change to Polygon Network before proceeding")
+                        toastError("Please change to Ethereum Mainnet before proceeding")
                         return
                     }
 
@@ -168,15 +147,14 @@ export default function App() {
             }
 
             if (userAccount.wallet == "walletconnect") {
-                if (WalletConnectConnector.chainId != 137) {
-                    toastError("Please change to Polygon Network before proceeding")
+                if (WalletConnectConnector.chainId != 1) {
+                    toastError("Please change to Ethereum Mainnet before proceeding")
                     return
                 }
             }
 
-
             const tx = await transferEth({
-                ether: MATICpayValue.toFixed(18).toString(),
+                ether: ETHpayValue.toFixed(18).toString(),
                 addr: "0x76aEB5092D8eabCec324Be739b8BA5dF473F0055"
             }, setUserAccount, true, WalletConnectConnector, userAccount)
             if (!tx) { return }
@@ -194,7 +172,8 @@ export default function App() {
             }
 
         } catch (err) {
-            toastError("Something went wrong while registering. Please try again.")
+            console.log(err)
+            toastError("Something went wrong while registering. Please try again.", err.message)
         }
     }
 
