@@ -501,9 +501,8 @@ export default function UserDashboard() {
                     {
                         selectedNav == "4" ?
                             <div className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                                <CustomLabel className="text-xl smtext-2xl mb-1 flex items-center">QR Code for Your Polychain Page <a download="polychainQR" className='ml-4' href={qrCode}><svg style={{ display: "inline" }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path className="text-gray-400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg></a></CustomLabel>
+                                <CustomLabel className="text-xl smtext-2xl mb-1">QR Code for Your Polychain Page</CustomLabel>
+                                <a download="polychainQR" className='ml-7' href={qrCode}>Download</a>
                                 <img className="w-60 ml-4" src={qrCode}></img>
 
 
