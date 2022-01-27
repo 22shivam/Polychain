@@ -325,16 +325,16 @@ export default function UserDashboard() {
                         <CustomLabel className="text-xl  smtext-2xl mb-3">Profile Information</CustomLabel>
                         <div className='ml-2 flex items-center align-items-center align-baseline'>
                             <CustomLabel className="text-xl">Your Username: </CustomLabel>
-                            <a className="cursor-pointer" href={`/${username}`} target="_blank">
+                            <Link className="cursor-pointer" href={`/${username}`}>
                                 <CustomLabel className="-ml-2 underline cursor-pointer text-xl mx-0 px-0 font-normal hover:text-brand-primary-medium hover:underline">{username}</CustomLabel>
-                            </a>
-                            <a className="cursor-pointer" href={`/${username}`} target="_blank">
+                            </Link>
+                            <Link className="cursor-pointer" href={`/${username}`}>
                                 <div className='cursor-pointer'>
                                     <svg className='cursor-pointer' xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
                         <div className='flex flex-col' id="form">
 
@@ -506,11 +506,11 @@ export default function UserDashboard() {
                                     <path className="text-gray-400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg></a></CustomLabel>
                                 <img className="w-60 ml-4" src={qrCode}></img>
-                                <CustomLabel className="text-xl smtext-2xl mb-4 flex items-center mt-10">Share your Page</CustomLabel>
+                                <CustomLabel className="text-xl smtext-2xl mb-1 flex items-center mt-10">Share your Page</CustomLabel>
                                 <div className='flex'>
-                                    <CustomButton className="ml-8" onClick={() => { navigator.clipboard.writeText(`https://polychain.tech/${username}`); toastSuccess("URL Copied!") }}>Copy Page URL</CustomButton>
-                                    <CustomBrandedButton onClick={() => { window.open(`https://twitter.com/intent/tweet?&text=check out my polychain page and send crypto (btc, eth, sol, etc.) to me today! @polychainhq`, "_blank") }}>Tweet your Page</CustomBrandedButton>
-
+                                    <CustomButton className="ml-8" onCLick={() => { navigator.clipboard.writeText(`https://polychain.tech/${username}`) }}>Copy Page URL</CustomButton>
+                                    <CustomBrandedButton href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="check out my polychain page and send me popular cryptocurrencies like btc, eth, sol, etc. to me today! " data-via="polychainhq" data-lang="en" data-show-count="false">Tweet</CustomBrandedButton><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                    <a href="https://twitter.com/intent/tweet?original_referer=https://polychain.tech/&ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Eshare%7Ctwgr%5E&related=polychainhq&text=claiming%20my%20%40polychainhq%20link!&url=https%3A%2F%2Fpolychain.tech%2F" target="_blank" rel="noreferrer">Tweet it</a>
                                 </div>
 
                             </div>

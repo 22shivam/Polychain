@@ -509,7 +509,7 @@ export default function UserDashboard() {
                                 <CustomLabel className="text-xl smtext-2xl mb-4 flex items-center mt-10">Share your Page</CustomLabel>
                                 <div className='flex'>
                                     <CustomButton className="ml-8" onClick={() => { navigator.clipboard.writeText(`https://polychain.tech/${username}`); toastSuccess("URL Copied!") }}>Copy Page URL</CustomButton>
-                                    <CustomBrandedButton onClick={() => { window.open(`https://twitter.com/intent/tweet?&text=check out my polychain page and send crypto (btc, eth, sol, etc.) to me today! @polychainhq`, "_blank") }}>Tweet your Page</CustomBrandedButton>
+                                    <CustomBrandedButton onClick={() => { window.open(`https://twitter.com/intent/tweet?&text=check out my polychain page and send crypto (btc, eth, sol, etc.) to me through it today! @polychainhq`, "_blank") }}>Tweet your Page</CustomBrandedButton>
 
                                 </div>
 

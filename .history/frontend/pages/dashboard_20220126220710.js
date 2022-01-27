@@ -506,10 +506,10 @@ export default function UserDashboard() {
                                     <path className="text-gray-400" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg></a></CustomLabel>
                                 <img className="w-60 ml-4" src={qrCode}></img>
-                                <CustomLabel className="text-xl smtext-2xl mb-4 flex items-center mt-10">Share your Page</CustomLabel>
+                                <CustomLabel className="text-xl smtext-2xl mb-1 flex items-center mt-10">Share your Page</CustomLabel>
                                 <div className='flex'>
-                                    <CustomButton className="ml-8" onClick={() => { navigator.clipboard.writeText(`https://polychain.tech/${username}`); toastSuccess("URL Copied!") }}>Copy Page URL</CustomButton>
-                                    <CustomBrandedButton onClick={() => { window.open(`https://twitter.com/intent/tweet?&text=check out my polychain page and send crypto (btc, eth, sol, etc.) to me today! @polychainhq`, "_blank") }}>Tweet your Page</CustomBrandedButton>
+                                    <CustomButton className="ml-8" onCLick={() => { navigator.clipboard.writeText(`https://polychain.tech/${username}`) }}>Copy Page URL</CustomButton>
+                                    {/* <CustomBrandedButton onClick={window.open(`https://twitter.com/intent/tweet?via=%40polychainhq&text=check out my polychain page and send popular cryptocurrencies (btc, eth, sol, matic etc.) to me today! \n \npolychain.tech/${username}`, "_blank")} >Tweet</CustomBrandedButton> */}
 
                                 </div>
 
