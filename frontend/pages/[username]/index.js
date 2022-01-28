@@ -21,6 +21,21 @@ import Page from "./../components/Page";
 import ensureEthereumMainnet from "../../lib/ensureEthereumMainnet";
 import ensureMaticMainnet from "../../lib/ensureMaticMainnet";
 import CustomButton from "../components/customButton";
+import Moralis from 'react-moralis'
+import { useMoralisWeb3Api } from 'react-moralis'
+
+function fixUrl(url) {
+    try {
+        if (url.startsWith("ipfs")) {
+            return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://ipfs/")
+        } else {
+            return url + "?format=JSON"
+        }
+    }
+    catch (error) {
+        return ""
+    }
+}
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -46,7 +61,10 @@ const handleSubmitDESO = async (addr) => {
     }
 }
 
+const MORALIS_ETH_NFT_URL = "https://deep-index.moralis.io/api/v2"
+
 export default function UserPayment() {
+    const { Web3API } = useMoralisWeb3Api()
     const { WalletConnectConnector, setWalletConnectConnector } = useContext(WalletConnectorContext);
     const { userAccount, setUserAccount } = useContext(UserContext);
     const router = useRouter()
@@ -79,6 +97,57 @@ export default function UserPayment() {
     const [anySocialUrl, setAnySocialUrl] = useState(false);
     const [links, setLinks] = useState([]);
     const [active, setActive] = useState(1);
+    const [ethNFTs, setEthNFTs] = useState([]);
+
+    useEffect(() => {
+        if (!ETHAddress) {
+            return
+        }
+        console.log("hello")
+        try {
+
+            const fetchEthNFTs = async () => {
+                const options = { chain: 'eth', address: ETHAddress };
+                const ethNFTs = await Web3API.account.getNFTs(options);
+                console.log(ethNFTs)
+                let ethNFTArray = []
+
+                // const data = await response.json()
+                for (let i = 0; i < ethNFTs.result.length; i++) {
+                    try {
+                        const url = fixUrl(ethNFTs.result[i].token_uri)
+                        if (url == "") {
+                            continue
+                        }
+                        let response = await fetch(url)
+                        let data = await response.json()
+
+                        if (data.image) {
+                            ethNFTArray.push(data.image)
+                        } else if (data.image_url) {
+                            ethNFTArray.push(data.image_url)
+                        }
+
+                    } catch (e) {
+                        console.log(e)
+                    }
+
+                }
+
+                setEthNFTs(ethNFTArray)
+            }
+
+
+
+            fetchEthNFTs()
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }, [ETHAddress])
+
+    console.log(ethNFTs)
 
 
     useEffect(() => {
@@ -227,7 +296,6 @@ export default function UserPayment() {
 
                     if (response.user.links && response.user.links.length > 0) {
                         setLinks(response.user.links)
-                        console.log(response.user.links)
                     }
 
                     setSelectedCurrency(currencyArray[0])
@@ -270,7 +338,6 @@ export default function UserPayment() {
         }
     }
 
-    console.log(links)
 
 
     return (
@@ -351,6 +418,11 @@ export default function UserPayment() {
 
 
                             </div> : ""}
+                        {ethNFTs.map(
+                            (nft, index) => {
+                                return <img key={index} src={nft} width="80"></img>
+                            }
+                        )}
 
                     </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="/">Buy</Link> this username</CustomLabel>}
                 <CustomBrandedButton onClick={() => { router.push("/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
