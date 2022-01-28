@@ -5,7 +5,6 @@ import { useState, createContext, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { CookiesProvider, useCookies } from 'react-cookie';
 import toastError from '../lib/toastError';
-import { MoralisProvider } from "react-moralis";
 
 
 const UserContext = createContext({
@@ -65,15 +64,14 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <MoralisProvider appId="NduEmqu5WF0ARaohRmOBEVNv4mZ72db9rUxV1ant" serverUrl="https://nvtyqdqhdwd0.usemoralis.com:2053/server">
-      <CookiesProvider>
-        <WalletConnectorContext.Provider value={value2}>
-          <UserContext.Provider value={value}>
-            <Component {...pageProps} />
-          </UserContext.Provider>
-        </WalletConnectorContext.Provider>
-      </CookiesProvider>
-    </MoralisProvider>
+
+    <CookiesProvider>
+      <WalletConnectorContext.Provider value={value2}>
+        <UserContext.Provider value={value}>
+          <Component {...pageProps} />
+        </UserContext.Provider>
+      </WalletConnectorContext.Provider>
+    </CookiesProvider>
   )
 }
 

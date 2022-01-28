@@ -21,21 +21,19 @@ import Page from "./../components/Page";
 import ensureEthereumMainnet from "../../lib/ensureEthereumMainnet";
 import ensureMaticMainnet from "../../lib/ensureMaticMainnet";
 import CustomButton from "../components/customButton";
-import Moralis from 'react-moralis'
-import { useMoralisWeb3Api } from 'react-moralis'
 
-function fixUrl(url) {
-    try {
-        if (url.startsWith("ipfs")) {
-            return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://")[1]
-        } else {
-            return url + "?format=JSON"
-        }
-    }
-    catch (error) {
-        return ""
-    }
-}
+// function fixUrl(url) {
+//     try {
+//         if (url.startsWith("ipfs")) {
+//             return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://")[1]
+//         } else {
+//             return url + "?format=JSON"
+//         }
+//     }
+//     catch (error) {
+//         return ""
+//     }
+// }
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -64,7 +62,7 @@ const handleSubmitDESO = async (addr) => {
 const MORALIS_ETH_NFT_URL = "https://deep-index.moralis.io/api/v2"
 
 export default function UserPayment() {
-    const { Web3API } = useMoralisWeb3Api()
+    // const { Web3API } = useMoralisWeb3Api()
     const { WalletConnectConnector, setWalletConnectConnector } = useContext(WalletConnectorContext);
     const { userAccount, setUserAccount } = useContext(UserContext);
     const router = useRouter()
@@ -153,7 +151,7 @@ export default function UserPayment() {
             try {
                 let response = await fetch(`https://api.nftport.xyz/v0/accounts/${ETHAddress}?chain=ethereum`, {
                     headers: {
-                        "Authorization": "c4688209-7089-4421-add7-e2904a27de41",
+                        "Authorization": process.env.NEXT_PUBLIC_NFTPORT_API_KEY,
                         "Content-Type": "application/json"
                     }
                 })
