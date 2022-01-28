@@ -350,7 +350,13 @@ export default function UserPayment() {
                     }
 
                     if (response.user.links && response.user.links.length > 0) {
-                        setLinks(response.user.links)
+                        const actualLinks = []
+                        for (let i = 0; i < response.user.links.length; i++) {
+                            if (response.user.links[i].url !== "" || response.user.links[i].title !== "") {
+                                actualLinks.push(response.user.links[i])
+                            }
+                        }
+                        setLinks(actualLinks)
                     }
 
                     setSelectedCurrency(currencyArray[0])
