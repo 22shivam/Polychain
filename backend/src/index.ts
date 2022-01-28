@@ -29,7 +29,7 @@ app.use(cors({
         'https://polychain.vercel.app',
         'https://polychain.tech',
         'https://www.polychain.tech',
-        "https://polychain-f11rdgwkz-22shivam.vercel.app"
+        "https://polychain-8igkmtn8f-22shivam.vercel.app"
     ],
     credentials: true
 }))
