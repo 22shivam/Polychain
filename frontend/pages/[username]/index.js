@@ -407,7 +407,7 @@ export default function UserPayment() {
                     <meta name="title" property="og:title" content={`${fullName}'s Polychain Page`} />
                 </Head>
                 {loading ? <Loading /> : accountExists ?
-                    <div id="card" className="transition-all duration-300 flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 mx-8 sm:mx-28 bg-white md:mx-32">
+                    <div id="card" className="transition-all duration-300 flex flex-col justify-center rounded-xl border border-gray-100 shadow-lg p-3 pt-6 sm:p-6 mx-8 sm:mx-28 bg-white md:mx-32">
                         <nav className="flex flex-row justify-evenly">
 
                             {links.length <= 0 && ethNFTs.length > 0 ? <>
