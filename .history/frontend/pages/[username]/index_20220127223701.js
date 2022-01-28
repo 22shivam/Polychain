@@ -406,25 +406,25 @@ export default function UserPayment() {
                         <nav className="flex flex-row justify-evenly">
 
                             {links.length <= 0 && ethNFTs.length > 0 ? <>
-                                <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>Payment</CustomLabel>
+                                <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium" : "text-gray-500"}>Payment</CustomLabel>
                                 <div className="border border-gray-300"></div>
-                                <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(3) }} className={active == 3 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>NFTs</CustomLabel>
+                                <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(3) }} className={active == 3 ? "text-brand-primary-medium" : "text-gray-500"}>NFTs</CustomLabel>
 
                             </> : ""}
 
                             {links.length > 0 && (ethNFTs.length <= 0) ?
                                 <>
-                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>Payment</CustomLabel>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium" : "text-gray-500"}>Payment</CustomLabel>
                                     <div className="border border-gray-300"></div>
-                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(2) }} className={active == 2 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>Links</CustomLabel>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(2) }} className={active == 2 ? "text-brand-primary-medium" : "text-gray-500"}>Links</CustomLabel>
 
                                 </> : ""}
                             {links.length > 0 && ethNFTs.length > 0 ?
                                 <>
-                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500"}>Payment</CustomLabel>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium" : "text-gray-500"}>Payment</CustomLabel>
                                     <div className="border border-gray-300"></div>
-                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(2) }} className={active == 2 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>Links</CustomLabel>
-                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(3) }} className={active == 3 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>NFTs</CustomLabel>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(2) }} className={active == 2 ? "text-brand-primary-medium" : "text-gray-500"}>Links</CustomLabel>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(3) }} className={active == 3 ? "text-brand-primary-medium" : "text-gray-500"}>NFTs</CustomLabel>
                                 </> : ""}
                         </nav>
                         {active == 1 ? <div className="flex flex-col">
