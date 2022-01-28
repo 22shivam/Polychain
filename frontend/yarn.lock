@@ -4480,7 +4480,7 @@
   dependencies:
     "minimist" "^1.2.5"
 
-"moralis@>=1.1.0":
+"moralis@^1.2.0", "moralis@>=1.1.0":
   "integrity" "sha512-MmPT0NsiCamuIwMVt0jmq62AvvQnn+XPlFngllSvVG0g/2mOtMl6TqX99oZkJjSJaR9nqFOEHIkerPsKno5lVQ=="
   "resolved" "https://registry.npmjs.org/moralis/-/moralis-1.2.0.tgz"
   "version" "1.2.0"
