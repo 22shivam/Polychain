@@ -429,6 +429,7 @@ export default function UserPayment() {
                                     <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500"}>Payment</CustomLabel>
                                     <div className="border border-gray-300"></div>
                                     <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(2) }} className={active == 2 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>Links</CustomLabel>
+                                    <div className="border border-gray-300"></div>
                                     <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(3) }} className={active == 3 ? "text-brand-primary-medium cursor-pointer" : "text-gray-500 cursor-pointer"}>NFTs</CustomLabel>
                                 </> : ""}
                         </nav>
