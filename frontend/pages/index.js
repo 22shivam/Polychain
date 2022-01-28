@@ -151,7 +151,8 @@ export default function App() {
 
             const requestObject = {
                 tx,
-                username
+                username,
+                polygon: true
             }
             const registrationResponse = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/register/eth`, requestObject)
             if (!registrationResponse.success) {
