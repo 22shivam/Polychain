@@ -474,7 +474,7 @@ export default function UserPayment() {
                         </div> : ""}
                         {active == 2 ?
                             <div className="flex flex-col space-y-3 px-6 pt-8 pb-8">
-                                {links.map(link => {
+                                {links.map((link, index) => {
                                     return (
                                         link.title !== "" || link.url !== "" ? <CustomButton onClick={() => { window.open(link.url, "_blank") }} className="w-80">{link.title}</CustomButton> : ""
                                     )
@@ -488,7 +488,7 @@ export default function UserPayment() {
                                     (nft, index) => {
 
                                         return (
-                                            <div className="m-4 mb-8 mx-6 shadow-md rounded-3xl overflow-hidden">
+                                            <div key={index} className="m-4 mb-8 mx-6 shadow-md rounded-3xl overflow-hidden">
                                                 <video onLoad={(e) => { e.target.style.display = "block" }} style={{ "display": "none" }} width="300" loop muted onError={(e) => { e.target.style.display = "none" }}>
                                                     <source src={nft.url} type='video/webm' />
                                                 </video>
