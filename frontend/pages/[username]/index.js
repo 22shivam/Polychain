@@ -39,6 +39,7 @@ const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ET
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
 const COINBASE_URL_BTC = "https://api.coinbase.com/v2/exchange-rates?currency=BTC"
 const COINBASE_URL_DESO = "https://api.coinbase.com/v2/exchange-rates?currency=DESO"
+const COINBASE_URL_MATIC = "https://api.coinbase.com/v2/exchange-rates?currency=MATIC"
 
 
 const TOKEN_ADDRESS = "0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa";
@@ -245,6 +246,12 @@ export default function UserPayment() {
                     const USDPerETH = coinbaseResponse.data.rates.USD
                     setUSDPerCurrency(USDPerETH)
                     setDisplayedAddress(DESOAddress)
+                } else if (selectedCurrency.name === "MATIC") {
+                    let coinbaseResponse = await fetch(COINBASE_URL_MATIC)
+                    coinbaseResponse = await coinbaseResponse.json()
+                    const USDPerETH = coinbaseResponse.data.rates.USD
+                    setUSDPerCurrency(USDPerETH)
+                    setDisplayedAddress(ETHAddress)
                 }
             } catch (e) {
                 toastInfo("Something went wrong fetching price information. However, you can still make transactions!")
