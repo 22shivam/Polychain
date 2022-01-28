@@ -27,7 +27,7 @@ import { useMoralisWeb3Api } from 'react-moralis'
 function fixUrl(url) {
     try {
         if (url.startsWith("ipfs")) {
-            return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://ipfs/")
+            return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://")[1]
         } else {
             return url + "?format=JSON"
         }
@@ -98,52 +98,104 @@ export default function UserPayment() {
     const [links, setLinks] = useState([]);
     const [active, setActive] = useState(1);
     const [ethNFTs, setEthNFTs] = useState([]);
+    // const [polygonNFTs, setPolygonNFTs] = useState([]);
 
     useEffect(() => {
+        // if (!ETHAddress) {
+        //     return
+        // }
+        // console.log("hello")
+        // try {
+
+        //     const fetchEthNFTs = async () => {
+        //         const options = { chain: 'eth', address: ETHAddress };
+        //         const ethNFTs = await Web3API.account.getNFTs(options);
+        //         console.log(ethNFTs)
+        //         let ethNFTArray = []
+
+        //         // const data = await response.json()
+        //         for (let i = 0; i < ethNFTs.result.length; i++) {
+        //             try {
+        //                 const url = fixUrl(ethNFTs.result[i].token_uri)
+        //                 if (url == "") {
+        //                     continue
+        //                 }
+        //                 let response = await fetch(url)
+        //                 let data = await response.json()
+
+        //                 if (data.image) {
+        //                     ethNFTArray.push(data.image)
+        //                 } else if (data.image_url) {
+        //                     ethNFTArray.push(data.image_url)
+        //                 }
+
+        //             } catch (e) {
+        //                 console.log(e)
+        //             }
+
+        //         }
+
+        //         setEthNFTs(ethNFTArray)
+        //     }
+
+
+
+        //     fetchEthNFTs()
+
+        // } catch (error) {
+        //     console.log(error)
+        // }
+
         if (!ETHAddress) {
             return
         }
-        console.log("hello")
-        try {
-
-            const fetchEthNFTs = async () => {
-                const options = { chain: 'eth', address: ETHAddress };
-                const ethNFTs = await Web3API.account.getNFTs(options);
-                console.log(ethNFTs)
-                let ethNFTArray = []
-
-                // const data = await response.json()
-                for (let i = 0; i < ethNFTs.result.length; i++) {
-                    try {
-                        const url = fixUrl(ethNFTs.result[i].token_uri)
-                        if (url == "") {
-                            continue
-                        }
-                        let response = await fetch(url)
-                        let data = await response.json()
-
-                        if (data.image) {
-                            ethNFTArray.push(data.image)
-                        } else if (data.image_url) {
-                            ethNFTArray.push(data.image_url)
-                        }
-
-                    } catch (e) {
-                        console.log(e)
+        async function fetchEthNFTs() {
+            try {
+                let response = await fetch(`https://api.nftport.xyz/v0/accounts/${ETHAddress}?chain=ethereum`, {
+                    headers: {
+                        "Authorization": "c4688209-7089-4421-add7-e2904a27de41",
+                        "Content-Type": "application/json"
                     }
-
+                })
+                let data = await response.json()
+                console.log(data)
+                let ethNFTArray = []
+                for (let i = 0; i < data.nfts.length; i++) {
+                    ethNFTArray.push({ url: data.nfts[i].file_url, name: data.nfts[i].name, contractAddress: data.nfts[i].contract_address, tokenId: data.nfts[i].token_id })
                 }
-
+                ethNFTArray = ethNFTArray.filter((c, index) => {
+                    return ethNFTArray.indexOf(c) === index && c.url !== "";
+                });
                 setEthNFTs(ethNFTArray)
+            } catch (e) {
+                console.log(e)
+
             }
-
-
-
-            fetchEthNFTs()
-
-        } catch (error) {
-            console.log(error)
         }
+
+        // async function fetchPolygonNFTs() {
+        //     try {
+        //         let response = await fetch(`https://api.nftport.xyz/v0/accounts/${ETHAddress}?chain=polygon`, {
+        //             headers: {
+        //                 "Authorization": "c4688209-7089-4421-add7-e2904a27de41",
+        //                 "Content-Type": "application/json"
+        //             }
+        //         })
+        //         let data = await response.json()
+        //         console.log(data)
+        //         let polygonNFTArray = []
+        //         for (let i = 0; i < data.nfts.length; i++) {
+        //             polygonNFTArray.push(data.nfts[i].file_url)
+        //         }
+        //         setPolygonNFTs(polygonNFTArray)
+        //     } catch (e) {
+        //         console.log(e)
+
+        //     }
+        // }
+
+        fetchEthNFTs()
+        // fetchPolygonNFTs()
 
     }, [ETHAddress])
 
@@ -352,19 +404,33 @@ export default function UserPayment() {
                     <meta name="title" property="og:title" content={`${fullName}'s Polychain Page`} />
                 </Head>
                 {loading ? <Loading /> : accountExists ?
-                    <div id="card" className="flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 bg-white">
+                    <div id="card" className="transition-all duration-300 flex flex-col justify-center rounded-xl border border-gray-300 shadow-sm p-3 pt-6 sm:p-6 mx-8 sm:mx-32 bg-white md:mx-40 lg:mx-60">
                         <nav className="flex flex-row justify-evenly">
 
-                            {links.length > 0 ?
+                            {links.length <= 0 && ethNFTs.length > 0 ? <>
+                                <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium" : "text-gray-500"}>Payment</CustomLabel>
+                                <div className="border border-gray-300"></div>
+                                <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(3) }} className={active == 3 ? "text-brand-primary-medium" : "text-gray-500"}>NFTs</CustomLabel>
+
+                            </> : ""}
+
+                            {links.length > 0 && (ethNFTs.length <= 0) ?
                                 <>
                                     <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium" : "text-gray-500"}>Payment</CustomLabel>
                                     <div className="border border-gray-300"></div>
                                     <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(2) }} className={active == 2 ? "text-brand-primary-medium" : "text-gray-500"}>Links</CustomLabel>
 
                                 </> : ""}
+                            {links.length > 0 && ethNFTs.length > 0 ?
+                                <>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(1) }} className={active == 1 ? "text-brand-primary-medium" : "text-gray-500"}>Payment</CustomLabel>
+                                    <div className="border border-gray-300"></div>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(2) }} className={active == 2 ? "text-brand-primary-medium" : "text-gray-500"}>Links</CustomLabel>
+                                    <CustomLabel style={{ fontSize: "1.2rem" }} onClick={() => { setActive(3) }} className={active == 3 ? "text-brand-primary-medium" : "text-gray-500"}>NFTs</CustomLabel>
+                                </> : ""}
                         </nav>
                         {active == 1 ? <div className="flex flex-col">
-                            <div id="profile_header" className={(links.length > 0 ? "flex flex-row items-start mt-8" : "flex flex-row items-start")}>
+                            <div id="profile_header" className={(links.length > 0 || ethNFTs.length > 0 ? "flex flex-row items-start mt-8" : "flex flex-row items-start")}>
                                 {profilePic ?
                                     <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : <Identicon className="rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
                                 <div className="flex flex-col ml-2">
@@ -418,11 +484,28 @@ export default function UserPayment() {
 
 
                             </div> : ""}
-                        {ethNFTs.map(
-                            (nft, index) => {
-                                return <img key={index} src={nft} width="80"></img>
-                            }
-                        )}
+                        {active == 3 ?
+                            <div className="mt-4 flex flex-wrap justify-center">
+                                {ethNFTs.map(
+                                    (nft, index) => {
+
+                                        return (
+                                            <div className="m-4 mb-8 mx-6 shadow-md rounded-3xl overflow-hidden">
+                                                <video onLoad={(e) => { e.target.style.display = "block" }} style={{ "display": "none" }} width="300" loop muted onError={(e) => { e.target.style.display = "none" }}>
+                                                    <source src={nft.url} type='video/webm' />
+                                                </video>
+                                                <img onLoad={(e) => { e.target.style.display = "block" }} style={{ "display": "none" }} key={index} onError={(event) => { event.target.style.display = 'none' }} src={nft.url} width="300"></img>
+                                                <div className="flex flex-row justify-between items-center my-6">
+                                                    <CustomLabel style={{ fontSize: "1.3rem" }} className="px-4">{nft.name}</CustomLabel>
+                                                    <a className="mr-2" target="_blank" rel="noreferrer" href={`https://opensea.io/assets/${nft.contractAddress}/${nft.tokenId}`}>
+                                                        <svg className='cursor-pointer h-6 w-6' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>)
+                                    })}
+                            </div> : ""}
 
                     </div> : <CustomLabel className="text-lg">No account with this username exists. <Link className="" href="/">Buy</Link> this username</CustomLabel>}
                 <CustomBrandedButton onClick={() => { router.push("/") }} className="my-10 opacity-60 rounded-2xl">Get your own!</CustomBrandedButton>
