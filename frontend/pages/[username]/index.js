@@ -495,18 +495,20 @@ export default function UserPayment() {
 
                                         return (
                                             <div key={index} className="m-4 mb-8 mx-6 shadow-md rounded-3xl overflow-hidden">
-                                                <video onLoad={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ "display": "none", height: "200px", objectFit: "cover" }} width="300" loop muted onError={(e) => { e.target.style.display = "none" }}>
-                                                    <source src={nft.url} type='video/webm' />
-                                                </video>
+                                                {nft.url.endsWith("webm") ?
+                                                    <video className="m-0" onLoadStart={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ margin: "0px", display: "none", height: "200px", objectFit: "cover" }} width="300" height="200px" loop muted onError={(event) => { event.target.style.display = 'none' }} >
+                                                        <source style={{ margin: "0px" }} src={nft.url} type='video/webm' />
+                                                    </video> : ""}
                                                 <img onLoad={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ "display": "none", height: "300px", objectFit: "cover", width: "300px" }} key={index} onError={(event) => { event.target.style.display = 'none' }} src={nft.url} width="300"></img>
                                                 <div id={"nftname" + index.toString()} style={{ display: "none" }} className="flex flex-row justify-between items-center my-6">
-                                                    <CustomLabel style={{ fontSize: "1.3rem" }} className="px-4">{nft.name}</CustomLabel>
+                                                    <CustomLabel style={{ fontSize: "1.3rem", maxWidth: "270px" }} className="px-4">{nft.name}</CustomLabel>
                                                     <a className="mr-2" target="_blank" rel="noreferrer" href={nft.url.startsWith("https://rarible") ? `https://rarible.com/token/${nft.contractAddress}:${nft.tokenId}?tab=details` : `https://opensea.io/assets/${nft.contractAddress}/${nft.tokenId}`}>
                                                         <svg className='cursor-pointer h-6 w-6' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                                         </svg>
                                                     </a>
                                                 </div>
+
                                             </div>)
                                     })}
                             </div> : ""}
