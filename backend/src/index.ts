@@ -692,7 +692,7 @@ app.post("/register/sol", async (req, res) => {
 app.post("/register/eth", async (req, res) => {
     try {
         // transaction data coming succesfully in req.body!
-        const { tx, username } = req.body
+        const { tx, username, polygon } = req.body
 
         if (username !== username.replace(/[^a-zA-Z0-9]/g, "")) {
             res.json({
@@ -723,7 +723,12 @@ app.post("/register/eth", async (req, res) => {
         const USDPerETH = coinbaseResponse.data.data.rates.USD
 
         // check whether transaction hash is there on etherscan and check the amount paid
-        const etherscanResponse = await axios.get(`https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${tx.hash}&apikey=${process.env.ETHERSCAN_API_KEY}`)
+        let url = `https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${tx.hash}&apikey=${process.env.ETHERSCAN_API_KEY}`
+        if (polygon) {
+            url = `https://api.polygonscan.com/api?module=proxy&action=eth_getTransactionByHash&txhash=${tx.hash}&apikey=${process.env.POLYGONSCAN_API_KEY}`
+        }
+
+        const etherscanResponse = await axios.get(url)
         const txDetailsFromEtherscan = etherscanResponse.data.result
 
         if (!txDetailsFromEtherscan) {
@@ -736,7 +741,7 @@ app.post("/register/eth", async (req, res) => {
         const ethPaidUSD = ethPaid * USDPerETH
 
         // verify that amount paid to right address
-        if (txDetailsFromEtherscan.toUpperCae() !== ETHEREUM_ADDRESS.toUpperCase()) {
+        if (txDetailsFromEtherscan.to.toUpperCase() !== ETHEREUM_ADDRESS.toUpperCase()) {
             return res.json({
                 success: false,
                 message: "USD paid to wrong address"
