@@ -161,9 +161,14 @@ export default function UserPayment() {
                 for (let i = 0; i < data.nfts.length; i++) {
                     ethNFTArray.push({ url: data.nfts[i].file_url, name: data.nfts[i].name, contractAddress: data.nfts[i].contract_address, tokenId: data.nfts[i].token_id })
                 }
-                ethNFTArray = ethNFTArray.filter((c, index) => {
-                    return ethNFTArray.indexOf(c) === index && c.url !== "";
-                });
+
+                ethNFTArray = ethNFTArray.filter((value, index, self) =>
+                    index === self.findIndex((t) => (
+                        t.url === value.url && t.contractAddress === value.contractAddress
+                    )) && value.url != ""
+                )
+                console.log(ethNFTArray)
+
                 setEthNFTs(ethNFTArray)
             } catch (e) {
                 console.log(e)
@@ -483,16 +488,16 @@ export default function UserPayment() {
 
                             </div> : ""}
                         {active == 3 ?
-                            <div className="mt-4 flex flex-wrap justify-center">
+                            <div className="mt-4 flex flex-wrap justify-center items-start">
                                 {ethNFTs.map(
                                     (nft, index) => {
 
                                         return (
                                             <div key={index} className="m-4 mb-8 mx-6 shadow-md rounded-3xl overflow-hidden">
-                                                <video onLoad={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ "display": "none" }} width="300" loop muted onError={(e) => { e.target.style.display = "none" }}>
+                                                <video onLoad={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ "display": "none", height: "200px", objectFit: "cover" }} width="300" loop muted onError={(e) => { e.target.style.display = "none" }}>
                                                     <source src={nft.url} type='video/webm' />
                                                 </video>
-                                                <img onLoad={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ "display": "none" }} key={index} onError={(event) => { event.target.style.display = 'none' }} src={nft.url} width="300"></img>
+                                                <img onLoad={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ "display": "none", height: "300px", objectFit: "cover", width: "300px" }} key={index} onError={(event) => { event.target.style.display = 'none' }} src={nft.url} width="300"></img>
                                                 <div id={"nftname" + index.toString()} style={{ display: "none" }} className="flex flex-row justify-between items-center my-6">
                                                     <CustomLabel style={{ fontSize: "1.3rem" }} className="px-4">{nft.name}</CustomLabel>
                                                     <a className="mr-2" target="_blank" rel="noreferrer" href={`https://opensea.io/assets/${nft.contractAddress}/${nft.tokenId}`}>
