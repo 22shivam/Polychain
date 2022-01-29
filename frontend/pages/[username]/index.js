@@ -509,7 +509,7 @@ export default function UserPayment() {
                                         return (
                                             <div key={index} className="m-4 mb-8 mx-6 shadow-md rounded-3xl overflow-hidden">
                                                 {nft.url.endsWith("webm") ?
-                                                    <video className="m-0" onLoadStart={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ margin: "0px", display: "none", height: "200px", objectFit: "cover" }} width="300" height="200px" loop muted onError={(event) => { event.target.style.display = 'none' }} >
+                                                    <video className="m-0" onLoadStart={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ margin: "0px", display: "none", height: "300px", objectFit: "cover" }} width="300" height="200px" loop muted onError={(event) => { event.target.style.display = 'none' }} >
                                                         <source style={{ margin: "0px" }} src={nft.url} type='video/webm' />
                                                     </video> : ""}
                                                 <img onLoad={(e) => { e.target.style.display = "block"; let name = document.getElementById("nftname" + index.toString()); name.style.display = "flex" }} style={{ "display": "none", height: "300px", objectFit: "cover", width: "300px" }} key={index} onError={(event) => { event.target.style.display = 'none' }} src={nft.url} width="300"></img>
