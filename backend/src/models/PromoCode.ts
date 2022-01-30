@@ -6,6 +6,7 @@ export interface promoCodeAttr {
     promoCode: string;
     address?: string;
     blockchain?: string;
+    polychainDrop?: boolean;
 }
 
 // interface that describes the properties a promocode model has
@@ -32,6 +33,10 @@ const PromoCodeSchema = new mongoose.Schema({
         type: String,
         enum: ["eth", "sol"],
         required: false
+    },
+    polychainDrop: {
+        type: Boolean,
+        required: false,
     }
 })
 

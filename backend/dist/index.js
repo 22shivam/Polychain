@@ -45,6 +45,7 @@ const tweetnacl_1 = __importDefault(require("tweetnacl"));
 const bitcoin_address_validation_1 = require("bitcoin-address-validation");
 const web3 = __importStar(require("@solana/web3.js"));
 const getTweet_1 = __importDefault(require("./utils/getTweet"));
+const PolychainDrop_1 = __importDefault(require("./models/PolychainDrop"));
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH";
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL";
 const SOLANA_EXPLORER_URL = "https://api.mainnet-beta.solana.com/";
@@ -457,6 +458,43 @@ app.get("/isLoggedIn", (req, res) => __awaiter(void 0, void 0, void 0, function*
     catch (e) {
         res.status(500).json({ success: false, message: "Server Error", isLoggedIn: false });
         console.log(e);
+    }
+}));
+app.get("/polychainDrop", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const token = req.cookies.token;
+        jsonwebtoken_1.default.verify(token, process.env.COOKIE_SECRET, (err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: "Not logged in",
+                    isLoggedIn: false
+                });
+            }
+            const { blockchain, address } = decoded.data;
+            if (blockchain !== "eth") {
+                return res.json({
+                    success: false,
+                    message: "You need to be logged in with an Ethereum Wallet in order to access the drop",
+                });
+            }
+            const user = yield PolychainDrop_1.default.findOne({ address: address }).exec();
+            if (!user) {
+                return res.json({
+                    success: false,
+                    message: "You are not eligible for the drop",
+                });
+            }
+            return res.json({
+                success: true,
+                message: "You are eligible for the drop",
+                user
+            });
+        }));
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
 }));
 // app.post("/promocode", async (req, res) => {

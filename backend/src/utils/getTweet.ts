@@ -61,6 +61,7 @@ async function fetchTweet(url: string) {
 
     addrs = addrs.filter(addr => ethers.utils.isAddress(addr));
 
+
     return {
         ens: enss,
         address: addrs
