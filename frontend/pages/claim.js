@@ -59,10 +59,10 @@ export default function Claim() {
 
             <div className='flex flex-col justify-center items-center'>
                 {promoCode == "" ? eligible ?
-                    <div className='mt-20 flex flex-col shadow-lg py-4 rounded-3xl justify-center flex-1 items-center mx-4 space-y-4' id="card">
+                    <div style={{ maxWidth: "600px" }} className='mt-20 flex flex-col shadow-lg py-4 rounded-3xl justify-center flex-1 items-center mx-4 space-y-4' id="card">
 
                         <CustomLabel className="smtext-2xl mt-4">What is Polychain?</CustomLabel>
-                        <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">1. Send and receive popular cryptocurrencies (ETH, BTC, SOL, MATIC) using a simple, shareable link</CustomLabel>
+                        <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">1. Send and receive popular cryptocurrencies (eth, btc, sol, matic) using a simple, shareable link. See <a className='text-brand-primary-medium' href="https://polychain.tech/shivam" target="_blank" rel="noreferrer">polychain.tech/shivam</a> for example</CustomLabel>
                         <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">2. Showcase your NFTs on your Polychain page</CustomLabel>
                         <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">3. Put all your links in one place</CustomLabel>
                         <CustomLabel className="font-medium w-4/6 text-gray-700 my-2">4. Embed Polychain into your websites to accept crypto payments and donations</CustomLabel>
