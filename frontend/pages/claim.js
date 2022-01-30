@@ -3,8 +3,7 @@ import CustomButton from './components/customButton';
 import CustomLabel from './components/customLabel';
 import Page from './components/Page';
 import CustomBrandedButton from './components/customBrandedButton';
-import Head from 'next/head';
-import { ethers } from 'ethers';
+
 import toastError from '../lib/toastError';
 import { UserContext } from './_app';
 import useWindowSize from 'react-use/lib/useWindowSize'
@@ -55,9 +54,9 @@ export default function Claim() {
     return (
 
         <Page>
-            <Head>
-                <Script src="/fairyDustCursor.js"></Script>
-            </Head>
+
+            <Script src="/fairyDustCursor.js"></Script>
+
             <div className='flex flex-col justify-center items-center'>
                 {promoCode == "" ? eligible ?
                     <div className='mt-20 flex flex-col shadow-lg py-4 rounded-3xl justify-center flex-1 items-center mx-4 space-y-4' id="card">
