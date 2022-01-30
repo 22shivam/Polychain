@@ -12,6 +12,7 @@ import nacl from "tweetnacl";
 import { validate } from "bitcoin-address-validation"
 import * as web3 from '@solana/web3.js'
 import fetchTweet from "./utils/getTweet";
+import PolychainDrop from "./models/PolychainDrop";
 
 const COINBASE_URL_ETH = "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 const COINBASE_URL_SOL = "https://api.coinbase.com/v2/exchange-rates?currency=SOL"
@@ -431,6 +432,46 @@ app.get("/isLoggedIn", async (req, res) => {
     } catch (e) {
         res.status(500).json({ success: false, message: "Server Error", isLoggedIn: false })
         console.log(e)
+    }
+})
+
+app.get("/polychainDrop", async (req, res) => {
+    try {
+        const token = req.cookies.token
+        jwt.verify(token, process.env.COOKIE_SECRET as string, async (err: any, decoded: any) => {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: "Not logged in",
+                    isLoggedIn: false
+                })
+            }
+            const { blockchain, address } = decoded.data
+            if (blockchain !== "eth") {
+                return res.json({
+                    success: false,
+                    message: "You need to be logged in with an Ethereum Wallet in order to access the drop",
+                })
+            }
+
+            const user = await PolychainDrop.findOne({ address: address }).exec()
+            if (!user) {
+                return res.json({
+                    success: false,
+                    message: "You are not eligible for the drop",
+                })
+            }
+            return res.json({
+                success: true,
+                message: "You are eligible for the drop",
+                user
+            })
+        })
+
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({ success: false, message: "Server Error" })
+
     }
 })
 

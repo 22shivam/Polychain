@@ -18,6 +18,10 @@ const PromoCodeSchema = new mongoose_1.default.Schema({
         type: String,
         enum: ["eth", "sol"],
         required: false
+    },
+    polychainDrop: {
+        type: Boolean,
+        required: false,
     }
 });
 PromoCodeSchema.statics.build = (attr) => {
