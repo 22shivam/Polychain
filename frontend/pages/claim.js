@@ -66,6 +66,7 @@ export default function Claim() {
                         <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">2. Showcase your NFTs on your Polychain page</CustomLabel>
                         <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">3. Put all your links in one place</CustomLabel>
                         <CustomLabel className="font-medium w-4/6 text-gray-700 my-2">4. Embed Polychain into your websites to accept crypto payments and donations</CustomLabel>
+                        <CustomLabel>Join over 200 happy users!</CustomLabel>
                         <div className='mt-4'></div>
                         <CustomBrandedButton className="text-lg" onClick={claim}>Claim</CustomBrandedButton>
                         <div className='mb-4'></div>
