@@ -18,6 +18,9 @@ import Loading from './components/Loading';
 import Identicon from 'react-identicons';
 import generateQR from '../lib/generateQR';
 import CustomButton from './components/customButton';
+import { parseUnits } from 'ethers/lib/utils';
+import toastInfo from '../lib/toastInfo';
+
 
 const navigationItems = [
     {
@@ -31,6 +34,10 @@ const navigationItems = [
     {
         id: 3,
         name: "Tools",
+    },
+    {
+        id: 5,
+        name: "Personal Token"
     },
     {
         id: 4,
@@ -98,6 +105,11 @@ export default function UserDashboard() {
     const [link4, setLink4] = useState({ title: "", url: "" });
     const [link5, setLink5] = useState({ title: "", url: "" });
     const [link6, setLink6] = useState({ title: "", url: "" });
+    const [tokenName, setTokenName] = useState("");
+    const [tokenSymbol, setTokenSymbol] = useState("");
+    const [tokenSupply, setTokenSupply] = useState(0);
+    const [personalTokenAddress, setPersonalTokenAddress] = useState("");
+    const [hasPersonalToken, setHasPersonalToken] = useState(false);
 
 
     // handling logouts
@@ -161,6 +173,13 @@ export default function UserDashboard() {
                     setLink4(response.user.links[3] || { title: "", url: "" })
                     setLink5(response.user.links[4] || { title: "", url: "" })
                     setLink6(response.user.links[5] || { title: "", url: "" })
+                    if (response.user.personalToken && response.user.personalToken.tokenAddress) {
+                        setHasPersonalToken(true)
+                        setPersonalTokenAddress(response.user.personalToken.tokenAddress)
+                        setTokenName(response.user.personalToken.tokenName)
+                        setTokenSymbol(response.user.personalToken.tokenSymbol)
+                        setTokenSupply(response.user.personalToken.tokenSupply)
+                    }
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)
@@ -257,6 +276,74 @@ export default function UserDashboard() {
 
     }
 
+    const mintToken = async (e) => {
+        try {
+            if (userAccount.blockchain !== "eth") {
+                return toastError("You have to be logged in with an Ethereum wallet to mint tokens")
+            }
+            if (userAccount.wallet == "walletconnect") {
+                return toastError("Currently, we do not support minting tokens with WalletConnect")
+            }
+            if (tokenSupply <= 0) {
+                return toastError("Please enter a valid token supply")
+            }
+            if (tokenName == "") {
+                return toastError("Please enter a valid token name")
+            }
+            if (tokenSymbol == "") {
+                return tokenError("Please enter a valid token symbol")
+            }
+
+            const bcr = await fetch('/contracts_erc20_sol_Token.bin');
+            const bc = await bcr.text();
+            const abir = await fetch('/contracts_erc20_sol_Token.abi');
+            const abi = await abir.text();
+
+            const accounts = await ethereum.request({ method: "eth_requestAccounts" })
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+
+            const token = new ethers.ContractFactory(abi, bc, signer);
+            console.log(tokenName)
+            console.log(ETHAddress)
+            console.log(tokenSymbol)
+            console.log(tokenSupply)
+            const contract = await token.deploy(tokenName, tokenSymbol, ETHAddress, tokenSupply);
+            toastInfo("Deploying token contract...")
+
+            await contract.deployTransaction.wait();
+            toastSuccess("Token contract deployed successfully")
+
+            console.log(contract.address);
+            setPersonalTokenAddress(contract.address);
+            console.log(tokenName, tokenSupply, tokenSymbol, contract.address)
+            let response = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/userDetails/minttoken`, {
+                contractAddress: contract.address,
+                tokenName,
+                tokenSymbol,
+                tokenSupply
+            })
+            if (!response.success) {
+                if (response.isNotLoggedIn) {
+                    setUserAccount({})
+                    toastError("Session Expired. You will need to login again to update your account")
+                    return
+                }
+                toastError(response.message)
+            } else {
+                toastSuccess("Token minted successfully")
+                setHasPersonalToken(true)
+
+            }
+        } catch (e) {
+            console.log(e)
+            toastError("Somethnig went wrong. Please try again.")
+        }
+
+        // store personal token address in db
+
+    }
+
     const extractAddresses = async (e) => {
         try {
             const resp = await createPostRequest(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tweet`, {
@@ -327,7 +414,7 @@ export default function UserDashboard() {
                     <nav className='shadow-md'>
                         <ul className="flex flex-col mt-2 px-2 space-y-1">
                             {navigationItems.map((item) => {
-                                let className = "transition duration-200 pl-2 pr-36 rounded-md py-2 font-semibold hover:bg-gray-50 text-gray-600" + (item.id == selectedNav ? " bg-gray-100" : "")
+                                let className = "transition duration-200 px-2 rounded-md py-2 w-48 font-semibold hover:bg-gray-50 text-gray-600" + (item.id == selectedNav ? " bg-gray-100" : "")
                                 return (
                                     <li key={item.id} onClick={() => { setSelectedNav(item.id) }} className={className}>
                                         {item.name}
@@ -592,6 +679,65 @@ export default function UserDashboard() {
                             </div>
 
                             : ""
+                    }
+                    {
+                        selectedNav == "5" ? ETHAddress ? !hasPersonalToken ?
+                            <div className='p-10'>
+                                <CustomLabel className="text-xl  smtext-2xl mb-3">Mint your Personal Token</CustomLabel>
+                                <CustomLabel className="block font-medium w-4/6 my-2 text-gray-700">You will be charged a small gas fee as in order to mint your personal token, we have to deploy a smart contract for you! The complete token supply will be deposited to your account after which you can share it with others.</CustomLabel>
+                                <div className='flex flex-col mt-4 items-start'>
+                                    <CustomLabel className="ml-2">Token Name:</CustomLabel>
+                                    <CustomInput className="my-1 w-72 sm:w-96" type="text" value={tokenName} onChange={(e) => { setTokenName((e.target.value)); console.log(e.target.value); }} placeholder="enter token name" />
+                                </div>
+
+                                <div className='flex flex-col mt-4 items-start'>
+                                    <CustomLabel className="ml-2">Symbol:</CustomLabel>
+                                    <CustomInput maxLength="160" className="my-1 w-72 sm:w-96" type="text" value={tokenSymbol} onChange={(e) => { setTokenSymbol((e.target.value)); console.log(e.target.value) }} placeholder="enter token symbol" />
+                                </div>
+
+                                <div className='flex flex-col mt-4 items-start'>
+                                    <CustomLabel className="ml-2">Supply:</CustomLabel>
+                                    <CustomInput maxLength="160" className="my-1 w-72 sm:w-96" type="number" value={tokenSupply} onChange={(e) => setTokenSupply(e.target.value)} placeholder="enter token supply" />
+                                </div>
+                                <div className='mx-4 mt-5'>
+                                    <CustomBrandedButton className="px-6" onClick={mintToken}>Mint Token</CustomBrandedButton>
+                                </div>
+
+                            </div> :
+                            <div className='p-10'>
+                                <CustomLabel className="text-xl  smtext-2xl mb-8">Your Personal Token Details</CustomLabel>
+                                <div className="border-t border-gray-200 mt-4">
+                                    <dl>
+                                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500">Token Name</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{tokenName}</dd>
+                                        </div>
+                                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500">Token Symbol</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{tokenSymbol}</dd>
+                                        </div>
+                                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500">Token Supply</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{tokenSupply}</dd>
+                                        </div>
+                                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500">Token Contract Address</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex space-x-4 justify-between items-center">{personalTokenAddress}
+                                                <div className='cursor-pointer mx-3'>
+                                                    <a href={`https://polygonscan.com/address/${personalTokenAddress}`} target="_blank" rel="noreferrer">
+                                                        <svg className='cursor-pointer h-5 w-5' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                        </svg>
+                                                    </a>
+                                                </div></dd>
+
+                                        </div>
+
+                                    </dl>
+                                </div>
+
+                            </div>
+                            : <CustomLabel>We currently only support the creation of Personal Tokens on Ethereum and Polygon. Support for other chains coming soon.</CustomLabel> : ""
                     }
                 </div>
                 : <CustomLabel className="font-medium flex flex-col items-center mt-4"><span>There is no username associated with this wallet address. <Link className='underline inline' href={`/`}>Buy</Link> one now!</span></CustomLabel> : <CustomLabel className="font-medium flex flex-col items-center mt-4">Please login to access this page.</CustomLabel>

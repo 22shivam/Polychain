@@ -92,6 +92,32 @@ const UserSchema = new mongoose_1.default.Schema({
         type: Array,
         required: false,
         default: []
+    },
+    personalToken: {
+        tokenAddress: {
+            type: String,
+            required: false,
+        },
+        tokenName: {
+            type: String,
+            required: false,
+        },
+        tokenSymbol: {
+            type: String,
+            required: false,
+        },
+        tokenSupply: {
+            type: String,
+            required: false,
+        },
+        tokenOwner: {
+            type: String,
+            required: false,
+        },
+        tokenBlockchain: {
+            type: String,
+            required: false,
+        }
     }
     // twitterLink: {
     //     type: String,

@@ -114,6 +114,70 @@ app.get("/api/address/sol/:address", async (req, res) => {
     }
 })
 
+
+app.post("/userDetails/minttoken", (req: any, res: any) => {
+    try {
+
+        const token = req.cookies.token
+        jwt.verify(token, process.env.COOKIE_SECRET as string, async (err: any, decoded: any) => {
+            if (err) { // not logged in
+                return res.json({
+                    isNotLoggedIn: true,
+                    success: false,
+                    message: "Invalid token"
+                })
+            } else { // logged in
+                let { address, blockchain } = decoded.data
+                if (blockchain !== "eth") {
+                    return res.json({
+                        success: false,
+                        message: "We currently only support token minting with Ethereum"
+                    })
+                }
+                let { tokenName, tokenSymbol, tokenSupply, contractAddress } = req.body
+                console.log(tokenName, tokenSupply, tokenSymbol, contractAddress)
+                if (tokenSupply && tokenSupply <= 0) {
+                    return res.json({
+                        success: false,
+                        message: "Token supply must be greater than 0"
+                    })
+                }
+                if (!tokenName || !tokenSymbol || !contractAddress) {
+                    return res.json({
+                        success: false,
+                        message: "Please provide all the required information"
+                    })
+                }
+                const user = await User.findOne({ ETHAddress: address }).exec()
+                if (!user) {
+                    return res.json({
+                        success: false,
+                        message: "No user found with this Ethereum address"
+                    })
+                }
+                user.personalToken = {
+                    tokenName: tokenName,
+                    tokenSymbol: tokenSymbol,
+                    tokenSupply: tokenSupply,
+                    tokenAddress: contractAddress,
+                    tokenOwner: address,
+                    tokenBlockchain: blockchain
+                }
+                await user.save()
+                return res.json({
+                    success: true,
+                    message: "Token minted successfully"
+                })
+            }
+        })
+
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({ success: false, message: "Something went wrong while serving your request" })
+    }
+})
+
+
 app.post("/userDetails/update", (req: any, res: any) => {
     try {
         // update details associated with the account that has the address in the cookie as having cookie means u have that address. 
