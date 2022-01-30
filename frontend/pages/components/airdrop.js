@@ -1,11 +1,11 @@
-import Page from './components/Page';
-import { UserContext } from './_app';
+import Page from './Page';
+import { UserContext } from '../_app';
 import { useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import CustomBrandedButton from './components/customBrandedButton';
-import CustomLabel from './components/customLabel';
-import CustomInput from './components/customInput';
-import { parseBalanceMap } from '../lib/parseBalanceMap';
+import CustomBrandedButton from './customBrandedButton';
+import CustomLabel from './customLabel';
+import CustomInput from './customInput';
+import { parseBalanceMap } from '../../lib/parseBalanceMap';
 
 export default function Airdrop() {
     const { userAccount, setUserAccount } = useContext(UserContext);
