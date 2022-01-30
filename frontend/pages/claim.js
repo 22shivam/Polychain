@@ -9,6 +9,7 @@ import toastError from '../lib/toastError';
 import { UserContext } from './_app';
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import Script from 'next/script'
 
 export default function Claim() {
     const { userAccount, setUserAccount } = useContext(UserContext);
@@ -55,7 +56,7 @@ export default function Claim() {
 
         <Page>
             <Head>
-                <script src="/fairyDustCursor.js"></script>
+                <Script src="/fairyDustCursor.js"></Script>
             </Head>
             <div className='flex flex-col justify-center items-center'>
                 {promoCode == "" ? eligible ?
