@@ -2,44 +2,41 @@ import Page from './components/Page';
 import { UserContext } from './_app';
 import { useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { parseUnits } from 'ethers/lib/utils';
 import CustomBrandedButton from './components/customBrandedButton';
 import CustomLabel from './components/customLabel';
 import CustomInput from './components/customInput';
 import { parseBalanceMap } from '../lib/parseBalanceMap';
 
-const MERKLE_ROOT = "0x58815614f0d1a4a780fd47a20af795f43c6abe3a56880afb925a64411dd53d86";
-
 export default function Airdrop() {
     const { userAccount, setUserAccount } = useContext(UserContext);
 
-    const [ address, setAddress] = useState("");
-    const [ overrideValue, setOverrideValue ] = useState(0);
-    const [ merkleRoot, setMerkleRoot ] = useState({});
-    const [ tokenAddress, setTokenAddress ] = useState("");
+    const [address, setAddress] = useState("");
+    const [overrideValue, setOverrideValue] = useState(0);
+    const [merkleRoot, setMerkleRoot] = useState({});
+    const [tokenAddress, setTokenAddress] = useState("");
 
     const syntaxTester = new RegExp(/[,]+/);
 
     function parseAddresses() {
         let addressList = address.split(/\r?\n/);
-        if(addressList.filter(addr => !syntaxTester.test(addr)).length > 0) {
+        if (addressList.filter(addr => !syntaxTester.test(addr)).length > 0) {
             console.log('must have amount for each wallet');
             return;
         }
 
         addressList = addressList.map(addr => {
-           const [a, amt] = addr.split(",");
-           return {
+            const [a, amt] = addr.split(",");
+            return {
                 address: a,
                 earnings: `0x${(amt * (10 ** 18)).toString(16)}`
-           };
+            };
         });
         return addressList;
     }
 
     function updateAmount() {
         const addressList = address.split(/\r?\n/).map(addr => {
-            if(addr.indexOf(",") > -1) {
+            if (addr.indexOf(",") > -1) {
                 return `${addr.substring(0, addr.indexOf(","))},${overrideValue}`;
             } else {
                 return `${addr},${overrideValue}`;
@@ -49,15 +46,15 @@ export default function Airdrop() {
     }
 
     function getMerkleRoot() {
-        if(userAccount.address) {
+        if (userAccount.address) {
             const addresses = parseAddresses();
-            if(addresses) {
+            if (addresses) {
                 console.log(addresses);
                 const balanceMap = parseBalanceMap(addresses);
                 console.log("balance map", balanceMap);
                 setMerkleRoot(balanceMap.merkleRoot);
                 console.log("merkle root", merkleRoot);
-            } 
+            }
         } else {
             console.log('must be signed in');
         }
@@ -102,9 +99,9 @@ export default function Airdrop() {
         // })();
     }, [userAccount]);
 
-    return(<>
+    return (<>
         <Page>
-        
+
             <h1>Enter ethereum address below</h1>
             <p>Should be address followed by , and amount</p>
             <textarea onChange={(e) => setAddress(e.target.value)} value={address}></textarea>
@@ -116,7 +113,7 @@ export default function Airdrop() {
             </div>
             <CustomBrandedButton className="px-6 self-start ml-4" onClick={() => updateAmount()}>Update</CustomBrandedButton>
             <h1>Enter address of token</h1>
-            <CustomInput className="my-1 w-72 sm:w-96" type="text" placeholder="0.00" value={tokenAddress} onChange={(e) => setTokenAddress(e.target.value) }/>
+            <CustomInput className="my-1 w-72 sm:w-96" type="text" placeholder="0.00" value={tokenAddress} onChange={(e) => setTokenAddress(e.target.value)} />
             <CustomBrandedButton onClick={sendAirdrop}>Airdrop</CustomBrandedButton>
         </Page>
     </>)
