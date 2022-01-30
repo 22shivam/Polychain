@@ -20,7 +20,33 @@ interface UserModel extends mongoose.Model<UserDoc> {
 
 // interface that describes a property that a user document has
 interface UserDoc extends mongoose.Document, userAttr {
+    personalToken: {
+        tokenAddress: {
+            type: String,
+            required: false,
+        },
+        tokenName: {
+            type: String,
+            required: false,
+        },
+        tokenSymbol: {
+            type: String,
+            required: false,
+        },
+        tokenSupply: {
+            type: String,
+            required: false,
+        },
+        tokenOwner: {
+            type: String,
+            required: false,
+        },
+        tokenBlockchain: {
+            type: String,
+            required: false,
+        }
 
+    }
 }
 
 const UserSchema = new mongoose.Schema({
@@ -111,6 +137,32 @@ const UserSchema = new mongoose.Schema({
         type: Array,
         required: false,
         default: []
+    },
+    personalToken: {
+        tokenAddress: {
+            type: String,
+            required: false,
+        },
+        tokenName: {
+            type: String,
+            required: false,
+        },
+        tokenSymbol: {
+            type: String,
+            required: false,
+        },
+        tokenSupply: {
+            type: String,
+            required: false,
+        },
+        tokenOwner: {
+            type: String,
+            required: false,
+        },
+        tokenBlockchain: {
+            type: String,
+            required: false,
+        }
     }
 
 
