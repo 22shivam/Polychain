@@ -254,7 +254,7 @@ export default function App() {
                 <div className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-16 font-medium">
                     <div>
                         <h5 className="mt-10 mb-3 font-semibold text-gray-900">What is Spindl?</h5>
-                        <p>Spindl replaces your wallet addresses with a shareable link which you can use to receive payments, tips, etc. in several popular cryptocurrencies. Check <Link href="/shivam">polchain.tech/shivam</Link> for example!</p>
+                        <p>Spindl replaces your wallet addresses with a shareable link which you can use to receive payments, tips, etc. in several popular cryptocurrencies. Check <Link href="/shivam">spindl.tech/shivam</Link> for example!</p>
                         <h5 className="mt-10 mb-3 font-semibold text-gray-900">How can I access to it for free?</h5>
                         <p>Just tweet anything @spindlhq to receive a promocode which can be redeemed for 1 year access to your own spindl link!</p>
 
