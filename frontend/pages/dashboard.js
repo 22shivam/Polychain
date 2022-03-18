@@ -183,7 +183,7 @@ export default function UserDashboard() {
                     // setUserAccount({ address: processedResponse.address, blockchain: processedResponse.blockchain })
                     setHasUsername(true)
                     setLoading(false)
-                    const qrCode = await generateQR(`https://polychain.com${response.user.username}/`)
+                    const qrCode = await generateQR(`https://spindl.me${response.user.username}/`)
                     setQrCode(qrCode)
                     // }
                 }
@@ -665,14 +665,14 @@ export default function UserDashboard() {
                     {
                         selectedNav == "4" ?
                             <div className='flex flex-col mb-20 pt-10 px-6 flex-1'>
-                                <CustomLabel className="text-xl smtext-2xl mb-1 flex items-center">QR Code for your Page <a download="polychainQR" className='ml-4 h-6 w-6' href={qrCode}><svg style={{ display: "inline" }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <CustomLabel className="text-xl smtext-2xl mb-1 flex items-center">QR Code for your Page <a download="spindlQR" className='ml-4 h-6 w-6' href={qrCode}><svg style={{ display: "inline" }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path className="text-gray-400" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg></a></CustomLabel>
                                 <img className="w-60 ml-4" src={qrCode}></img>
                                 <CustomLabel className="text-xl smtext-2xl mb-4 flex items-center mt-10">Share your Page</CustomLabel>
                                 <div className='flex'>
-                                    <CustomButton className="ml-8" onClick={() => { navigator.clipboard.writeText(`https://polychain.tech/${username}`); toastSuccess("URL Copied!") }}>Copy Page URL</CustomButton>
-                                    <CustomBrandedButton className="flex items-center justify-center" onClick={() => { window.open(`https://twitter.com/intent/tweet?&text=check out my polychain page (polychain.tech/${username}) and send crypto (btc, eth, sol, etc.) to me today! @polychainhq`, "_blank") }}>Tweet your Page <img className='ml-2' src="/modifiedTwitter.svg" width='20'></img></CustomBrandedButton>
+                                    <CustomButton className="ml-8" onClick={() => { navigator.clipboard.writeText(`https://spindl.me/${username}`); toastSuccess("URL Copied!") }}>Copy Page URL</CustomButton>
+                                    <CustomBrandedButton className="flex items-center justify-center" onClick={() => { window.open(`https://twitter.com/intent/tweet?&text=check out my spindl page (spindl.tech/${username}) and send crypto (btc, eth, sol, etc.) to me today! @spindlhq`, "_blank") }}>Tweet your Page <img className='ml-2' src="/modifiedTwitter.svg" width='20'></img></CustomBrandedButton>
 
                                 </div>
 

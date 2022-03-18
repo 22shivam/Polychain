@@ -267,7 +267,7 @@ export default function Header({ brandedButtonLabel, brandedButtonCallback }) {
                 style={{ maxWidth: "70%", left: "50%", transform: "translate(-50%, 0%)" }}
             />
             <div onClick={() => { router.push("/") }} className="grow-0 flex items-center justify-center cursor-pointer" id="left_nav_bar">
-                <img className="" src="/croppedPolychainLogo.png" alt="Polychain Logo" width="150" />
+                <img className="" src="/croppedPolychainLogo.png" alt="Spindl Logo" width="150" />
             </div>
             <div className="grow" id="spacer">  </div>
             <div className="grow-0 my-2 sm:mr-4 flex" id="right_nav_bar">

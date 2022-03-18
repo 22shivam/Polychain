@@ -61,11 +61,11 @@ export default function Claim() {
                 {promoCode == "" ? eligible ?
                     <div style={{ maxWidth: "700px" }} className='mt-20 flex flex-col shadow-lg py-4 rounded-3xl justify-center flex-1 items-center mx-4 space-y-4' id="card">
 
-                        <CustomLabel className="smtext-2xl mt-4">What is Polychain?</CustomLabel>
-                        <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">1. Send and receive popular cryptocurrencies (eth, btc, sol, matic) using a simple, shareable link. See <a className='text-brand-primary-medium' href="https://polychain.tech/shivam" target="_blank" rel="noreferrer">polychain.tech/shivam</a> for example</CustomLabel>
-                        <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">2. Showcase your NFTs on your Polychain page</CustomLabel>
+                        <CustomLabel className="smtext-2xl mt-4">What is Spindl?</CustomLabel>
+                        <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">1. Send and receive popular cryptocurrencies (eth, btc, sol, matic) using a simple, shareable link. See <a className='text-brand-primary-medium' href="https://spindl.me/shivam" target="_blank" rel="noreferrer">spindl.me/shivam</a> for example</CustomLabel>
+                        <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">2. Showcase your NFTs on your Spindl page</CustomLabel>
                         <CustomLabel className="font-medium w-4/6 my-2 text-gray-700">3. Put all your links in one place</CustomLabel>
-                        <CustomLabel className="font-medium w-4/6 text-gray-700 my-2">4. Embed Polychain into your websites to accept crypto payments and donations</CustomLabel>
+                        <CustomLabel className="font-medium w-4/6 text-gray-700 my-2">4. Embed Spindl into your websites to accept crypto payments and donations</CustomLabel>
                         <CustomLabel>Join over 200 happy users!</CustomLabel>
                         <div className='mt-4'></div>
                         <CustomBrandedButton className="text-lg" onClick={claim}>Claim</CustomBrandedButton>
@@ -73,7 +73,7 @@ export default function Claim() {
                     </div> : <div className='flex flex-col items-center mx-4 text-center'>
                         <img src="/sad.gif" className='rounded-md mt-6' width="500"></img>
                         <CustomLabel className="mt-4">Join our discord: <a className='font-normal' href="http://discord.gg/pdbJVcARfR" rel="noreferrer" target="_blank">discord.gg/pdbJVcARfR</a></CustomLabel>
-                        <CustomLabel className="mt-4">Follow us on Twitter: <a className='font-normal' href="http://twitter.com/polychainhq" rel="noreferrer" target="_blank">twitter.com/polychainhq</a></CustomLabel>
+                        <CustomLabel className="mt-4">Follow us on Twitter: <a className='font-normal' href="http://twitter.com/spindlhq" rel="noreferrer" target="_blank">twitter.com/spindlhq</a></CustomLabel>
                         <CustomLabel className="font-semibold text-center mt-5 text-brand-primary-dark" style={{ maxWidth: "380px", fontSize: "1.rem" }}>Maybe DM us on one of these places, and you, too, might get a surprise?</CustomLabel>
                         <CustomLabel></CustomLabel>
 
@@ -91,10 +91,10 @@ export default function Claim() {
                         </div>
                         <div className='flex flex-row'>
                             <CustomButton onClick={() => { navigator.clipboard.writeText(promoCode) }}>Copy</CustomButton>
-                            <CustomBrandedButton onClick={() => { window.open("https://polychain.tech/", "_blank") }}>Use it now</CustomBrandedButton>
+                            <CustomBrandedButton onClick={() => { window.open("https://spindl.me/", "_blank") }}>Use it now</CustomBrandedButton>
                         </div>
                         <div className='flex flex-col items-start text-justify mt-8' style={{ maxWidth: "400px" }}>
-                            <CustomLabel><span className="text-brand-primary-dark text-center">Steps to Redeem:</span> <br></br> Go to <a href="https://polychain.tech/" rel='noreferrer' target="_blank">polychain.tech</a> and login. Enter your promo code and the username you want. Press use promo code and voila!</CustomLabel>
+                            <CustomLabel><span className="text-brand-primary-dark text-center">Steps to Redeem:</span> <br></br> Go to <a href="https://spindl.me/" rel='noreferrer' target="_blank">spindl.me</a> and login. Enter your promo code and the username you want. Press use promo code and voila!</CustomLabel>
 
                         </div>
                     </div>}

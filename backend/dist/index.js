@@ -61,7 +61,9 @@ app.use((0, cors_1.default)({
         'https://polychain.vercel.app',
         'https://polychain.tech',
         'https://www.polychain.tech',
-        "https://polychain-8igkmtn8f-22shivam.vercel.app"
+        "https://polychain-8igkmtn8f-22shivam.vercel.app",
+        "https://spindl.me",
+        'https://www.spindl.me'
     ],
     credentials: true
 }));
@@ -436,6 +438,24 @@ app.get("/logout", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(e);
     }
 }));
+// app.get("addUserToDrop/:address", async (req, res) => {
+//     try {
+//         const { address } = req.params
+//         if (!user) {
+//             return res.json({ success: false, message: "No User Found" })
+//         }
+//         const drop = await Drop.findOne({ SOLAddress: address }).exec()
+//         if (!drop) {
+//             return res.json({ success: false, message: "No Drop Found" })
+//         }
+//         drop.users.push(user)
+//         await drop.save()
+//         return res.json({ success: true, message: "User added to drop" })
+//     } catch (e) {
+//         console.log(e)
+//         res.status(500).json({ success: false, message: "Server Error" })
+//     }
+// }))
 app.get("/isLoggedIn", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = req.cookies.token;

@@ -414,10 +414,10 @@ export default function UserPayment() {
             <div className="flex flex-col align-items-center items-center mt-16">
                 <Head>
                     <title>{username}</title>
-                    <meta name="twitter:title" content={`${fullName}'s Polychain Page`} />
-                    <meta name="twitter:description" content="Polychain - Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
-                    <meta name="description" property="og:description" content="Polychain - Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
-                    <meta name="title" property="og:title" content={`${fullName}'s Polychain Page`} />
+                    <meta name="twitter:title" content={`${fullName}'s Spindl Page`} />
+                    <meta name="twitter:description" content="Spindl - Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
+                    <meta name="description" property="og:description" content="Spindl - Send and recieve bitcoin, ethereum, solana, etc. with a simple, shareable link!" />
+                    <meta name="title" property="og:title" content={`${fullName}'s Spindl Page`} />
                 </Head>
                 {loading ? <Loading /> : accountExists ?
                     <div id="card" className="transition-all duration-300 flex flex-col justify-center rounded-xl border border-gray-100 shadow-lg p-3 pt-6 sm:p-6 mx-8 sm:mx-28 bg-white md:mx-32">
@@ -452,7 +452,7 @@ export default function UserPayment() {
                                     <Image width="60" className="rounded-full object-cover" height="60" src={profilePic}></Image> : <Identicon className="rounded-full object-cover mr-1" string={ETHAddress ? ETHAddress : SOLAddress} size={50} />}
                                 <div className="flex flex-col ml-2">
                                     {fullName ? <CustomLabel className="px-0">{fullName}</CustomLabel> : <CustomLabel className="px-0">{username}</CustomLabel>}
-                                    <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">{bio ? bio : "Welcome to my Polychain Page!"}</CustomLabel>
+                                    <CustomLabel style={{ fontWeight: "500", maxWidth: "300px" }} className="px-0">{bio ? bio : "Welcome to my Spindl Page!"}</CustomLabel>
                                 </div>
                             </div>
 
