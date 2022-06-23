@@ -32,7 +32,7 @@ app.use(cors({
         'https://www.polychain.tech',
         "https://polychain-8igkmtn8f-22shivam.vercel.app",
         "https://spindl.me",
-        'https://www.spindl.me'
+        'https://www.spindl.me',
     ],
     credentials: true
 }))
